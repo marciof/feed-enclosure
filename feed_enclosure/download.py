@@ -20,8 +20,7 @@ MODULE_DOC = __doc__.strip()
 # TODO youtube-dl detection
 #      https://github.com/ytdl-org/youtube-dl/#how-can-i-detect-whether-a-given-url-is-supported-by-youtube-dl
 #      https://github.com/ytdl-org/youtube-dl/#embedding-youtube-dl
-# TODO rename to Downloader? 
-class Download:
+class Downloader:
 
     def __init__(self):
         self.logger = log.create_logger('download')
@@ -58,4 +57,4 @@ class Download:
 #      https://github.com/PySimpleGUI/PySimpleGUI
 #      https://github.com/alfiopuglisi/guietta
 if __name__ == '__main__':
-    sys.exit(Download().main())
+    sys.exit(Downloader().main())
