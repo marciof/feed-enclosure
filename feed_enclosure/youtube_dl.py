@@ -3,8 +3,8 @@
 """
 Wraps youtube-dl to add additional functionality.
 
-Changes: (1) support for uGet as an external downloader; (2) support for an
-output download folder only template.
+Changes: (1) support for uGet as an external downloader, named "x-uget";
+(2) support for an output download folder only template.
 """
 
 # stdlib
@@ -25,7 +25,7 @@ from youtube_dl.downloader.external import _BY_NAME, ExternalFD  # type: ignore
 from youtube_dl.utils import YoutubeDLError  # type: ignore
 
 # internal
-from . import log, uget
+from . import log, os_api, uget
 
 
 MODULE_DOC = __doc__.strip()
@@ -95,6 +95,7 @@ class UgetFD (ExternalFD):
     def _make_cmd(self, tmpfilename: str, info_dict: dict) -> List[str]:
         (folder, file_name_only) = os.path.split(tmpfilename)
 
+        # TODO use flag to wait for download?
         (command, file_path) = self.uget.make_command(
             url=info_dict['url'],
             file_name=file_name_only,
@@ -117,7 +118,7 @@ class UgetFD (ExternalFD):
 
         try:
             is_downloaded = self.uget.is_downloaded(tmpfilename, expected_size)
-            return_code: Optional[int] = 0
+            return_code: Optional[int] = os_api.EXIT_SUCCESS
         except FileNotFoundError:
             is_downloaded = False
             return_code = None
@@ -125,7 +126,7 @@ class UgetFD (ExternalFD):
         # TODO honor youtube-dl's continue/restart option
         if is_downloaded:
             self.report_file_already_downloaded(tmpfilename)
-            return 0
+            return os_api.EXIT_SUCCESS
 
         if return_code is None:
             self.uget.ensure_running_background()
@@ -246,6 +247,7 @@ class YoutubeDl:
             argv.extend(['--format', format])
 
         # FIXME add `YoutubeDL` option for adding metadata
+        #       https://github.com/ytdl-org/youtube-dl/#embedding-youtube-dl
         if add_metadata:
             argv.append('--add-metadata')
 
@@ -255,7 +257,7 @@ class YoutubeDl:
         argv.extend(['--', url])
         exit_status = self.main(argv)
 
-        if exit_status not in {None, 0}:
+        if exit_status not in {None, os_api.EXIT_SUCCESS}:
             raise YoutubeDLError(exit_status)
 
 

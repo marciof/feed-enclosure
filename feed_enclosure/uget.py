@@ -99,7 +99,6 @@ class Uget:
 
         # TODO log progress and refactor with `.youtube_dl`
         if wait_for_download and file_path is not None:
-            self.logger.info('Waiting for download to finish')
             asyncio.run(self.wait_for_download(file_path))
 
         return return_code
@@ -137,6 +136,17 @@ class Uget:
 
         return ((block_size >= actual_size)
                 and ((file_size is None) or (actual_size == file_size)))
+
+    # TODO wait for download (needs folder and filename or auto-detect?)
+    def download(self, url: str) -> None:
+        argv = []
+
+        argv.extend(['--', url])
+        exit_status = self.main(argv)
+
+        if exit_status != os_api.EXIT_SUCCESS:
+            raise Exception(
+                'uGet exited with status error code %d' % exit_status)
 
     def make_command(
             self,
@@ -196,6 +206,7 @@ class Uget:
             progress_cb: Optional[Callable[[int], None]] = None) \
             -> None:
 
+        self.logger.info('Waiting for download to finish: %s', file_path)
         (folder, file_name) = os.path.split(file_path)
 
         if folder == '':

@@ -17,9 +17,6 @@ from . import log, uget, youtube_dl
 MODULE_DOC = __doc__.strip()
 
 
-# TODO youtube-dl detection
-#      https://github.com/ytdl-org/youtube-dl/#how-can-i-detect-whether-a-given-url-is-supported-by-youtube-dl
-#      https://github.com/ytdl-org/youtube-dl/#embedding-youtube-dl
 class Downloader:
 
     def __init__(self):
@@ -42,13 +39,20 @@ class Downloader:
         self.logger.info('Downloading URL: %s', url)
 
         try:
-            self.youtube_dl.download(url)
+            # FIXME youtube URL support detection
+            #       https://github.com/ytdl-org/youtube-dl/#how-can-i-detect-whether-a-given-url-is-supported-by-youtube-dl
+            self.youtube_dl.download(
+                url,
+                external_downloader='x-uget',
+                format='bestvideo+bestaudio',
+                add_metadata=True,
+                verbose=True)
         except youtube_dl.YoutubeDLError as error:
             self.logger.debug(
-                'Failed to download using YouTube DL', exc_info=error)
-
-            # TODO add a uGet `download` method (and wait for it to finish)
-            self.uget.main(['--', url])
+                'Failed to download using YouTube DL (attempting with uGet)',
+                exc_info=error)
+            # TODO use same parameters as `enclosure_download.sh`
+            self.uget.download(url)
 
 
 # TODO tests
