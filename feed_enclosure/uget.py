@@ -137,12 +137,25 @@ class Uget:
         return ((block_size >= actual_size)
                 and ((file_size is None) or (actual_size == file_size)))
 
-    # TODO wait for download (needs folder and filename or auto-detect?)
-    def download(self, url: str, folder: Optional[str] = None) -> None:
+    # TODO wait for download (needs folder and file name or auto-detect?)
+    # TODO avoid parsing arguments a second time?
+    def download(self, url: str, path: Optional[str] = None) -> None:
         argv = []
 
-        if folder is not None:
-            argv.append(self.arg_folder.option_strings[0] + '=' + folder)
+        if path is not None:
+            if os.path.isdir(path):
+                (folder, file_name) = (path, None)
+            else:
+                (folder, file_name) = os.path.split(path)
+                if not folder:
+                    folder = os.curdir
+
+            if folder:
+                argv.append(
+                    self.arg_folder.option_strings[0] + '=' + folder)
+            if file_name:
+                argv.append(
+                    self.arg_file_name.option_strings[0] + '=' + file_name)
 
         argv.extend(['--', url])
         exit_status = self.main(argv)
@@ -222,7 +235,7 @@ class Uget:
                               | Mask.MODIFY | Mask.MOVED_TO)
 
             # TODO add an optional check, if after starting uGet there's no
-            #      inotify event for the target filename then it's
+            #      inotify event for the target file name then it's
             #      suspicious and flag it or timeout with an error?
             async for event in inotify:
                 if event.path.name != file_name:

@@ -6,7 +6,7 @@ enclosures are chosen, and also rewritten to have the best quality possible.
 Accepts whatever kinds of feed `feedparser` supports.
 
 Enclosure URLs will also have their associated feed entry title saved in the
-URL fragment part as a filename, so downloaders can use it if/when needed.
+URL fragment part as a file name, so downloaders can use it if/when needed.
 """
 
 # stdlib
@@ -55,7 +55,7 @@ def list_parsed_feed_entry_enclosure_urls(
 def add_title_filename_to_url(url: str, title: str) -> str:
     """
     Add a title in the URL fragment part for downloaders to use when the
-    original URL filename isn't human readable (URL fragments are client-side
+    original URL file name isn't human readable (URL fragments are client-side
     only, so safe to remove).
     """
 

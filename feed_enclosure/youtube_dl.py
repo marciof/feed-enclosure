@@ -83,7 +83,7 @@ class UgetFD (ExternalFD):
         clean_file_name = self.uget.clean_file_name(filename)
 
         if clean_file_name != filename:
-            self.warn('Filename cleaned up: %s', clean_file_name)
+            self.warn('File name cleaned up: %s', clean_file_name)
 
         return super().temp_name(clean_file_name)
 
@@ -150,8 +150,12 @@ class UgetFD (ExternalFD):
 
 class YoutubeDl:
 
-    def __init__(self, register_uget_external_downloader: bool = True):
+    def __init__(
+            self,
+            uget_external_downloader: Optional[str] = 'x-uget'):
+
         self.logger = log.create_logger('youtube_dl')
+        self.uget_external_downloader = uget_external_downloader
 
         self.arg_parser = argparse.ArgumentParser(
             description=MODULE_DOC, add_help=False, allow_abbrev=False)
@@ -160,8 +164,9 @@ class YoutubeDl:
         self.arg_output = self.arg_parser.add_argument(
             '-o', '--output', help='Output template')
 
-        if register_uget_external_downloader:
-            self.register_uget_external_downloader()
+        if uget_external_downloader is not None:
+            self.register_external_downloader(
+                uget_external_downloader, UgetFD)
 
     def main(self, args: Optional[List[str]] = None) -> Any:
         parsed_args = self.parse_args(args)
@@ -178,9 +183,6 @@ class YoutubeDl:
             -> None:
 
         _BY_NAME[name] = klass
-
-    def register_uget_external_downloader(self) -> None:
-        self.register_external_downloader('x-uget', UgetFD)
 
     def parse_args(self, args: Optional[List[str]]) -> List[str]:
         (parsed_args, rest_args) = self.arg_parser.parse_known_args(args)
@@ -217,7 +219,7 @@ class YoutubeDl:
                 # Directory constant, eg. ".."
                 return os.path.join(output, youtube_dl.DEFAULT_OUTTMPL)
             else:
-                # Filename only, eg. "xyz"
+                # File name only, eg. "xyz"
                 return output
 
         if os.path.isdir(output):
@@ -225,6 +227,7 @@ class YoutubeDl:
         else:
             return output
 
+    # TODO avoid parsing arguments a second time?
     def download(
             self,
             url: str,

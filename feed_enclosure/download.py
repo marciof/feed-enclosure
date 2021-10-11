@@ -26,8 +26,8 @@ class Downloader:
         self.arg_parser = argparse.ArgumentParser(description=MODULE_DOC)
         self.arg_url = self.arg_parser.add_argument(
             'url', help='URL to download')
-        self.arg_folder = self.arg_parser.add_argument(
-            '-f', '--folder', metavar='PATH', help='download save location')
+        self.arg_path = self.arg_parser.add_argument(
+            '-p', '--path', metavar='PATH', help='download save location')
 
         self.uget = uget.Uget()
         self.youtube_dl = youtube_dl.YoutubeDl()
@@ -38,22 +38,21 @@ class Downloader:
 
         parsed_kwargs = vars(parsed_args)
         url = parsed_kwargs[self.arg_url.dest]
-        folder = parsed_kwargs[self.arg_folder.dest]
+        path = parsed_kwargs[self.arg_path.dest]
 
-        self.download(url, folder=folder)
+        self.download(url, path=path)
 
-    # TODO add filename option
-    def download(self, url: str, folder: Optional[str] = None) -> None:
-        if folder is None:
-            folder = os.curdir
+    def download(self, url: str, path: Optional[str] = None) -> None:
+        if path is None:
+            path = os.curdir
 
         try:
             # FIXME youtube URL support detection
             #       https://github.com/ytdl-org/youtube-dl/#how-can-i-detect-whether-a-given-url-is-supported-by-youtube-dl
             self.youtube_dl.download(
                 url,
-                external_downloader='x-uget',
-                output=folder,
+                external_downloader=self.youtube_dl.uget_external_downloader,
+                output=path.replace('%', '%%'),
                 format='bestvideo+bestaudio',
                 add_metadata=True,
                 verbose=True)
@@ -61,8 +60,9 @@ class Downloader:
             self.logger.debug(
                 'Failed to download using YouTube DL (attempting with uGet)',
                 exc_info=error)
+
             # TODO use same parameters as `enclosure_download.sh`
-            self.uget.download(url, folder=folder)
+            self.uget.download(url, path=path)
 
 
 # TODO tests
