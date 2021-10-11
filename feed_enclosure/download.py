@@ -7,6 +7,7 @@ feed enclosures.
 
 # stdlib
 import argparse
+import os
 import sys
 from typing import Any, List, Optional
 
@@ -25,18 +26,26 @@ class Downloader:
         self.arg_parser = argparse.ArgumentParser(description=MODULE_DOC)
         self.arg_url = self.arg_parser.add_argument(
             'url', help='URL to download')
+        self.arg_folder = self.arg_parser.add_argument(
+            '-f', '--folder', metavar='PATH', help='download save location')
 
         self.uget = uget.Uget()
         self.youtube_dl = youtube_dl.YoutubeDl()
 
     def main(self, args: Optional[List[str]] = None) -> Any:
         parsed_args = self.arg_parser.parse_args(args)
-        url = vars(parsed_args)[self.arg_url.dest]
-        self.download(url)
+        self.logger.debug('Parsed arguments: %s', parsed_args)
 
-    # TODO add folder and filename options
-    def download(self, url: str) -> None:
-        self.logger.info('Downloading URL: %s', url)
+        parsed_kwargs = vars(parsed_args)
+        url = parsed_kwargs[self.arg_url.dest]
+        folder = parsed_kwargs[self.arg_folder.dest]
+
+        self.download(url, folder=folder)
+
+    # TODO add filename option
+    def download(self, url: str, folder: Optional[str] = None) -> None:
+        if folder is None:
+            folder = os.curdir
 
         try:
             # FIXME youtube URL support detection
@@ -44,6 +53,7 @@ class Downloader:
             self.youtube_dl.download(
                 url,
                 external_downloader='x-uget',
+                output=folder,
                 format='bestvideo+bestaudio',
                 add_metadata=True,
                 verbose=True)
@@ -52,7 +62,7 @@ class Downloader:
                 'Failed to download using YouTube DL (attempting with uGet)',
                 exc_info=error)
             # TODO use same parameters as `enclosure_download.sh`
-            self.uget.download(url)
+            self.uget.download(url, folder=folder)
 
 
 # TODO tests

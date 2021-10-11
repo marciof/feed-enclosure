@@ -138,8 +138,11 @@ class Uget:
                 and ((file_size is None) or (actual_size == file_size)))
 
     # TODO wait for download (needs folder and filename or auto-detect?)
-    def download(self, url: str) -> None:
+    def download(self, url: str, folder: Optional[str] = None) -> None:
         argv = []
+
+        if folder is not None:
+            argv.append(self.arg_folder.option_strings[0] + '=' + folder)
 
         argv.extend(['--', url])
         exit_status = self.main(argv)
