@@ -67,7 +67,7 @@ class Downloader:
                 exc_info=error)
 
             # TODO use same parameters as `enclosure_download.sh`
-            self.uget.download(url, path=path)
+            self.uget.download(url, path=path, quiet=True)
 
 
 # TODO tests

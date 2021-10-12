@@ -139,7 +139,13 @@ class Uget:
 
     # TODO wait for download (needs folder and file name or auto-detect?)
     # TODO avoid parsing arguments a second time?
-    def download(self, url: str, path: Optional[str] = None) -> None:
+    def download(
+            self,
+            url: str,
+            path: Optional[str] = None,
+            quiet: bool = False) \
+            -> None:
+
         argv = []
 
         if path is not None:
@@ -156,6 +162,9 @@ class Uget:
             if file_name:
                 argv.append(
                     self.arg_file_name.option_strings[0] + '=' + file_name)
+
+        if quiet:
+            argv.append(self.arg_quiet.option_strings[0])
 
         argv.extend(['--', url])
         exit_status = self.main(argv)
