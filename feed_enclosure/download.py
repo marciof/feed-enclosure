@@ -8,6 +8,7 @@ feed enclosures.
 # stdlib
 import argparse
 import os
+import os.path
 import sys
 from typing import Any, List, Optional
 
@@ -20,8 +21,9 @@ MODULE_DOC = __doc__.strip()
 
 class Downloader:
 
-    def __init__(self):
+    def __init__(self, default_folder: str = os.curdir):
         self.logger = log.create_logger('download')
+        self.default_folder = default_folder
 
         self.arg_parser = argparse.ArgumentParser(description=MODULE_DOC)
         self.arg_url = self.arg_parser.add_argument(
@@ -44,9 +46,12 @@ class Downloader:
 
     def download(self, url: str, path: Optional[str] = None) -> None:
         if path is None:
-            path = os.curdir
+            path = self.default_folder
 
         try:
+            if path == '-':
+                path = os.path.join(self.default_folder, path)
+
             # FIXME youtube URL support detection
             #       https://github.com/ytdl-org/youtube-dl/#how-can-i-detect-whether-a-given-url-is-supported-by-youtube-dl
             self.youtube_dl.download(
