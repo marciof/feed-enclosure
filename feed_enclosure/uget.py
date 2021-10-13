@@ -80,6 +80,7 @@ class Uget:
         parsed_kwargs = vars(parsed_args)
         wait_for_download = parsed_kwargs.pop(self.arg_wait_for_download.dest)
 
+        # TODO auto-detect folder and file name to wait for download?
         if wait_for_download:
             has_folder = parsed_kwargs[self.arg_folder.dest] is not None
             has_file_name = parsed_kwargs[self.arg_file_name.dest] is not None
@@ -137,13 +138,13 @@ class Uget:
         return ((block_size >= actual_size)
                 and ((file_size is None) or (actual_size == file_size)))
 
-    # TODO wait for download (needs folder and file name or auto-detect?)
     # TODO avoid parsing arguments a second time?
     def download(
             self,
             url: str,
             path: Optional[str] = None,
-            quiet: bool = False) \
+            quiet: bool = False,
+            wait: bool = False) \
             -> None:
 
         argv = []
@@ -165,6 +166,9 @@ class Uget:
 
         if quiet:
             argv.append(self.arg_quiet.option_strings[0])
+
+        if wait:
+            argv.append(self.arg_wait_for_download.option_strings[0])
 
         argv.extend(['--', url])
         exit_status = self.main(argv)

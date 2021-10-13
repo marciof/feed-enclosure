@@ -62,13 +62,12 @@ class Downloader:
                 add_metadata=True,
                 verbose=True)
         except youtube_dl.YoutubeDLError as error:
-            # TODO hide error log when it's unsupported
+            # TODO hide Youtube DL error log when it's unsupported
             self.logger.debug(
                 'Failed to download using YouTube DL (attempting with uGet)',
                 exc_info=error)
 
-            # TODO use same parameters as `enclosure_download.sh`
-            self.uget.download(url, path=path, quiet=True)
+            self.uget.download(url, path=path, quiet=True, wait=True)
 
 
 # TODO tests
