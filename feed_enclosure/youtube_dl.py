@@ -19,6 +19,7 @@ from typing import Any, List, Optional, Type
 from overrides import overrides
 # FIXME missing type stubs for some external libraries
 # TODO use yt-dlp? https://github.com/yt-dlp/yt-dlp
+# TODO use pytube? https://github.com/pytube/pytube
 import youtube_dl  # type: ignore
 # FIXME plugin system API for youtube-dl external downloaders
 from youtube_dl.downloader.external import _BY_NAME, ExternalFD  # type: ignore

@@ -25,7 +25,7 @@
 
 ## Prototyping?
 
-1. QR code reader PWA (camera).
+1. QR code reader PWA (camera). (Or authenticator?)
    - Feature recent history (storage).
      - See: https://github.com/pubkey/rxdb 
      - See: https://developer.mozilla.org/en-US/docs/Web/API/StorageManager/persist 
