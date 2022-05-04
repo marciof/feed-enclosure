@@ -58,6 +58,7 @@ class Downloader:
                 url,
                 external_downloader=self.youtube_dl.uget_external_downloader,
                 output=path.replace('%', '%%'),
+                # TODO expose format?
                 format='bestvideo+bestaudio',
                 add_metadata=True,
                 verbose=True)
