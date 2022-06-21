@@ -3,26 +3,48 @@
 # Runtime
 
 ## feed_rewrite
+
+### https://pypi.org/project/feedgen/#history
 feedgen==0.9.0
-feedparser==6.0.8
-pathvalidate==2.4.1
+
+### https://github.com/kurtmckee/feedparser/blob/develop/CHANGELOG.rst
+feedparser==6.0.10
+
+### https://github.com/thombashi/pathvalidate/releases
+pathvalidate==2.5.0
 
 ## liferea
-xdg==5
+
+### https://github.com/srstevenson/xdg/releases
+xdg==5.1.1
 
 ## opml
+
+### https://github.com/tiran/defusedxml#changelog
 defusedxml==0.7.1
 
 ## uget
-asyncinotify==2.0.2
-Unidecode==1.2.0
+
+### https://gitlab.com/Taywee/asyncinotify
+asyncinotify==2.0.5
+
+### https://pypi.org/project/Unidecode/#history
+Unidecode==1.3.4
 
 ## youtube_dl
+
+### https://github.com/mkorpela/overrides/releases
 overrides==6.1.0
-youtube-dl==2021.6.6
+
+### https://github.com/ytdl-org/youtube-dl/blob/master/ChangeLog
+youtube-dl==2021.12.17
 
 # Test
 
 ## lint
-mypy==0.812
-pycodestyle==2.7.0
+
+### http://www.mypy-lang.org/news.html
+mypy==0.961
+
+### https://pycodestyle.pycqa.org/en/latest/developer.html#changes
+pycodestyle==2.8.0
