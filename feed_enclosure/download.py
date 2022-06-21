@@ -59,7 +59,8 @@ class Downloader:
                 external_downloader=self.youtube_dl.uget_external_downloader,
                 output=path.replace('%', '%%'),
                 # TODO expose format?
-                format='bestvideo+bestaudio',
+                # TODO option to pick best quality using `url_rewrite`?
+                format='bestvideo+bestaudio/best',
                 add_metadata=True,
                 verbose=True)
         except youtube_dl.YoutubeDLError as error:
