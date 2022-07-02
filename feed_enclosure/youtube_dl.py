@@ -81,12 +81,7 @@ class UgetFD (ExternalFD):
 
     @overrides
     def temp_name(self, filename: str) -> str:
-        clean_file_name = self.uget.clean_file_name(filename)
-
-        if clean_file_name != filename:
-            self.warn('File name cleaned up: %s', clean_file_name)
-
-        return super().temp_name(clean_file_name)
+        return self.uget.clean_file_name(filename)
 
     def calc_format_percent(self, count: int, total: Optional[int]) -> str:
         return self.format_percent(self.calc_percent(count, total)).strip()

@@ -66,11 +66,16 @@ class Uget:
             help='Wait for download to finish (requires folder and file name)',
             action='store_true')
 
-    # FIXME uGet doesn't handle filenames with Unicode characters on the CLI
+    # FIXME uGet breaks on filenames with emojis/Unicode characters on the CLI
     # TODO some Unicode files are still being not handled correctly?
     #      see https://docs.python.org/3/library/os.html#os.fsencode
     def clean_file_name(self, file_name: str) -> str:
-        return unidecode(file_name)
+        clean_file_name = unidecode(file_name)
+
+        if clean_file_name != file_name:
+            self.logger.warning('File name cleaned up: %s', clean_file_name)
+
+        return clean_file_name
 
     def main(self, args: Optional[List[str]] = None) -> int:
         (parsed_args, rest_args) = self.arg_parser.parse_known_args(args)
@@ -235,6 +240,7 @@ class Uget:
             progress_cb: Optional[Callable[[int], None]] = None) \
             -> None:
 
+        # FIXME logged twice?
         self.logger.info('Waiting for download to finish: %s', file_path)
         (folder, file_name) = os.path.split(file_path)
 
@@ -242,6 +248,7 @@ class Uget:
             folder = os.getcwd()
 
         # TODO use the `watchdog` package to be platform agnostic?
+        # TODO detect/handle when inotify has run out of watches (better logs)
         with Inotify() as inotify:
             # TODO watch target file only for performance (measure first)
             inotify.add_watch(folder, Mask.ONLYDIR | Mask.CLOSE | Mask.CREATE
@@ -255,6 +262,8 @@ class Uget:
                     continue
                 if self.is_downloaded(file_path, file_size, progress_cb):
                     break
+
+        self.logger.info('Download complete: %s', file_path)
 
 
 # TODO tests
