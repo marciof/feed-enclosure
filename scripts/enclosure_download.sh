@@ -24,7 +24,7 @@ dl_begin_hook_opt=b
 dl_end_hook_opt=e
 
 download_folder=.
-ytdl_video_format=bestvideo+bestaudio
+ytdl_video_format='bestvideo+bestaudio/best'
 dl_hook_arg=
 dl_begin_hook=
 dl_end_hook=
