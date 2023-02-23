@@ -60,7 +60,7 @@ class Downloader:
                 output=path.replace('%', '%%'),
                 # TODO expose format?
                 # TODO option to pick best quality using `url_rewrite`?
-                format='bestvideo[height<=?1080]+bestaudio/best[height<=?1080]/best',
+                format='bestvideo+bestaudio/best',
                 add_metadata=True,
                 verbose=True)
         except youtube_dl.YoutubeDLError as error:
