@@ -53,7 +53,6 @@ class Downloader:
                 path = os.path.join(self.default_folder, path)
 
             # FIXME youtube URL support detection
-            #       https://github.com/ytdl-org/youtube-dl/#how-can-i-detect-whether-a-given-url-is-supported-by-youtube-dl
             self.youtube_dl.download(
                 url,
                 external_downloader=self.youtube_dl.uget_external_downloader,

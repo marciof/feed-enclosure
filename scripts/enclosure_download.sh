@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Wrapper script to download enclosures, that can be used with Liferea.
-# Accepts whatever youtube-dl supports, plus IGN Daily Fix videos.
+# Accepts whatever yt-dlp supports, plus IGN Daily Fix videos.
 #
 # Dependencies:
 #   apt install uget # Version: 2.2.3-2 # downloader tool
@@ -83,7 +83,7 @@ download_via_uget() {
         "$dl_uget_url"
 }
 
-# Download a URL using youtube-dl.
+# Download a URL using yt-dlp.
 #
 # Globals: YOUTUBE_DL_BIN
 # Arguments: url format folder
@@ -117,7 +117,7 @@ Usage: [options] url
 Options:
   -$help_opt           display this help and exit
   -$download_folder_opt folder    download save location to "folder", defaults to "$download_folder"
-  -$ytdl_video_format_opt format    set youtube-dl video "format", defaults to "$ytdl_video_format"
+  -$ytdl_video_format_opt format    set yt-dlp video "format", defaults to "$ytdl_video_format"
   -$dl_begin_hook_opt command   "command" hook to run when beginning a download
   -$dl_end_hook_opt command   "command" hook to run when ending a download
   -$dl_hook_arg_opt argument  additional "argument" for the download hooks
@@ -179,7 +179,7 @@ main() {
             "$url" "$ytdl_video_format" "$download_folder" "$dl_hook_arg"
     fi
 
-    # TODO invert condition to let youtube-dl try first?
+    # TODO invert condition to let yt-dlp try first?
     # TODO attempt to extract metadata from IGN Daily Fix videos?
     if is_ign_url "$url"; then
         download_via_uget "$url" "$download_folder"

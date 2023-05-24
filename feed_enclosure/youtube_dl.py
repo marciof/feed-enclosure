@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 """
-Wraps youtube-dl to add additional functionality.
+Wraps yt-dlp to add additional functionality.
 
 Changes: (1) support for uGet as an external downloader, named "x-uget";
 (2) support for an output download folder only template.
@@ -18,12 +18,12 @@ from typing import Any, List, Optional, Type
 # external
 from overrides import overrides
 # FIXME missing type stubs for some external libraries
-# TODO use yt-dlp? https://github.com/yt-dlp/yt-dlp
-# TODO use pytube? https://github.com/pytube/pytube
-import youtube_dl  # type: ignore
-# FIXME plugin system API for youtube-dl external downloaders
-from youtube_dl.downloader.external import _BY_NAME, ExternalFD  # type: ignore
-from youtube_dl.utils import YoutubeDLError  # type: ignore
+# Preferred over youtube-dl due to being more up-to-date.
+import yt_dlp  # type: ignore
+# FIXME use plugin API for external downloaders
+#       https://github.com/yt-dlp/yt-dlp#developing-plugins
+from yt_dlp.downloader.external import _BY_NAME, ExternalFD  # type: ignore
+from yt_dlp.utils import YoutubeDLError  # type: ignore
 
 # internal
 from . import log, os_api, uget
@@ -32,10 +32,11 @@ from . import log, os_api, uget
 MODULE_DOC = __doc__.strip()
 
 
+# TODO remove? simplifies, and there are formats that uGet can't handle anyway
 # TODO log to syslog as well using `log`
 class UgetFD (ExternalFD):
     """
-    https://github.com/ytdl-org/youtube-dl#mandatory-and-optional-metafields
+    https://github.com/yt-dlp/yt-dlp/blob/master/CONTRIBUTING.md#mandatory-and-optional-metafields
     """
 
     AVAILABLE_OPT = '--version'
@@ -86,7 +87,7 @@ class UgetFD (ExternalFD):
     def calc_format_percent(self, count: int, total: Optional[int]) -> str:
         return self.format_percent(self.calc_percent(count, total)).strip()
 
-    # TODO honor youtube-dl's proxy option/value
+    # TODO honor proxy option/value
     # TODO honor `external_downloader_args`
     def _make_cmd(self, tmpfilename: str, info_dict: dict) -> List[str]:
         (folder, file_name_only) = os.path.split(tmpfilename)
@@ -119,7 +120,7 @@ class UgetFD (ExternalFD):
             is_downloaded = False
             return_code = None
 
-        # TODO honor youtube-dl's continue/restart option
+        # TODO honor continue/restart option
         if is_downloaded:
             self.report_file_already_downloaded(tmpfilename)
             return os_api.EXIT_SUCCESS
@@ -150,6 +151,7 @@ class YoutubeDl:
             self,
             uget_external_downloader: Optional[str] = 'x-uget'):
 
+        self.PATHS_ARG_NAME = '--paths'
         self.logger = log.create_logger('youtube_dl')
         self.uget_external_downloader = uget_external_downloader
 
@@ -167,10 +169,10 @@ class YoutubeDl:
     def main(self, args: Optional[List[str]] = None) -> Any:
         parsed_args = self.parse_args(args)
 
-        # FIXME expose function to use youtube-dl without exiting
+        # FIXME expose function without exiting
         try:
             # TODO capture error output and log it
-            return youtube_dl._real_main(parsed_args)
+            return yt_dlp._real_main(parsed_args)
         except SystemExit as exit_error:
             return exit_error.code
 
@@ -188,11 +190,8 @@ class YoutubeDl:
         self.logger.debug('Remaining arguments: %s', rest_args)
 
         if parsed_kwargs[self.arg_output.dest]:
-            rest_args[0:0] = [
-                self.arg_output.option_strings[0],
-                self.parse_output_template_arg(
-                    parsed_kwargs[self.arg_output.dest]),
-            ]
+            rest_args[0:0] = self.parse_output_template_arg(
+                parsed_kwargs[self.arg_output.dest])
 
         if parsed_kwargs[self.arg_help.dest]:
             rest_args.insert(0, self.arg_help.option_strings[0])
@@ -202,26 +201,26 @@ class YoutubeDl:
         self.logger.debug('Final arguments: %s', rest_args)
         return rest_args
 
-    # https://github.com/ytdl-org/youtube-dl#output-template
-    def parse_output_template_arg(self, output: str) -> str:
+    # https://github.com/yt-dlp/yt-dlp#output-template
+    def parse_output_template_arg(self, output: str) -> List[str]:
         (head, tail) = os.path.split(output)
 
         if not tail:
             # Directory only, eg. "xyz/"
-            return os.path.join(output, youtube_dl.DEFAULT_OUTTMPL)
+            return [self.PATHS_ARG_NAME, output]
 
         if not head:
             if os.path.isdir(output):
                 # Directory constant, eg. ".."
-                return os.path.join(output, youtube_dl.DEFAULT_OUTTMPL)
+                return [self.PATHS_ARG_NAME, output]
             else:
                 # File name only, eg. "xyz"
-                return output
+                return [self.arg_output.option_strings[0], output]
 
         if os.path.isdir(output):
-            return os.path.join(output, youtube_dl.DEFAULT_OUTTMPL)
+            return [self.PATHS_ARG_NAME, output]
         else:
-            return output
+            return [self.arg_output.option_strings[0], output]
 
     # TODO avoid parsing arguments a second time?
     def download(
@@ -245,8 +244,7 @@ class YoutubeDl:
         if format is not None:
             argv.extend(['--format', format])
 
-        # FIXME add `YoutubeDL` option for adding metadata
-        #       https://github.com/ytdl-org/youtube-dl/#embedding-youtube-dl
+        # FIXME add option for adding metadata
         if add_metadata:
             argv.append('--add-metadata')
 
