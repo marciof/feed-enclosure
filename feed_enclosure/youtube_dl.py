@@ -1,159 +1,37 @@
 # -*- coding: UTF-8 -*-
 
+# FIXME remove yt-dlp wrapper as it's no longer needed
 """
-Wraps yt-dlp to add additional functionality.
-
-Changes: (1) support for uGet as an external downloader, named "x-uget";
-(2) support for an output download folder only template.
+Wraps yt-dlp.
 """
 
 # stdlib
 import argparse
-import asyncio
 import os.path
 import sys
-from time import time
-from typing import Any, List, Optional, Type
+from typing import Any, List, Optional
 
 # external
-from overrides import overrides
 # FIXME missing type stubs for some external libraries
 # Preferred over youtube-dl due to being more up-to-date.
 import yt_dlp  # type: ignore
 # FIXME use plugin API for external downloaders
 #       https://github.com/yt-dlp/yt-dlp#developing-plugins
-from yt_dlp.downloader.external import _BY_NAME, ExternalFD  # type: ignore
 from yt_dlp.utils import YoutubeDLError  # type: ignore
 
 # internal
-from . import log, os_api, uget
+from . import log, os_api
 
 
 MODULE_DOC = __doc__.strip()
 
 
-# TODO remove? simplifies, and there are formats that uGet can't handle anyway
-# TODO log to syslog as well using `log`
-class UgetFD (ExternalFD):
-    """
-    https://github.com/yt-dlp/yt-dlp/blob/master/CONTRIBUTING.md#mandatory-and-optional-metafields
-    """
-
-    AVAILABLE_OPT = '--version'
-
-    def __init__(
-            self,
-            *args,
-            download_progress_throttle_interval_secs: float = 1,
-            **kwargs):
-
-        super().__init__(*args, **kwargs)
-        self.uget = uget.Uget()
-        self.last_timestamp_secs = time()
-        self.download_progress_throttle_interval_secs = \
-            download_progress_throttle_interval_secs
-
-    @classmethod
-    @overrides
-    def get_basename(cls) -> str:
-        return uget.find_executable_name()
-
-    def error(self, message: str, *args) -> None:
-        self.report_error(('[%s] ' + message) % (self.get_basename(), *args))
-
-    def info(self, message: str, *args) -> None:
-        self.to_screen(('[%s] ' + message) % (self.get_basename(), *args))
-
-    def warn(self, message: str, *args) -> None:
-        self.report_warning(('[%s] ' + message) % (self.get_basename(), *args))
-
-    def log_progress_throttled(
-            self, current_size: int, expected_size: Optional[int]):
-
-        timestamp_secs = time()
-        should_log = ((timestamp_secs - self.last_timestamp_secs)
-                      >= self.download_progress_throttle_interval_secs)
-
-        if should_log:
-            self.last_timestamp_secs = timestamp_secs
-            self.info('Downloaded %s block bytes (%s)',
-                      current_size,
-                      self.calc_format_percent(current_size, expected_size))
-
-    @overrides
-    def temp_name(self, filename: str) -> str:
-        return self.uget.clean_file_name(filename)
-
-    def calc_format_percent(self, count: int, total: Optional[int]) -> str:
-        return self.format_percent(self.calc_percent(count, total)).strip()
-
-    # TODO honor proxy option/value
-    # TODO honor `external_downloader_args`
-    def _make_cmd(self, tmpfilename: str, info_dict: dict) -> List[str]:
-        (folder, file_name_only) = os.path.split(tmpfilename)
-
-        # TODO use flag to wait for download?
-        (command, file_path) = self.uget.make_command(
-            url=info_dict['url'],
-            file_name=file_name_only,
-            folder=folder,
-            quiet=True,
-            http_user_agent=info_dict.get('http_headers', {})
-                                     .get('User-Agent'))
-
-        return command
-
-    @overrides
-    def _call_downloader(self, tmpfilename: str, info_dict: dict) -> int:
-        # TODO use `filesize_approx` as well?
-        expected_size = info_dict.get('filesize')
-
-        if expected_size is None:
-            self.warn('Unknown expected file size, using block size only.')
-        else:
-            self.info('Expected file size: %d bytes', expected_size)
-
-        try:
-            is_downloaded = self.uget.is_downloaded(tmpfilename, expected_size)
-            return_code: Optional[int] = os_api.EXIT_SUCCESS
-        except FileNotFoundError:
-            is_downloaded = False
-            return_code = None
-
-        # TODO honor continue/restart option
-        if is_downloaded:
-            self.report_file_already_downloaded(tmpfilename)
-            return os_api.EXIT_SUCCESS
-
-        if return_code is None:
-            self.uget.ensure_running_background()
-            return_code = super()._call_downloader(tmpfilename, info_dict)
-            self.info('Return code: %s', return_code)
-        else:
-            self.info('File already exists, waiting for download.')
-
-        asyncio.run(self.wait_for_download(tmpfilename, info_dict))
-        return return_code
-
-    async def wait_for_download(self, tmpfilename: str, info_dict: dict):
-        expected_size = info_dict.get('filesize')
-
-        await self.uget.wait_for_download(
-            tmpfilename,
-            expected_size,
-            lambda current_size:
-                self.log_progress_throttled(current_size, expected_size))
-
-
 class YoutubeDl:
 
-    def __init__(
-            self,
-            uget_external_downloader: Optional[str] = 'x-uget'):
+    def __init__(self):
 
         self.PATHS_ARG_NAME = '--paths'
         self.logger = log.create_logger('youtube_dl')
-        self.uget_external_downloader = uget_external_downloader
 
         self.arg_parser = argparse.ArgumentParser(
             description=MODULE_DOC, add_help=False, allow_abbrev=False)
@@ -161,10 +39,6 @@ class YoutubeDl:
             '-h', '--help', action='store_true', help=argparse.SUPPRESS)
         self.arg_output = self.arg_parser.add_argument(
             '-o', '--output', help='Output template')
-
-        if uget_external_downloader is not None:
-            self.register_external_downloader(
-                uget_external_downloader, UgetFD)
 
     def main(self, args: Optional[List[str]] = None) -> Any:
         parsed_args = self.parse_args(args)
@@ -175,12 +49,6 @@ class YoutubeDl:
             return yt_dlp._real_main(parsed_args)
         except SystemExit as exit_error:
             return exit_error.code
-
-    def register_external_downloader(
-            self, name: str, klass: Type[ExternalFD]) \
-            -> None:
-
-        _BY_NAME[name] = klass
 
     def parse_args(self, args: Optional[List[str]]) -> List[str]:
         (parsed_args, rest_args) = self.arg_parser.parse_known_args(args)
@@ -226,7 +94,6 @@ class YoutubeDl:
     def download(
             self,
             url: str,
-            external_downloader: Optional[str] = None,
             output: Optional[str] = None,
             format: Optional[str] = None,
             add_metadata: bool = False,
@@ -234,9 +101,6 @@ class YoutubeDl:
             -> None:
 
         argv = []
-
-        if external_downloader is not None:
-            argv.extend(['--external-downloader', external_downloader])
 
         if output is not None:
             argv.extend([self.arg_output.option_strings[0], output])

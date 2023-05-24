@@ -1,4 +1,5 @@
-- replace uget? too many bugs, and no current development?
+- emojis break Dropbox upload on Linux?
+  - https://www.youtube.com/v/8rB4Y-uE1ng?version=3#EA Trax in Need for Speed, Burnout & SSX rocked 🤘 SO GOOD
 - retry youtube 403 uget stuck
 - better % progress with large files and at rounded 100% (sometimes it shows 100% for some time)
 - breaks sending from Liferea to uGet: https://www.youtube.com/v/oBz7LrZ6qWM?version=3#I ❤️ XBOX ONE & PS4 Games - CHEAP $15 or less!

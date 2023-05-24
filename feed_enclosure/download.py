@@ -56,7 +56,6 @@ class Downloader:
             # FIXME youtube URL support detection
             self.youtube_dl.download(
                 url,
-                external_downloader=self.youtube_dl.uget_external_downloader,
                 output=path.replace('%', '%%'),
                 # TODO expose format?
                 # TODO option to pick best quality using `url_rewrite`?
