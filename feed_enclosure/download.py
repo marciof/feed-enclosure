@@ -44,6 +44,7 @@ class Downloader:
 
         self.download(url, path=path)
 
+    # FIXME filenames with emojis/Unicode break Dropbox upload?
     def download(self, url: str, path: Optional[str] = None) -> None:
         if path is None:
             path = self.default_folder
