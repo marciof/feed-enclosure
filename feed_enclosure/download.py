@@ -45,6 +45,7 @@ class Downloader:
         self.download(url, path=path)
 
     # FIXME filenames with emojis/Unicode break Dropbox upload?
+    # TODO ensure downloads can be paused and resumed
     def download(self, url: str, path: Optional[str] = None) -> None:
         if path is None:
             path = self.default_folder
@@ -64,6 +65,7 @@ class Downloader:
                 verbose=True)
         except youtube_dl.YoutubeDLError as error:
             # TODO hide Youtube DL error log when it's unsupported
+            # TODO attempt to extract metadata from IGN Daily Fix videos?
             self.logger.debug(
                 'Failed to download using YouTube DL (attempting with uGet)',
                 exc_info=error)
@@ -76,5 +78,7 @@ class Downloader:
 #      https://github.com/chriskiehl/Gooey
 #      https://github.com/PySimpleGUI/PySimpleGUI
 #      https://github.com/alfiopuglisi/guietta
+# TODO GUI notification of download errors or significant events?
+#      eg. ffmpeg muxing start/end, error "downloading" livestreams, etc
 if __name__ == '__main__':
     sys.exit(Downloader().main())
