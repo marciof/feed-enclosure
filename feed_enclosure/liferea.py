@@ -110,6 +110,7 @@ class Liferea:
     def find_feed_list_opml(self) -> Path:
         return xdg_config_home().joinpath('liferea', 'feedlist.opml')
 
+    # TODO add option to remove altogether
     def set_feed_conversion_filter(self, command: str) -> None:
         self.modify_feed_list_opml_outline_attrib('filtercmd', command)
 

@@ -45,6 +45,7 @@ class Downloader:
         self.download(url, path=path)
 
     # FIXME filenames with emojis/Unicode break Dropbox upload?
+    # FIXME fails on TikTok videos with very long titles
     # TODO ensure downloads can be paused and resumed
     def download(self, url: str, path: Optional[str] = None) -> None:
         if path is None:

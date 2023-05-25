@@ -23,6 +23,11 @@ xdg~=5.1.1
 ### https://github.com/tiran/defusedxml#changelog
 defusedxml~=0.7.1
 
+## tiktok_rss
+
+### https://github.com/Russell-Newton/TikTokPy/releases
+tiktokapipy~=0.1.13
+
 ## uget
 
 ### https://gitlab.com/Taywee/asyncinotify
