@@ -25,8 +25,8 @@ defusedxml~=0.7.1
 
 ## tiktok_rss
 
-### https://github.com/Russell-Newton/TikTokPy/releases
-tiktokapipy~=0.1.13
+### https://git.launchpad.net/beautifulsoup/tree/CHANGELOG
+beautifulsoup4~=4.10.0
 
 ## uget
 

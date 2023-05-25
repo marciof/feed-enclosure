@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 """
-Outputs an RSS feed of up to 10 videos for a given TikTok user name.
+Rewrites a TikTok user's HTML page (in stdin) into RSS (in stdout).
 """
 
 # stdlib
@@ -11,8 +11,8 @@ from typing import Any, List, Optional
 
 # external
 # FIXME missing type stubs for some external libraries
+import bs4
 from feedgen import feed as feedgen  # type: ignore
-from tiktokapipy.api import TikTokAPI
 
 # internal
 from . import log, os_api
@@ -21,59 +21,62 @@ from . import log, os_api
 MODULE_DOC = __doc__.strip()
 
 
-def build_feed(user_name: str, logger: log.Logger) -> feedgen.FeedGenerator:
-    with TikTokAPI(navigation_retries=3, navigation_timeout=10) as tik_tok:
-        # FIXME takes too long to build a feed and Liferea times out
-        user = tik_tok.user(user_name, video_limit=1)
-        user_url = 'https://www.tiktok.com/@' + user_name
-        logger.info('TikTok user: %s', user)
+def build_feed(user_page_html: str, logger: log.Logger) -> str:
+    page = bs4.BeautifulSoup(user_page_html, 'html5lib')
+    feed = feedgen.FeedGenerator()
 
-        feed = feedgen.FeedGenerator()
-        feed.id(str(user.id))
-        feed.title(user.nickname)
-        feed.link({'href': user_url})
+    title = page.title.string
+    url = page.find('link', attrs={'rel': 'canonical'})['href']
+    description = page.find('meta', attrs={'property': 'og:description'})[
+        'content']
 
-        # FIXME add description from user's bio
-        # Description is mandatory for RSS feeds.
-        # https://www.rssboard.org/rss-specification
-        feed.description('-')
+    logger.info('TikTok user: %s', url)
 
-        for video in user.videos:
-            video_url = user_url + '/video/' + str(video.id)
-            logger.info('TikTok video "%s": %s', video.desc, video_url)
+    feed.title(title)
+    feed.link({'href': url})
+    feed.description(description)
 
-            feed_entry = feed.add_entry()
+    for video in page.find_all(attrs={'data-e2e': 'user-post-item'}):
+        link_tag = video.find('a')
+        thumbnail_tag = link_tag.find('img')
 
-            # FIXME are the title and description the same thing?
-            feed_entry.title(video.desc)
+        video_url = link_tag['href']
+        video_title = thumbnail_tag['alt']
+        video_thumbnail_url = thumbnail_tag['src']
 
-            feed_entry.id(str(video.id))
-            feed_entry.link({'href': video_url})
-            feed_entry.published(video.create_time)
-            feed_entry.enclosure(url=video_url, type='')
+        # FIXME add date
+        logger.info('TikTok video "%s": %s', video_title, video_url)
+        feed_entry = feed.add_entry()
 
-            # FIXME need to properly encode into HTML
-            feed_entry.description('<img src="%s">' % video.video.cover)
+        feed_entry.id(video_url)
 
-        logger.info('Built feed: %s', feed)
-        return feed
+        # TODO remove hashtags?
+        feed_entry.title(video_title)
+        feed_entry.link({'href': video_url})
+        feed_entry.enclosure(url=video_url, type='')
 
+        # FIXME need to properly encode into HTML
+        feed_entry.description('<img src="%s">' % video_thumbnail_url)
 
-def build_feed_to_stdout(user_name: str, logger: log.Logger) -> None:
-    print(build_feed(user_name, logger).rss_str(pretty=True).decode())
+    return feed.rss_str(pretty=True).decode()
 
 
-def parse_args(args: Optional[List[str]], logger: log.Logger) -> str:
-    arg_parser = argparse.ArgumentParser(description=MODULE_DOC)
-    arg_user_name = arg_parser.add_argument('user', help='user name')
+def build_feed_to_stdout(logger: log.Logger) -> None:
+    # FIXME `feedparser` breaks on detecting the encoding of the input
+    #       data when given a file object (eg `sys.stdin`) that when
+    #       `read` gives a string-like object, since the regex is a bytes
+    #       pattern (see `feedparser.encodings.RE_XML_PI_ENCODING`). As a
+    #       workaround read `sys.stdin` to yield a string.
+    print(build_feed(sys.stdin.read(), logger))
 
-    parsed_args = arg_parser.parse_args(args)
-    logger.debug('Parsed arguments: %s', parsed_args)
 
-    user_name = vars(parsed_args)[arg_user_name.dest]
-    logger.debug('User name: %s', user_name)
+def parse_args(args: Optional[List[str]], logger: log.Logger) -> None:
+    parser = argparse.ArgumentParser(description=MODULE_DOC)
+    parser.parse_args(args)
 
-    return user_name
+    if sys.stdin.isatty():
+        logger.warning('Stdin is a terminal (possibly connected to keyboard)')
+        logger.warning(parser.format_usage().strip())
 
 
 def main(args: Optional[List[str]] = None) -> Any:
@@ -81,7 +84,8 @@ def main(args: Optional[List[str]] = None) -> Any:
 
     try:
         logger = log.create_logger('tiktok_rss')
-        build_feed_to_stdout(parse_args(args, logger), logger)
+        parse_args(args, logger)
+        build_feed_to_stdout(logger)
         return os_api.EXIT_SUCCESS
     except SystemExit:
         raise

@@ -46,7 +46,9 @@ class Downloader:
 
     # FIXME filenames with emojis/Unicode break Dropbox upload?
     # FIXME fails on TikTok videos with very long titles
+    # FIXME output from yt-dlp isn't logged
     # TODO ensure downloads can be paused and resumed
+    # TODO normalize file names? https://github.com/woodgern/confusables
     def download(self, url: str, path: Optional[str] = None) -> None:
         if path is None:
             path = self.default_folder
