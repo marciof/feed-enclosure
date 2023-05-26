@@ -6,6 +6,8 @@ Rewrites a TikTok user's HTML page (in stdin) into RSS (in stdout).
 
 # stdlib
 import argparse
+from datetime import datetime, timezone
+import json
 import sys
 from typing import Any, List, Optional
 
@@ -21,9 +23,9 @@ from . import log, os_api
 MODULE_DOC = __doc__.strip()
 
 
-def build_feed(user_page_html: str, logger: log.Logger) -> str:
+# TODO refactor duplicate parsing of feed properties?
+def build_feed_from_html(user_page_html: str, logger: log.Logger) -> str:
     page = bs4.BeautifulSoup(user_page_html, 'html5lib')
-    feed = feedgen.FeedGenerator()
 
     title = page.title.string
     url = page.find('link', attrs={'rel': 'canonical'})['href']
@@ -32,42 +34,80 @@ def build_feed(user_page_html: str, logger: log.Logger) -> str:
 
     logger.info('TikTok user: %s', url)
 
+    feed = feedgen.FeedGenerator()
     feed.title(title)
     feed.link({'href': url})
     feed.description(description)
 
     for video in page.find_all(attrs={'data-e2e': 'user-post-item'}):
         link_tag = video.find('a')
-        thumbnail_tag = link_tag.find('img')
+        cover_tag = link_tag.find('img')
 
         video_url = link_tag['href']
-        video_title = thumbnail_tag['alt']
-        video_thumbnail_url = thumbnail_tag['src']
+        video_title = cover_tag['alt']
+        video_cover_url = cover_tag['src']
 
         # FIXME add date
         logger.info('TikTok video "%s": %s', video_title, video_url)
         feed_entry = feed.add_entry()
 
         feed_entry.id(video_url)
-
-        # TODO remove hashtags?
         feed_entry.title(video_title)
         feed_entry.link({'href': video_url})
         feed_entry.enclosure(url=video_url, type='')
 
-        # FIXME need to properly encode into HTML
-        feed_entry.description('<img src="%s">' % video_thumbnail_url)
+        # FIXME encode safely into HTML
+        feed_entry.description('<img src="%s">' % video_cover_url)
 
     return feed.rss_str(pretty=True).decode()
 
 
+def build_feed_from_json(user_page_html: str, logger: log.Logger) -> str:
+    page = bs4.BeautifulSoup(user_page_html, 'html5lib')
+    state = json.loads(page.find('script', attrs={'id': 'SIGI_STATE'}).string)
+
+    title = page.title.string
+    url = page.find('link', attrs={'rel': 'canonical'})['href']
+    description = page.find('meta', attrs={'property': 'og:description'})[
+        'content']
+
+    logger.info('TikTok user: %s', url)
+
+    feed = feedgen.FeedGenerator()
+    feed.title(title)
+    feed.link({'href': url})
+    feed.description(description)
+
+    for video_id, video_props in state['ItemModule'].items():
+        video_url = url + '/video/' + video_id
+        video_title = video_props['desc']
+        video_created_timestamp = int(video_props['createTime'])
+        video_cover_url = video_props['video']['cover']
+
+        logger.info('TikTok video "%s": %s', video_title, video_url)
+        feed_entry = feed.add_entry()
+
+        feed_entry.id(video_url)
+        feed_entry.title(video_title)
+        feed_entry.link({'href': video_url})
+        feed_entry.enclosure(url=video_url, type='')
+        feed_entry.published(datetime.fromtimestamp(video_created_timestamp,
+            tz=timezone.utc))
+
+        # FIXME encode safely into HTML
+        feed_entry.description('<img src="%s">' % video_cover_url)
+
+    return feed.rss_str(pretty=True).decode()
+
+
+# FIXME resort to parsing HTML if JSON fails
 def build_feed_to_stdout(logger: log.Logger) -> None:
     # FIXME `feedparser` breaks on detecting the encoding of the input
     #       data when given a file object (eg `sys.stdin`) that when
     #       `read` gives a string-like object, since the regex is a bytes
     #       pattern (see `feedparser.encodings.RE_XML_PI_ENCODING`). As a
     #       workaround read `sys.stdin` to yield a string.
-    print(build_feed(sys.stdin.read(), logger))
+    print(build_feed_from_json(sys.stdin.read(), logger))
 
 
 def parse_args(args: Optional[List[str]], logger: log.Logger) -> None:
