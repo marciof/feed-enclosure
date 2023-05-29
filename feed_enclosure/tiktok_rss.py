@@ -80,6 +80,8 @@ def build_feed_from_json(user_page_html: str, logger: log.Logger) -> str:
 
     for video_id, video_props in state['ItemModule'].items():
         video_url = url + '/video/' + video_id
+
+        # FIXME some titles are very long (use ellipsis / summarize)
         video_title = video_props['desc']
         video_created_timestamp = int(video_props['createTime'])
         video_cover_url = video_props['video']['cover']
