@@ -2,17 +2,6 @@
 
 # Runtime
 
-## feed_rewrite
-
-### https://pypi.org/project/feedgen/#history
-feedgen~=0.9.0
-
-### https://github.com/kurtmckee/feedparser/blob/develop/CHANGELOG.rst
-feedparser~=6.0.10
-
-### https://github.com/thombashi/pathvalidate/releases
-pathvalidate~=2.5.0
-
 ## liferea
 
 ### https://github.com/srstevenson/xdg/releases
@@ -27,6 +16,9 @@ defusedxml~=0.7.1
 
 ### https://git.launchpad.net/beautifulsoup/tree/CHANGELOG
 beautifulsoup4~=4.10.0
+
+### https://pypi.org/project/feedgen/#history
+feedgen~=0.9.0
 
 ## uget
 

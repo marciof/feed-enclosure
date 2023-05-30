@@ -9,7 +9,7 @@ import argparse
 from datetime import datetime, timezone
 import json
 import sys
-from typing import Any, List, Optional
+from typing import Any, List, Optional, TextIO
 
 # external
 # FIXME missing type stubs for some external libraries
@@ -24,7 +24,11 @@ MODULE_DOC = __doc__.strip()
 
 
 # TODO refactor duplicate parsing of feed properties?
-def build_feed_from_html(user_page_html: str, logger: log.Logger) -> str:
+def build_feed_from_html(
+        user_page_html: str | TextIO,
+        logger: log.Logger)\
+        -> str:
+
     page = bs4.BeautifulSoup(user_page_html, 'html5lib')
 
     title = page.title.string
@@ -62,7 +66,11 @@ def build_feed_from_html(user_page_html: str, logger: log.Logger) -> str:
     return feed.rss_str(pretty=True).decode()
 
 
-def build_feed_from_json(user_page_html: str, logger: log.Logger) -> str:
+def build_feed_from_json(
+        user_page_html: str | TextIO,
+        logger: log.Logger) \
+        -> str:
+
     page = bs4.BeautifulSoup(user_page_html, 'html5lib')
     state = json.loads(page.find('script', attrs={'id': 'SIGI_STATE'}).string)
 
@@ -104,12 +112,7 @@ def build_feed_from_json(user_page_html: str, logger: log.Logger) -> str:
 
 # FIXME resort to parsing HTML if JSON fails
 def build_feed_to_stdout(logger: log.Logger) -> None:
-    # FIXME `feedparser` breaks on detecting the encoding of the input
-    #       data when given a file object (eg `sys.stdin`) that when
-    #       `read` gives a string-like object, since the regex is a bytes
-    #       pattern (see `feedparser.encodings.RE_XML_PI_ENCODING`). As a
-    #       workaround read `sys.stdin` to yield a string.
-    print(build_feed_from_json(sys.stdin.read(), logger))
+    print(build_feed_from_json(sys.stdin, logger))
 
 
 def parse_args(args: Optional[List[str]], logger: log.Logger) -> None:
