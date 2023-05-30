@@ -258,7 +258,7 @@ class Uget:
             #      inotify event for the target file name then it's
             #      suspicious and flag it or timeout with an error?
             async for event in inotify:
-                if event.path.name != file_name:
+                if event.path and event.path.name != file_name:
                     continue
                 if self.is_downloaded(file_path, file_size, progress_cb):
                     break

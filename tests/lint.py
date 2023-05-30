@@ -19,7 +19,6 @@ def main() -> Optional[Tuple[Optional[SystemExit], StandardReport]]:
         print('--- Mypy ---')
 
         mypy_main(
-            script_path=None,
             stdout=sys.stdout,
             stderr=sys.stderr,
             args=['--', root_path])

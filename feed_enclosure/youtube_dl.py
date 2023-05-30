@@ -14,10 +14,10 @@ from typing import Any, List, Optional
 # external
 # FIXME missing type stubs for some external libraries
 # Preferred over youtube-dl due to being more up-to-date.
-import yt_dlp
+import yt_dlp  # type: ignore
 # FIXME use plugin API for external downloaders
 #       https://github.com/yt-dlp/yt-dlp#developing-plugins
-from yt_dlp.utils import YoutubeDLError
+from yt_dlp.utils import YoutubeDLError  # type: ignore
 
 # internal
 from . import log, os_api
