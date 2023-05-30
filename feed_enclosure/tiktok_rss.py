@@ -37,7 +37,7 @@ def build_feed_from_json(
     description = page.find('meta', attrs={'property': 'og:description'})[
         'content']
 
-    logger.info('TikTok user: %s', url)
+    logger.info('User at <%s>: %s', url, title)
 
     feed = feedgen.FeedGenerator()
     feed.title(title)
@@ -52,15 +52,15 @@ def build_feed_from_json(
         video_created_timestamp = int(video_props['createTime'])
         video_cover_url = video_props['video']['cover']
 
-        logger.info('TikTok video "%s": %s', video_title, video_url)
+        logger.info('Video "%s": %s', video_title, video_url)
         feed_entry = feed.add_entry()
 
         feed_entry.id(video_url)
         feed_entry.title(video_title)
         feed_entry.link({'href': video_url})
         feed_entry.enclosure(url=video_url, type='')
-        feed_entry.published(datetime.fromtimestamp(video_created_timestamp,
-            tz=timezone.utc))
+        feed_entry.published(datetime.fromtimestamp(
+            video_created_timestamp, tz=timezone.utc))
 
         feed_entry.description(
             '<img src="%s">' % html.escape(video_cover_url, quote=True))

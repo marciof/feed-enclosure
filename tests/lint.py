@@ -21,6 +21,7 @@ def main() -> Optional[Tuple[Optional[SystemExit], StandardReport]]:
         mypy_main(
             stdout=sys.stdout,
             stderr=sys.stderr,
+            clean_exit=True,
             args=['--', root_path])
     except SystemExit as error:
         mypy_exit_error = error
