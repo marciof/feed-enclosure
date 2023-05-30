@@ -24,49 +24,6 @@ from . import log, os_api
 MODULE_DOC = __doc__.strip()
 
 
-# TODO refactor duplicate parsing of feed properties?
-def build_feed_from_html(
-        user_page_html: str | TextIO,
-        logger: log.Logger)\
-        -> str:
-
-    page = bs4.BeautifulSoup(user_page_html, 'html5lib')
-
-    title = page.title.string
-    url = page.find('link', attrs={'rel': 'canonical'})['href']
-    description = page.find('meta', attrs={'property': 'og:description'})[
-        'content']
-
-    logger.info('TikTok user: %s', url)
-
-    feed = feedgen.FeedGenerator()
-    feed.title(title)
-    feed.link({'href': url})
-    feed.description(description)
-
-    for video in page.find_all(attrs={'data-e2e': 'user-post-item'}):
-        link_tag = video.find('a')
-        cover_tag = link_tag.find('img')
-
-        video_url = link_tag['href']
-        video_title = cover_tag['alt']
-        video_cover_url = cover_tag['src']
-
-        # FIXME add date
-        logger.info('TikTok video "%s": %s', video_title, video_url)
-        feed_entry = feed.add_entry()
-
-        feed_entry.id(video_url)
-        feed_entry.title(video_title)
-        feed_entry.link({'href': video_url})
-        feed_entry.enclosure(url=video_url, type='')
-
-        feed_entry.description(
-            '<img src="%s">' % html.escape(video_cover_url, quote=True))
-
-    return feed.rss_str(pretty=True).decode()
-
-
 def build_feed_from_json(
         user_page_html: str | TextIO,
         logger: log.Logger) \
@@ -111,7 +68,6 @@ def build_feed_from_json(
     return feed.rss_str(pretty=True).decode()
 
 
-# FIXME resort to parsing HTML if JSON fails
 def build_feed_to_stdout(logger: log.Logger) -> None:
     print(build_feed_from_json(sys.stdin, logger))
 
