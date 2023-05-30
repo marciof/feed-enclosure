@@ -7,6 +7,7 @@ Rewrites a TikTok user's HTML page (in stdin) into RSS (in stdout).
 # stdlib
 import argparse
 from datetime import datetime, timezone
+import html
 import json
 import sys
 from typing import Any, List, Optional, TextIO
@@ -60,8 +61,8 @@ def build_feed_from_html(
         feed_entry.link({'href': video_url})
         feed_entry.enclosure(url=video_url, type='')
 
-        # FIXME encode safely into HTML
-        feed_entry.description('<img src="%s">' % video_cover_url)
+        feed_entry.description(
+            '<img src="%s">' % html.escape(video_cover_url, quote=True))
 
     return feed.rss_str(pretty=True).decode()
 
@@ -104,8 +105,8 @@ def build_feed_from_json(
         feed_entry.published(datetime.fromtimestamp(video_created_timestamp,
             tz=timezone.utc))
 
-        # FIXME encode safely into HTML
-        feed_entry.description('<img src="%s">' % video_cover_url)
+        feed_entry.description(
+            '<img src="%s">' % html.escape(video_cover_url, quote=True))
 
     return feed.rss_str(pretty=True).decode()
 
