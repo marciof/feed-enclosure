@@ -1,3 +1,4 @@
+- need a download queueing system to prevent too many downloads at once? or rate limiting?
 - unhandled exception when doing "youtube_dl -h"?
 - emojis break Dropbox upload on Linux?
   - https://www.youtube.com/v/8rB4Y-uE1ng?version=3#EA Trax in Need for Speed, Burnout & SSX rocked 🤘 SO GOOD
