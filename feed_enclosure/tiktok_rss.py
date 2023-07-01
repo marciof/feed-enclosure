@@ -30,7 +30,13 @@ def build_feed_from_json(
         -> str:
 
     page = bs4.BeautifulSoup(user_page_html, 'html5lib')
-    state = json.loads(page.find('script', attrs={'id': 'SIGI_STATE'}).string)
+    state_element = page.find('script', attrs={'id': 'SIGI_STATE'})
+
+    # TODO logging and proper exception
+    if state_element is None:
+        raise Exception('No state element found in user page HTML: %s' % page)
+
+    state = json.loads(state_element.string)
 
     title = page.title.string
     url = page.find('link', attrs={'rel': 'canonical'})['href']
