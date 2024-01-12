@@ -25,4 +25,4 @@ fi
 reqs_txt_patterns="$(mktemp_posix)"
 
 grep -vE '^$|^#' "$REQS_TXT" | cut -d'~' -f1 > "$reqs_txt_patterns"
-pip list --outdated | grep -wFf "$reqs_txt_patterns" -
+pip list --outdated | grep -Ff "$reqs_txt_patterns" -
