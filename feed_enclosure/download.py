@@ -29,7 +29,7 @@ class Downloader:
         self.arg_url = self.arg_parser.add_argument(
             'url', help='URL to download')
         self.arg_path = self.arg_parser.add_argument(
-            '-p', '--path', metavar='PATH', help='download save location')
+            '-p', '--path', help='download save location')
 
         self.uget = uget.Uget()
         self.youtube_dl = youtube_dl.YoutubeDl()
