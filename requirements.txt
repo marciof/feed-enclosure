@@ -25,8 +25,8 @@ types-beautifulsoup4~=4.12.0.5
 
 ## uget
 
-### https://gitlab.com/Taywee/asyncinotify
-asyncinotify~=2.0.5
+### https://github.com/absperf/asyncinotify/tags
+asyncinotify~=4.0.5
 
 ### https://pypi.org/project/Unidecode/#history
 Unidecode~=1.3.4
