@@ -15,7 +15,7 @@ defusedxml~=0.7.1
 ## tiktok_rss
 
 ### https://git.launchpad.net/beautifulsoup/tree/CHANGELOG
-beautifulsoup4~=4.10.0
+beautifulsoup4~=4.12.2
 
 ### https://pypi.org/project/feedgen/#history
 feedgen~=0.9.0
