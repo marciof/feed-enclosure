@@ -4,8 +4,8 @@
 
 ## liferea
 
-### https://github.com/srstevenson/xdg/releases
-xdg~=5.1.1
+### https://github.com/srstevenson/xdg-base-dirs/releases
+xdg-base-dirs~=6.0.1
 
 ## opml
 

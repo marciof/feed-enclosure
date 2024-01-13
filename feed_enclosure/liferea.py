@@ -17,7 +17,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 # external
 # FIXME missing type stubs for some external libraries
-from xdg import xdg_config_home  # type: ignore
+from xdg_base_dirs import xdg_config_home  # type: ignore
 
 # internal
 from . import log, opml, os_api
