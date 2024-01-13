@@ -17,8 +17,8 @@ defusedxml~=0.7.1
 ### https://git.launchpad.net/beautifulsoup/tree/CHANGELOG
 beautifulsoup4~=4.12.2
 
-### https://pypi.org/project/feedgen/#history
-feedgen~=0.9.0
+### https://github.com/lkiesow/python-feedgen/releases
+feedgen~=1.0.0
 
 ### https://github.com/typeshed-internal/stub_uploader/blob/main/data/changelogs/beautifulsoup4.md
 types-beautifulsoup4~=4.12.0.5
