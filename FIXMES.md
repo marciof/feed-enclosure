@@ -20,10 +20,10 @@
 - cryptic error from Liferea if there's a missing Python package (see visual notifications on errors, in addition to logging)
 - pgrep shows many zombie processes
 - error on missing rec config folder setup
-- remove ign daily fix code
 
 - add option for sorting the feed list
 - make it possible to watch a video as it's being downloaded
 - sync VLC last video position
 - add command to turn off auto downloads for all feeds
 - embed original YouTube thumbnail
+- add helper for getting an RSS feed URL from a YouTube playlist

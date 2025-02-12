@@ -68,7 +68,6 @@ class Downloader:
                 verbose=True)
         except youtube_dl.YoutubeDLError as error:
             # TODO hide Youtube DL error log when it's unsupported
-            # TODO attempt to extract metadata from IGN Daily Fix videos?
             self.logger.debug(
                 'Failed to download using YouTube DL (attempting with uGet)',
                 exc_info=error)
