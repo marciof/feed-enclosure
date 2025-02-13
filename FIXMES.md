@@ -1,29 +1,25 @@
+- add option to not download livestreams
+- add option to skip YouTube shorts (vertical videos)
+- embed subtitles?
+- skip video if mtime is more than 1 year in the past (eg. Last Week Tonight uploading old episodes)
+- embed original YouTube thumbnail
+- rate limiting when there are too many sudden new videos (eg. Last Week Tonight uploading old episodes)
+
 - need a download queueing system to prevent too many downloads at once? or rate limiting?
 - unhandled exception when doing "youtube_dl -h"?
 - emojis break Dropbox upload on Linux?
   - https://www.youtube.com/v/8rB4Y-uE1ng?version=3#EA Trax in Need for Speed, Burnout & SSX rocked 🤘 SO GOOD
+  - see yt-dlp option `--restrict-filenames`
 - retry youtube 403 uget stuck
 - better % progress with large files and at rounded 100% (sometimes it shows 100% for some time)
-- breaks sending from Liferea to uGet: https://www.youtube.com/v/oBz7LrZ6qWM?version=3#I ❤️ XBOX ONE & PS4 Games - CHEAP $15 or less!
-- broken downloads:
-  - https://www.youtube.com/watch?v=GCROe7yg-n0
-  - https://www.youtube.com/watch?v=EjK5aRyhKpI
-  - https://www.youtube.com/v/MoAFxpzvOxA?version=3#M2 MacBook Air review a new Air-a  👀
-  - https://www.youtube.com/v/ez2eC7SxkSI?version=3#The 5 Best “Bad” Purchases I’ve Made
-- broken video:
-  - https://www.youtube.com/v/MoAFxpzvOxA?version=3#M2 MacBook Air review a new Air-a  👀
-  - https://www.youtube.com/v/pVQZzRbTpFQ?version=3#Video 986 Franske låneord i det norske språket
-- broken audio download: https://www.youtube.com/v/8nAPKAKyy_A?version=3#Why We Become “Too Nice” When We Like Someone
 - sometimes file size doesn't match even though fully uget downloaded: https://www.youtube.com/watch?v=6W94EWRHy2k
 - ctrl+c download python cmd should stop download, but continues with audio
 - Liferea fixup filtercmd on import, eg: filtercmd="unsafe command:
 - cryptic error from Liferea if there's a missing Python package (see visual notifications on errors, in addition to logging)
 - pgrep shows many zombie processes
 - error on missing rec config folder setup
-
 - add option for sorting the feed list
 - make it possible to watch a video as it's being downloaded
 - sync VLC last video position
 - add command to turn off auto downloads for all feeds
-- embed original YouTube thumbnail
 - add helper for getting an RSS feed URL from a YouTube playlist
