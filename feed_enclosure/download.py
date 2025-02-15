@@ -21,15 +21,25 @@ MODULE_DOC = __doc__.strip()
 
 class Downloader:
 
-    def __init__(self, default_folder: str = os.curdir):
+    def __init__(
+            self,
+            default_folder: str = os.curdir,
+            default_livestreams: bool = True):
+
         self.logger = log.create_logger('download')
         self.default_folder = default_folder
+        self.default_livestreams = default_livestreams
 
         self.arg_parser = argparse.ArgumentParser(description=MODULE_DOC)
         self.arg_url = self.arg_parser.add_argument(
             'url', help='URL to download')
         self.arg_path = self.arg_parser.add_argument(
             '-p', '--path', help='download save location')
+        self.arg_livestreams = self.arg_parser.add_argument(
+            '--livestreams',
+            action=argparse.BooleanOptionalAction,
+            default=default_livestreams,
+            help='allow live streams')
 
         self.uget = uget.Uget()
         self.youtube_dl = youtube_dl.YoutubeDl()
@@ -41,17 +51,29 @@ class Downloader:
         parsed_kwargs = vars(parsed_args)
         url = parsed_kwargs[self.arg_url.dest]
         path = parsed_kwargs[self.arg_path.dest]
+        livestreams = parsed_kwargs[self.arg_livestreams.dest]
 
-        self.download(url, path=path)
+        self.download(url, path=path, livestreams=livestreams)
 
     # FIXME filenames with emojis/Unicode break Dropbox upload?
     # FIXME fails on TikTok videos with very long titles
     # FIXME output from yt-dlp isn't logged
     # TODO ensure downloads can be paused and resumed
     # TODO normalize file names? https://github.com/woodgern/confusables
-    def download(self, url: str, path: Optional[str] = None) -> None:
+    def download(
+            self,
+            url: str,
+            path: Optional[str] = None,
+            livestreams: Optional[bool] = None) \
+            -> None:
+
         if path is None:
             path = self.default_folder
+
+        match_filters = None
+
+        if livestreams is not None and not livestreams:
+            match_filters = '!is_live'
 
         try:
             if path == '-':
@@ -64,6 +86,7 @@ class Downloader:
                 # TODO expose format?
                 # TODO option to pick best quality using `url_rewrite`?
                 format='bestvideo+bestaudio/best',
+                match_filters=match_filters,
                 add_metadata=True,
                 verbose=True)
         except youtube_dl.YoutubeDLError as error:

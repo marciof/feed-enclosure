@@ -96,6 +96,7 @@ class YoutubeDl:
             url: str,
             output: Optional[str] = None,
             format: Optional[str] = None,
+            match_filters: Optional[str] = None,
             add_metadata: bool = False,
             verbose: bool = False) \
             -> None:
@@ -107,6 +108,9 @@ class YoutubeDl:
 
         if format is not None:
             argv.extend(['--format', format])
+
+        if match_filters is not None:
+            argv.extend(['--match-filters', match_filters])
 
         # FIXME add option for adding metadata
         if add_metadata:

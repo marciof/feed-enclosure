@@ -1,11 +1,11 @@
-- add option to not download livestreams
+- remove yt-dlp wrapper as it's no longer needed and to simplify code?
 - add option to skip YouTube shorts (vertical videos)
 - embed subtitles?
 - skip video if mtime is more than 1 year in the past (eg. Last Week Tonight uploading old episodes)
 - embed original YouTube thumbnail
 - rate limiting when there are too many sudden new videos (eg. Last Week Tonight uploading old episodes)
 
-- need a download queueing system to prevent too many downloads at once? or rate limiting?
+- need a download queueing system to resume stopped downloads? check yt-dlp option `download-archive`
 - unhandled exception when doing "youtube_dl -h"?
 - emojis break Dropbox upload on Linux?
   - https://www.youtube.com/v/8rB4Y-uE1ng?version=3#EA Trax in Need for Speed, Burnout & SSX rocked 🤘 SO GOOD
