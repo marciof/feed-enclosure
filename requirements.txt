@@ -1,4 +1,5 @@
 # TODO Python package updates? notify of dependency changes? needs testing
+# TODO explain why/how each dependency is used?
 
 # Runtime
 
@@ -22,14 +23,6 @@ feedgen~=1.0.0
 
 ### https://github.com/typeshed-internal/stub_uploader/blob/main/data/changelogs/beautifulsoup4.md
 types-beautifulsoup4~=4.12.0.5
-
-## uget
-
-### https://github.com/absperf/asyncinotify/tags
-asyncinotify~=4.0.5
-
-### https://github.com/avian2/unidecode/blob/master/ChangeLog
-Unidecode~=1.3.8
 
 ## yt-dlp
 

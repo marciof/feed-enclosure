@@ -13,7 +13,7 @@ import sys
 from typing import Any, List, Optional
 
 # internal
-from . import log, uget, youtube_dl
+from . import log, youtube_dl
 
 
 MODULE_DOC = __doc__.strip()
@@ -43,7 +43,6 @@ class Downloader:
             default=self.default_livestreams,
             help='allow live streams')
 
-        self.uget = uget.Uget()
         self.youtube_dl = youtube_dl.YoutubeDl()
 
     def main(self, args: Optional[List[str]] = None) -> Any:
@@ -72,32 +71,25 @@ class Downloader:
         if path is None:
             path = self.default_folder
 
+        # FIXME abstract download to stdout representation
+        if path == '-':
+            path = os.path.join(self.default_folder, path)
+
         match_filters = None
 
         if livestreams is not None and not livestreams:
             match_filters = '!is_live'
 
-        try:
-            if path == '-':
-                path = os.path.join(self.default_folder, path)
-
-            # FIXME youtube URL support detection
-            self.youtube_dl.download(
-                url,
-                output=path.replace('%', '%%'),
-                # TODO expose format?
-                # TODO option to pick best quality using `url_rewrite`?
-                format='bestvideo+bestaudio/best',
-                match_filters=match_filters,
-                add_metadata=True,
-                verbose=True)
-        except youtube_dl.YoutubeDLError as error:
-            # TODO hide Youtube DL error log when it's unsupported
-            self.logger.debug(
-                'Failed to download using YouTube DL (attempting with uGet)',
-                exc_info=error)
-
-            self.uget.download(url, path=path, quiet=True, wait=True)
+        # FIXME youtube URL support detection
+        self.youtube_dl.download(
+            url,
+            output=path.replace('%', '%%'),
+            # TODO expose format?
+            # TODO option to pick best quality using `url_rewrite`?
+            format='bestvideo+bestaudio/best',
+            match_filters=match_filters,
+            add_metadata=True,
+            verbose=True)
 
 
 # TODO tests

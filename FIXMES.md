@@ -5,14 +5,14 @@
 - embed original YouTube thumbnail
 - rate limiting when there are too many sudden new videos (eg. Last Week Tonight uploading old episodes)
 
+- Log skipped videos
+- Log yt-dlp output
 - need a download queueing system to resume stopped downloads? check yt-dlp option `download-archive`
 - unhandled exception when doing "youtube_dl -h"?
 - emojis break Dropbox upload on Linux?
   - https://www.youtube.com/v/8rB4Y-uE1ng?version=3#EA Trax in Need for Speed, Burnout & SSX rocked 🤘 SO GOOD
   - see yt-dlp option `--restrict-filenames`
-- retry youtube 403 uget stuck
 - better % progress with large files and at rounded 100% (sometimes it shows 100% for some time)
-- sometimes file size doesn't match even though fully uget downloaded: https://www.youtube.com/watch?v=6W94EWRHy2k
 - ctrl+c download python cmd should stop download, but continues with audio
 - Liferea fixup filtercmd on import, eg: filtercmd="unsafe command:
 - cryptic error from Liferea if there's a missing Python package (see visual notifications on errors, in addition to logging)
