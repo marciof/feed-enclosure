@@ -34,11 +34,13 @@ class Downloader:
         self.arg_url = self.arg_parser.add_argument(
             'url', help='URL to download')
         self.arg_path = self.arg_parser.add_argument(
-            '-p', '--path', help='download save location')
+            '-p', '--path',
+            default=self.default_folder,
+            help='download save location (default: %s)' % self.default_folder)
         self.arg_livestreams = self.arg_parser.add_argument(
             '--livestreams',
             action=argparse.BooleanOptionalAction,
-            default=default_livestreams,
+            default=self.default_livestreams,
             help='allow live streams')
 
         self.uget = uget.Uget()
