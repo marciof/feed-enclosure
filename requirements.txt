@@ -27,7 +27,7 @@ types-beautifulsoup4~=4.12.0.5
 ## yt-dlp
 
 ### https://github.com/yt-dlp/yt-dlp/releases
-yt-dlp~=2025.8.27
+yt-dlp~=2025.9.23
 
 # Test
 
