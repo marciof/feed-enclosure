@@ -119,7 +119,12 @@ class YoutubeDl:
         if verbose:
             argv.append('--verbose')
 
-        argv.extend(['--', url])
+        argv.extend([
+            # FIXME add fallback https://github.com/yt-dlp/yt-dlp/issues/14680
+            # '--extractor-args', 'youtube:player_js_version=actual',
+            '--',
+            url,
+        ])
         exit_status = self.main(argv)
 
         if exit_status not in {None, os_api.EXIT_SUCCESS}:
