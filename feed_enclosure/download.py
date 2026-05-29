@@ -86,7 +86,7 @@ class Downloader:
             output=path.replace('%', '%%'),
             # TODO expose format?
             # TODO option to pick best quality using `url_rewrite`?
-            format='bestvideo+bestaudio/best',
+            format='bestvideo[height<=?720]+bestaudio/best',
             match_filters=match_filters,
             add_metadata=True,
             verbose=True)
