@@ -41,6 +41,7 @@ class ExtCmdPlugin (GObject.Object, Liferea.Activatable, Liferea.DownloadActivat
 
     def do_activate(self):
         try:
+            # FIXME listen to file changes to update the URL?
             self.enclosure_url_cmd = ENCLOSURE_URL_CMD.read_text()
         except FileNotFoundError:
             pass

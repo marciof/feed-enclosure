@@ -11,12 +11,16 @@
 
 set -e -u
 
-PYTHONPATH="${PYTHONPATH:-}:$(dirname "$(readlink -e "$0")")/../"
+BASE_PATH="$(dirname "$(readlink -e "$0")")/../"
+
+PYTHONPATH="${PYTHONPATH:-}:$BASE_PATH"
 export PYTHONPATH
 
 PYTHON3="${PYTHON3:-python3}"
+VENV="$BASE_PATH/.venv/bin/activate"
 
 module_name="$1"
 shift
 
+. "$VENV"
 "$PYTHON3" -m "feed_enclosure.$module_name" "$@"
