@@ -7,6 +7,7 @@ OPML parsing and handling.
 # stdlib
 import os
 from pathlib import Path
+import shutil
 import tempfile
 from typing import Iterator
 from xml.etree.ElementTree import Element
@@ -55,4 +56,4 @@ class Opml:
             temp_opml.close()
 
             self.logger.info('Replacing: %s --> %s', temp_opml.name, self.path)
-            os.replace(temp_opml.name, self.path)
+            shutil.move(temp_opml.name, self.path)
