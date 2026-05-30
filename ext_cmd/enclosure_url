@@ -1,1 +1,4 @@
-notify-send -- 'Enclosure URL' '%s'
+notify-send
+--
+Enclosure URL
+%s

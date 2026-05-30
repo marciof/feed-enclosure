@@ -29,6 +29,8 @@ ENCLOSURE_URL_CMD = CONFIG_DIR / 'enclosure_url'
 
 
 # FIXME use ShellActivatable and listen for new feed items?
+#   https://github.com/mozbugbox/liferea-plugin-studio
+#   https://github.com/lwindolf/liferea/tree/main/plugins
 class ExtCmdPlugin (GObject.Object, Liferea.Activatable, Liferea.DownloadActivatable):
     __gtype_name__ = 'ExtCmdPlugin'
     shell = GObject.property(type=Liferea.Shell)
@@ -42,7 +44,7 @@ class ExtCmdPlugin (GObject.Object, Liferea.Activatable, Liferea.DownloadActivat
     def do_activate(self):
         try:
             # FIXME listen to file changes to update the URL?
-            self.enclosure_url_cmd = ENCLOSURE_URL_CMD.read_text()
+            self.enclosure_url_cmd = ENCLOSURE_URL_CMD.read_text().splitlines()
         except FileNotFoundError:
             pass
 
@@ -58,6 +60,6 @@ class ExtCmdPlugin (GObject.Object, Liferea.Activatable, Liferea.DownloadActivat
         try:
             # FIXME don't use the shell?
             subprocess.Popen(
-                self.enclosure_url_cmd.replace('%s', url), shell=True)
+                [arg.replace('%s', url) for arg in self.enclosure_url_cmd])
         except OSError:
             pass
