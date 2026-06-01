@@ -58,7 +58,8 @@ class ExtCmdPlugin (GObject.Object, Liferea.Activatable, Liferea.DownloadActivat
             return
 
         try:
-            # FIXME don't use the shell?
+            # FIXME shell ease of use? (glob, tilde)
+            # FIXME how to escape a literal %s?
             subprocess.Popen(
                 [arg.replace('%s', url) for arg in self.enclosure_url_cmd])
         except OSError:
