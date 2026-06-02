@@ -1,17 +1,18 @@
-"""
-"""
+# -*- coding: UTF-8 -*-
 
 # FIXME document
 # FIXME test
 # FIXME error handling
-# FIXME logging
+# FIXME proper logging (including to syslog)
 # FIXME typing
 #   https://github.com/lwindolf/liferea/blob/main/src/plugins/liferea_activatable.h
 #   https://github.com/lwindolf/liferea/blob/main/src/plugins/download_activatable.h
 
+# stdlib
 import os
 from pathlib import Path
 import subprocess
+import sys
 
 # FIXME requirements.txt PyGObject
 from gi.repository import GObject, Liferea
@@ -35,10 +36,12 @@ class ExtCmdPlugin (GObject.Object, Liferea.Activatable, Liferea.DownloadActivat
     __gtype_name__ = 'ExtCmdPlugin'
     shell = GObject.property(type=Liferea.Shell)
 
+    def do_activate(self):
+        print(f'{PLUGIN_NAME}/activate', file=sys.stderr)
+
+    def do_deactivate(self):
+        print(f'{PLUGIN_NAME}/deactivate', file=sys.stderr)
 
     def do_download(self, url):
-        try:
-            # FIXME shell ease of use? (glob, tilde)
-            subprocess.Popen([ENCLOSURE_URL_CMD, url])
-        except OSError:
-            pass
+        print(f"{PLUGIN_NAME}/download/executing: {ENCLOSURE_URL_CMD} '{url}'", file=sys.stderr)
+        subprocess.Popen([ENCLOSURE_URL_CMD, url])

@@ -1,2 +1,13 @@
 #!/bin/sh
-notify-send -- 'Enclosure URL' "$1"
+
+# Runs a command for each URL argument.
+# Arguments: [URL ...]
+
+set -e -u
+
+for url; do
+    notify-send -- 'Enclosure URL' "$url"
+
+    # Example: (using https://github.com/mhogomchungu/media-downloader)
+    flatpak run io.github.mhogomchungu.media-downloader -a -u "$url"
+done
