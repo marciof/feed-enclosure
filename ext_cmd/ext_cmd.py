@@ -36,31 +36,9 @@ class ExtCmdPlugin (GObject.Object, Liferea.Activatable, Liferea.DownloadActivat
     shell = GObject.property(type=Liferea.Shell)
 
 
-    def __init__(self):
-        super(ExtCmdPlugin, self).__init__()
-        self.enclosure_url_cmd = None
-
-
-    def do_activate(self):
-        try:
-            # FIXME listen to file changes to update the URL?
-            self.enclosure_url_cmd = ENCLOSURE_URL_CMD.read_text().splitlines()
-        except FileNotFoundError:
-            pass
-
-
-    def do_deactivate(self):
-        self.enclosure_url_cmd = None
-
-
     def do_download(self, url):
-        if self.enclosure_url_cmd is None:
-            return
-
         try:
             # FIXME shell ease of use? (glob, tilde)
-            # FIXME how to escape a literal %s?
-            subprocess.Popen(
-                [arg.replace('%s', url) for arg in self.enclosure_url_cmd])
+            subprocess.Popen([ENCLOSURE_URL_CMD, url])
         except OSError:
             pass

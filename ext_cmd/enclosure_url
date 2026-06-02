@@ -1,4 +1,2 @@
-notify-send
---
-Enclosure URL
-%s
+#!/bin/sh
+notify-send -- 'Enclosure URL' "$1"
