@@ -17,10 +17,10 @@
 
 # Videos
 
-- Skip livestreams.
+- Skip livestreams option.
 - Embed metadata, subtitles and thumbnails in downloaded videos.
-- Option to skip YouTube shorts (vertical videos).
-- Option to skip video if mtime is more than 1 year in the past (eg. Last Week Tonight uploading old episodes).
+- Skip YouTube shorts (vertical videos) option.
+- Skip video if mtime is more than 1 year in the past (eg. Last Week Tonight uploading old episodes) option.
 - Parse video episodes from [The Impact](https://tvw.org/shows/the-impact/) into a feed for downloading, instead of the audio-only podcasts.
 - RSS feed from Instagram feed, for https://www.instagram.com/therapyjeff/
 - Make it possible to watch a video as it's being downloaded before it finishes.
@@ -35,6 +35,7 @@
 
 # Liferea
 
+- Feed fetch spacing option like RSS Guard.
 - OPML automatic backup (via Liferea plugins?)
 - Notification tray icon flashes too much, too quickly with new feed items, and is distracting (KDE Plasma 6).
 
