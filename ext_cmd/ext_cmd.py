@@ -17,7 +17,6 @@ import sys
 # FIXME requirements.txt PyGObject
 from gi.repository import GObject, Liferea
 
-
 # FIXME ensure correct paths for config and plugin (broken website links too?)
 #   https://lzone.de/liferea/blog/Writing-Liferea-Plugins-Tutorial-Part-1.html
 #   ~/.config/liferea/plugins/
@@ -27,7 +26,6 @@ PLUGIN_NAME = os.path.basename(os.path.dirname(__file__))
 CONFIG_HOME = Path(os.getenv('XDG_CONFIG_HOME', str(Path.home() / '.config')))
 CONFIG_DIR = CONFIG_HOME / 'liferea' / 'plugins' / PLUGIN_NAME
 ENCLOSURE_URL_CMD = CONFIG_DIR / 'enclosure_url'
-
 
 # FIXME use ShellActivatable and listen for new feed items?
 #   https://github.com/mozbugbox/liferea-plugin-studio

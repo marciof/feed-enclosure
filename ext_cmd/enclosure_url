@@ -8,6 +8,7 @@ set -e -u
 for url; do
     notify-send -- 'Enclosure URL' "$url"
 
-    # Example: (using https://github.com/mhogomchungu/media-downloader)
+    # Example:
+    # https://github.com/mhogomchungu/media-downloader/wiki/Frequently-Asked-Questions
     flatpak run io.github.mhogomchungu.media-downloader -a -u "$url"
 done
