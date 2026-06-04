@@ -27,6 +27,7 @@ CONFIG_HOME = Path(os.getenv('XDG_CONFIG_HOME', str(Path.home() / '.config')))
 CONFIG_DIR = CONFIG_HOME / 'liferea' / 'plugins' / PLUGIN_NAME
 ENCLOSURE_URL_CMD = CONFIG_DIR / 'enclosure_url'
 
+# FIXME can the builtin downloader plugin be disabled safely?
 # FIXME use ShellActivatable and listen for new feed items?
 #   https://github.com/mozbugbox/liferea-plugin-studio
 #   https://github.com/lwindolf/liferea/tree/main/plugins
