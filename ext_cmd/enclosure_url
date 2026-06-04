@@ -4,45 +4,66 @@
 # Arguments: [URL ...]
 
 # FIXME document (including dependencies and setup)
-# FIXME tests (including shellcheck)
+# FIXME test (including shellcheck)
+# FIXME error handling
+# FIXME proper logging (including to syslog)
+# TODO check https://github.com/TheFrenchGhosty/TheFrenchGhostys-Ultimate-YouTube-DL-Scripts-Collection
 
 set -e -u
 
-# FIXME confirm this is fine to do
-# See https://github.com/curl/curl/issues/5426
+# Arguments: see `curl`
+# Returns: success
 curl_dry_run() {
+    # FIXME confirm this is ok, see https://github.com/curl/curl/issues/5426
     curl --resolve '*:80:127.0.0.1' --resolve '*:443:127.0.0.1' "$@" || true
 }
 
-# FIXME use Python instead? or is curl more widely available?
+# Arguments: see `curl`
+# Stdout: URL encoded part of the query string
 curl_encode_query_string() {
+    # FIXME use Python instead? or is curl more widely available?
     curl_dry_run --silent --get --write-out '%{url.query}' "$@" -- _
 }
 
 # See https://github.com/vanloctech/youwee/blob/main/docs/browser-extension.md#how-it-works
 # See https://github.com/vanloctech/youwee/tree/main/extensions/youwee-webext
-# FIXME option to use other video formats (eg. mp4 doesn't embed metadata)
+# See buildDeepLink(): https://raw.githubusercontent.com/vanloctech/youwee/main/extensions/youwee-webext/src/shared.js#:~:text=function%20buildDeepLink
+# See normalizeQuality(): https://raw.githubusercontent.com/vanloctech/youwee/main/extensions/youwee-webext/src/shared.js#:~:text=function%20normalizeQuality
+#
+# Arguments: URL [quality | '']
+# Stdout: youwee:// protocol encoded download URL in one line
 encode_youwee_download_url() {
-    printf 'youwee://download?v=1&action=download_now&%s' \
+    # FIXME option to use other video formats (eg. mp4 doesn't embed metadata)
+    # FIXME embed subtitles
+    printf 'youwee://download?v=1&action=download_now&%s\n' \
         "$(curl_encode_query_string \
             --data-urlencode "url=$1" \
             --data-urlencode "quality=${2:-}")"
 }
 
 # See https://youwee.app
-# FIXME command line option?
-# FIXME document how to register protocol handling
-#   $ ln -s ext_cmd/Youwee.desktop ~/.local/share/applications/
-#   $ update-desktop-database ~/.local/share/applications
-#   $ apt install qttools5-dev-tools
-#   $ xdg-mime default Youwee.desktop x-scheme-handler/youwee
-# FIXME embed subtitles
-# FIXME embed chapters
+#
+# Arguments: see `encode_youwee_download_url`
 download_url_with_youwee() {
+    # FIXME document how to register protocol handling
+    #   $ ln -s ext_cmd/Youwee.desktop ~/.local/share/applications/
+    #   $ update-desktop-database ~/.local/share/applications
+    #   $ apt install qttools5-dev-tools
+    #   $ xdg-mime default Youwee.desktop x-scheme-handler/youwee
+    # FIXME command line option? https://github.com/vanloctech/youwee/issues/76
+    # FIXME disable window focus (workaround w/ KWin scripting API & D-Bus?)
     xdg-open "$(encode_youwee_download_url "$@")"
+}
+
+# See https://github.com/mhogomchungu/media-downloader
+#
+# Arguments: URL
+download_url_with_media_downloader() {
+    flatpak run io.github.mhogomchungu.media-downloader -a -u "$1"
 }
 
 for url; do
     notify-send -- 'Enclosure URL' "$url"
     download_url_with_youwee "$url" 720
+    # download_url_with_media_downloader "$url"
 done

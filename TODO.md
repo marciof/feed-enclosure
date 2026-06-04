@@ -1,45 +1,52 @@
 # General
 
+- Subscribe to mailing lists so I'm up to date with new features and breaking changes.
 - Need to find alternatives to Liferea? It removed the external downloaders option, and may remove more or go unmaintained? Check which have support for plugins: Akregator, RSS Guard, Thundebird.
-- Need to find alternatives to Media Downloader? GUI isn't very intuitive. Check which have support for automatic downloading: Parabolic.
 - Replace entire `feed_enclosure` with `ext_cmd`?
-  - It'll either work with https://github.com/mhogomchungu/media-downloader or with yt-dlp via command line (via shell scripting or a Python wrapper)
+  - It'll either work with a GUI media downloader app, or directly with yt-dlp via command line?
   - Could https://codeberg.org/lwindolf/lzone.de work instead? Using Web APIs such as Native Messaging?
-  - Confirm with author and fix `ext_cmd` to be API compliant.
-- `shellcheck` scripts
+  - Candidates (need to support OPML for data portability, and some form of plugin/extension to download enclosures):
+    - [RSS Guard](https://github.com/martinrotter/rssguard/issues/1952#issuecomment-4609281030)
+    - [Akregator](https://github.com/KDE/akregator/)
+    - [Alligator](https://github.com/kde/alligator)
+    - [Thunderbird](https://reviewers.addons.thunderbird.net/en-us/thunderbird/tag/rss) (see also [custom CSS](https://reddit.com/r/Thunderbird/comments/1fhyvvq/kind_of_loving_thunderbird_as_an_rss_reader_right/lo3dpgu/))
 - Helper script for getting an RSS feed URL from a YouTube channel/playlist.
 
 # Syncing
 
-- emojis break Dropbox upload on Linux? See yt-dlp option `--restrict-filenames` for videos like this: https://www.youtube.com/v/8rB4Y-uE1ng
 - Sync VLC last video position between devices.
 - Syncthing for faster efficient syncing within the local network between devices? Double check Dropbox.
 
 # Videos
 
+- Need to find other GUI alternatives?
+  - Parabolic, but see https://github.com/NickvisionApps/Parabolic/issues/1855
 - Skip livestreams option.
-- Embed metadata, subtitles and thumbnails in downloaded videos.
+- Embed metadata, subtitles in downloaded videos.
 - Skip YouTube shorts (vertical videos) option.
 - Skip video if mtime is more than 1 year in the past (eg. Last Week Tonight uploading old episodes) option.
 - Parse video episodes from [The Impact](https://tvw.org/shows/the-impact/) (plus [its others shows](https://tvw.org/shows/)) into a feed for downloading, instead of the audio-only podcasts. Or reuse one?
   - https://tvw.org/how-to-watch/
   - https://tvw.org/podcasts/
+  - Have a look at [rss-finder](https://github.com/search?q=repo%3Alwindolf%2Fliferea%20rss-finder&type=code)
 - RSS feed from Instagram feed, for https://www.instagram.com/therapyjeff/
 - Make it possible to watch a video as it's being downloaded before it finishes.
 - Video summarizing option? TL;DW Too Long; Didn't watch, https://tldw.tube/, https://news.ycombinator.com/item?id=43021044
 
-# Media Downloader
+## Youwee
 
-- Does it handle offline/errors and retries/resumes?
-- How to reliably set default options?
-- How long does the batch downloader list can get?
-- Backup settings: `~/.var/app/io.github.mhogomchungu.media-downloader/data/media-downloader/`
+- App is too sluggish/slow?
+- Disable previews altogether in the YouTube section?
+- Don't require choosing a specific video format? Let yt-dlp do it, and use [`?` in the format string](https://github.com/yt-dlp/yt-dlp#filtering-formats).
+- Follow dark/light mode from OS?
+- Show timestamp when download was added/finished in the queue.
+- Change number of parallel downloads during downloading.
 
 # Liferea
 
 - Feed fetch spacing option like RSS Guard.
 - OPML automatic backup (via Liferea plugins?)
-- Notification tray icon flashes too much, too quickly with new feed items, and is distracting (KDE Plasma 6).
+- Use `kdocker` for tray icon? [v2 removed Trayicon plugin](https://github.com/lwindolf/liferea/releases/tag/v2.0-RC1)
 
 # PWA?
 
