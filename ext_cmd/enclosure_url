@@ -3,12 +3,46 @@
 # Runs a command for each URL argument.
 # Arguments: [URL ...]
 
+# FIXME document (including dependencies and setup)
+# FIXME tests (including shellcheck)
+
 set -e -u
+
+# FIXME confirm this is fine to do
+# See https://github.com/curl/curl/issues/5426
+curl_dry_run() {
+    curl --resolve '*:80:127.0.0.1' --resolve '*:443:127.0.0.1' "$@" || true
+}
+
+# FIXME use Python instead? or is curl more widely available?
+curl_encode_query_string() {
+    curl_dry_run --silent --get --write-out '%{url.query}' "$@" -- _
+}
+
+# See https://github.com/vanloctech/youwee/blob/main/docs/browser-extension.md#how-it-works
+# See https://github.com/vanloctech/youwee/tree/main/extensions/youwee-webext
+# FIXME option to use other video formats (eg. mp4 doesn't embed metadata)
+encode_youwee_download_url() {
+    printf 'youwee://download?v=1&action=download_now&%s' \
+        "$(curl_encode_query_string \
+            --data-urlencode "url=$1" \
+            --data-urlencode "quality=${2:-}")"
+}
+
+# See https://youwee.app
+# FIXME command line option?
+# FIXME document how to register protocol handling
+#   $ ln -s ext_cmd/Youwee.desktop ~/.local/share/applications/
+#   $ update-desktop-database ~/.local/share/applications
+#   $ apt install qttools5-dev-tools
+#   $ xdg-mime default Youwee.desktop x-scheme-handler/youwee
+# FIXME embed subtitles
+# FIXME embed chapters
+download_url_with_youwee() {
+    xdg-open "$(encode_youwee_download_url "$@")"
+}
 
 for url; do
     notify-send -- 'Enclosure URL' "$url"
-
-    # Example:
-    # https://github.com/mhogomchungu/media-downloader/wiki/Frequently-Asked-Questions
-    flatpak run io.github.mhogomchungu.media-downloader -a -u "$url"
+    download_url_with_youwee "$url" 720
 done
