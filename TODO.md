@@ -3,7 +3,7 @@
 - Subscribe to mailing lists so I'm up to date with new features and breaking changes.
 - Need to find alternatives to Liferea? It removed the external downloaders option, and may remove more or go unmaintained? Check which have support for plugins: Akregator, RSS Guard, Thundebird.
 - Replace entire `feed_enclosure` with `ext_cmd`?
-  - It'll either work with a GUI media downloader app, or directly with yt-dlp via command line?
+  - It'll either work with a GUI media downloader app, or directly with yt-dlp via command line? https://yt-dlp-yt-dlp.mintlify.app/guides/post-processing
   - Could https://codeberg.org/lwindolf/lzone.de work instead? Using Web APIs such as Native Messaging?
   - Candidates (need to support OPML for data portability, and some form of plugin/extension to download enclosures):
     - [RSS Guard](https://github.com/martinrotter/rssguard/issues/1952#issuecomment-4609281030)
@@ -14,11 +14,15 @@
     - `converters/` (anything -> feed, eg. TVW show page HTML -> RSS)
     - `relays/` (data passing glue logic, eg. Liferea plugin)
     - `wrappers/` (helper scripts, eg. Youwee CLI script)
-  - Headless workflow alternative as well?
+  - Headless workflow alternative as well? With simple GUI options?
+    - https://github.com/chriskiehl/Gooey
+    - https://github.com/PySimpleGUI/PySimpleGUI
+    - https://github.com/alfiopuglisi/guietta
 - Helper script for getting an RSS feed URL from a YouTube channel/playlist.
 
 # Syncing
 
+- Do filenames with emojis break Dropbox syncing? See also https://github.com/woodgern/confusables
 - Sync VLC last video position between devices.
 - Syncthing for faster efficient syncing within the local network between devices? Double check Dropbox.
 

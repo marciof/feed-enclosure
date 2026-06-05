@@ -33,7 +33,8 @@ curl_encode_query_string() {
 # Arguments: URL [quality | '']
 # Stdout: youwee:// protocol encoded download URL in one line
 encode_youwee_download_url() {
-    # FIXME option to use other video formats (eg. mp4 doesn't embed metadata)
+    # FIXME option for other video formats (eg. mp4 doesn't embed metadata)
+    # FIXME better format selection, eg. bestvideo[height<=?720]+bestaudio/best
     # FIXME embed subtitles
     printf 'youwee://download?v=1&action=download_now&%s\n' \
         "$(curl_encode_query_string \
