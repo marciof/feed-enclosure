@@ -63,15 +63,12 @@ download_url_with_media_downloader() {
 }
 
 # Arguments: URL
+# Exit: 0 if live, 1 otherwise
 is_live_stream() {
     # FIXME too slow, and maybe at this point all these GUIs aren't worth it
     # FIXME multiple dependencies on yt-dlp
-    yt-dlp \
-        --quiet \
-        --simulate \
-        --match-filter '!is_live & !was_live' \
-        --exec 'after_filter:exit 1' \
-        "$1" 2>/dev/null
+    yt-dlp --print live_status --output-na-placeholder not_live "$1" \
+        | grep --quiet --invert-match --ignore-case -F not_live
 }
 
 for url; do
