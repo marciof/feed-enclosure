@@ -25,11 +25,12 @@
 - Embed metadata, subtitles in downloaded videos.
 - Skip YouTube shorts (vertical videos) option.
 - Skip video if mtime is more than 1 year in the past (eg. Last Week Tonight uploading old episodes) option.
-- Parse video episodes from [The Impact](https://tvw.org/shows/the-impact/) (plus [its others shows](https://tvw.org/shows/)) into a feed for downloading, instead of the audio-only podcasts. Or reuse one?
-  - https://tvw.org/how-to-watch/
-  - https://tvw.org/podcasts/
-  - Have a look at [rss-finder](https://github.com/search?q=repo%3Alwindolf%2Fliferea%20rss-finder&type=code)
 - RSS feed from Instagram feed, for https://www.instagram.com/therapyjeff/
+  - https://github.com/CloakHQ/CloakBrowser
+  - https://github.com/jpjacobpadilla/Stealth-Requests
+  - https://github.com/lexiforest/curl_cffi
+  - https://github.com/microsoft/playwright-python
+  - https://github.com/instaloader/instaloader
 - Make it possible to watch a video as it's being downloaded before it finishes.
 - Video summarizing option? TL;DW Too Long; Didn't watch, https://tldw.tube/, https://news.ycombinator.com/item?id=43021044
 
