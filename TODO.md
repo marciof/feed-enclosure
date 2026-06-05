@@ -10,6 +10,11 @@
     - [Akregator](https://github.com/KDE/akregator/)
     - [Alligator](https://github.com/kde/alligator)
     - [Thunderbird](https://reviewers.addons.thunderbird.net/en-us/thunderbird/tag/rss) (see also [custom CSS](https://reddit.com/r/Thunderbird/comments/1fhyvvq/kind_of_loving_thunderbird_as_an_rss_reader_right/lo3dpgu/))
+  - New project structure?
+    - `converters/` (anything -> feed, eg. TVW show page HTML -> RSS)
+    - `relays/` (data passing glue logic, eg. Liferea plugin)
+    - `wrappers/` (helper scripts, eg. Youwee CLI script)
+  - Headless workflow alternative as well?
 - Helper script for getting an RSS feed URL from a YouTube channel/playlist.
 
 # Syncing
@@ -45,9 +50,10 @@
 
 # Liferea
 
+- How to disable the built-in Download Manager and have that setting persist?
 - Feed fetch spacing option like RSS Guard.
 - OPML automatic backup (via Liferea plugins?)
-- Use `kdocker` for tray icon? [v2 removed Trayicon plugin](https://github.com/lwindolf/liferea/releases/tag/v2.0-RC1)
+- Find Wayland alternative to `kdocker` for tray icon? [v2 removed Trayicon plugin](https://github.com/lwindolf/liferea/releases/tag/v2.0-RC1)
 
 # PWA?
 
