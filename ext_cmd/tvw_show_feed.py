@@ -14,12 +14,31 @@ https://tvw.org/shows/
 # FIXME shebang pointing to venv's Python
 
 # stdlib
+from datetime import datetime as DateTime
 import sys
 
 # external
-from bs4 import BeautifulSoup
-import dateparser
+from bs4 import BeautifulSoup, Tag
+from dateparser.search import search_dates
 from feedgen.feed import FeedGenerator
+
+def find_show_description(soup: Tag) -> str:
+    # Prioritize description on the page, as some shows have the `meta`
+    # description as "The Impact is Sponsored by:", which isn't useful.
+    details = soup.select_one('#show-details h3 + p')
+
+    if details:
+        return details.get_text()
+
+    return soup.select_one('meta[name=description]')['content']
+
+def find_episode_published_date(ep_soup: Tag) -> DateTime:
+    # FIXME find/guess proper timezone
+    dates = search_dates(
+        ' '.join(map(Tag.get_text, ep_soup.select('time'))),
+        settings={'RETURN_AS_TIMEZONE_AWARE': True})
+
+    return dates[0][1]
 
 # FIXME avoid reading input all at once?
 html = sys.stdin.read()
@@ -34,9 +53,7 @@ if len(html) == 0:
 soup = BeautifulSoup(html, 'html.parser')
 title = soup.title.get_text()
 url = soup.select_one('link[rel=canonical]')['href']
-
-# FIXME <meta>'s description seems to be "The Impact is Sponsored by:"
-description = soup.select_one('meta[name=description]')['content']
+description = find_show_description(soup)
 
 feed = FeedGenerator()
 feed.title(title)
@@ -46,11 +63,7 @@ feed.description(description)
 for ep_soup in soup.select('#episodes .video-preview'):
     ep_title = ep_soup.find('h3').get_text()
     ep_url = ep_soup.select_one('a')['href']
-
-    # FIXME find/guess proper timezone
-    ep_time_str = ' '.join([t['datetime'] for t in ep_soup.select('time')])
-    ep_datetime = dateparser.parse(
-        ep_time_str, settings={'RETURN_AS_TIMEZONE_AWARE': True})
+    ep_datetime = find_episode_published_date(ep_soup)
 
     feed_entry = feed.add_entry()
     feed_entry.title(ep_title)
