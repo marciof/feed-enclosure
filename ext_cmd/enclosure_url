@@ -62,8 +62,23 @@ download_url_with_media_downloader() {
     flatpak run io.github.mhogomchungu.media-downloader -a -u "$1"
 }
 
+# Arguments: URL
+is_live_stream() {
+    # FIXME too slow, and maybe at this point all these GUIs aren't worth it
+    if [ "$(yt-dlp --print is_live "$1")" = "False" ]; then
+        return 1
+    else
+        return 0
+    fi
+}
+
 for url; do
-    notify-send -- 'Enclosure URL' "$url"
-    download_url_with_youwee "$url" 720
-    # download_url_with_media_downloader "$url"
+    notify-send 'Enclosure URL' "$url"
+
+    if is_live_stream "$url"; then
+        echo "Livestream skipped: $url" >&2
+    else
+        download_url_with_youwee "$url" 720
+        # download_url_with_media_downloader "$url"
+    fi
 done

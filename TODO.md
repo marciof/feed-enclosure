@@ -41,6 +41,8 @@
 
 ## Youwee
 
+- Filter option? Eg. skip livestreams
+- Sort download queue from recent to old.
 - App is too sluggish/slow?
 - Disable previews altogether in the YouTube section?
 - Don't require choosing a specific video format? Let yt-dlp do it, and use [`?` in the format string](https://github.com/yt-dlp/yt-dlp#filtering-formats).
@@ -54,6 +56,7 @@
 - Feed fetch spacing option like RSS Guard.
 - OPML automatic backup (via Liferea plugins?)
 - Find Wayland alternative to `kdocker` for tray icon? [v2 removed Trayicon plugin](https://github.com/lwindolf/liferea/releases/tag/v2.0-RC1)
+  - https://github.com/Druco/WKDocker/
 
 # PWA?
 
