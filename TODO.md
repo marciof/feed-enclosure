@@ -3,7 +3,9 @@
 - Subscribe to mailing lists so I'm up to date with new features and breaking changes.
 - Need to find alternatives to Liferea? It removed the external downloaders option, and may remove more or go unmaintained? Check which have support for plugins: Akregator, RSS Guard, Thundebird.
 - Replace entire `feed_enclosure` with `ext_cmd`?
-  - It'll either work with a GUI media downloader app, or directly with yt-dlp via command line? https://yt-dlp-yt-dlp.mintlify.app/guides/post-processing
+  - It'll either work with a GUI media downloader app, or directly with yt-dlp via command line?
+    - https://github.com/yt-dlp/yt-dlp#developing-plugins
+    - https://yt-dlp-yt-dlp.mintlify.app/guides/post-processing
   - Could https://codeberg.org/lwindolf/lzone.de work instead? Using Web APIs such as Native Messaging?
   - Candidates (need to support OPML for data portability, and some form of plugin/extension to download enclosures):
     - [RSS Guard](https://github.com/martinrotter/rssguard/issues/1952#issuecomment-4609281030)

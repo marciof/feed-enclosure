@@ -3,13 +3,14 @@
 """
 Wraps Liferea to add additional functionality.
 
-Changes: (1) command to get the path to the feed list OPML file; (2) command
-to enable feed enclosure automatic download; (3) command to set feed
-conversion filter.
+(1) Command to get the path to the feed list OPML file
+(2) Command to enable feed enclosure automatic download
+(3) Command to set feed conversion filter.
 """
 
 # stdlib
 import argparse
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -20,10 +21,16 @@ from typing import Any, Dict, List, Optional, Tuple
 from xdg_base_dirs import xdg_config_home  # type: ignore
 
 # internal
-from . import log, opml, os_api
+from . import log, opml
 
 
 MODULE_DOC = __doc__.strip()
+EXIT_FAILURE = 1
+
+try:
+    EXIT_SUCCESS = os.EX_OK
+except AttributeError:
+    EXIT_SUCCESS = 0
 
 
 # FIXME fix flag `--mainwindow-state`
@@ -75,12 +82,12 @@ class Liferea:
             else:
                 raise Exception('Unknown command: ' + command)
 
-            return os_api.EXIT_SUCCESS
+            return EXIT_SUCCESS
         except SystemExit:
             raise
         except BaseException as error:
             self.logger.error('Failed to interface Liferea', exc_info=error)
-            return os_api.EXIT_FAILURE
+            return EXIT_FAILURE
 
     def parse_args(self, args: Optional[List[str]]) \
             -> Tuple[Dict[str, Any], List[str]]:

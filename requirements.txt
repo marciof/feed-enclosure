@@ -13,17 +13,6 @@ xdg-base-dirs~=6.0.1
 ### https://github.com/tiran/defusedxml#changelog
 defusedxml~=0.7.1
 
-## tiktok_rss
-
-### https://git.launchpad.net/beautifulsoup/tree/CHANGELOG
-beautifulsoup4~=4.12.2
-
-### https://github.com/lkiesow/python-feedgen/releases
-feedgen~=1.0.0
-
-### https://github.com/typeshed-internal/stub_uploader/blob/main/data/changelogs/beautifulsoup4.md
-types-beautifulsoup4~=4.12.0.5
-
 ## yt-dlp
 
 ### https://github.com/yt-dlp/yt-dlp/releases
@@ -31,10 +20,8 @@ yt-dlp~=2026.3.13
 
 # Test
 
-## lint
-
-### http://www.mypy-lang.org/news.html
+## http://www.mypy-lang.org/news.html
 mypy~=0.961
 
-### https://pycodestyle.pycqa.org/en/latest/developer.html#changes
+## https://pycodestyle.pycqa.org/en/latest/developer.html#changes
 pycodestyle~=2.8.0
