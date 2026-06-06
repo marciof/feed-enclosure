@@ -47,7 +47,7 @@ encode_youwee_download_url() {
 # Arguments: see `encode_youwee_download_url`
 download_url_with_youwee() {
     # FIXME document how to register protocol handling
-    #   $ ln -s ext_cmd/Youwee.desktop ~/.local/share/applications/
+    #   $ ln -s etc/Youwee.desktop ~/.local/share/applications/
     #   $ update-desktop-database ~/.local/share/applications
     #   $ apt install qttools5-dev-tools
     #   $ xdg-mime default Youwee.desktop x-scheme-handler/youwee
