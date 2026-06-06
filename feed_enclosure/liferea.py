@@ -8,6 +8,12 @@ Wraps Liferea to add additional functionality.
 (3) Command to set feed conversion filter.
 """
 
+# FIXME document (including dependencies and setup)
+# FIXME test
+# FIXME error handling
+# FIXME proper logging (including to syslog)
+# FIXME shebang pointing to venv's Python?
+
 # stdlib
 import argparse
 import os
@@ -125,6 +131,5 @@ class Liferea:
         self.modify_feed_list_opml_outline_attrib('encAutoDownload', 'true')
 
 
-# TODO tests
 if __name__ == '__main__':
     sys.exit(Liferea().main())
