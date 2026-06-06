@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Runs a command for each URL argument.
+# Runs a command for each URL. Calls `download_url_with_youwee` by default.
 # Arguments: [URL ...]
 
 # FIXME document (including dependencies and setup)
@@ -66,13 +66,14 @@ download_url_with_media_downloader() {
 BASE_PATH="$(dirname "$(readlink -e "$0")")/../"
 . "$BASE_PATH/scripts/yt_dlp.sh"
 
+# FIXME split this script into generic vs download-specific
 for url; do
     notify-send 'Enclosure URL' "$url"
 
     if yt_is_livestream "$url"; then
         echo "Livestream skipped: $url" >&2
     else
-        echo download_url_with_youwee "$url" 720
+        download_url_with_youwee "$url" 720
         # download_url_with_media_downloader "$url"
     fi
 done

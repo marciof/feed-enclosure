@@ -1,5 +1,7 @@
 #!/bin/sh
+
 # Wrapper around the local venv's Python.
+# Arguments: [pass-through]
 
 set -e -u
 
