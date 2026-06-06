@@ -63,23 +63,16 @@ download_url_with_media_downloader() {
     flatpak run io.github.mhogomchungu.media-downloader -a -u "$1"
 }
 
-# Arguments: URL
-# Exit: 0 if live, 1 otherwise
-is_live_stream() {
-    # FIXME move to yt-dlp.sh and source it
-    # FIXME too slow, and maybe at this point all these GUIs aren't worth it
-    # FIXME multiple dependencies on yt-dlp
-    yt-dlp --print live_status --output-na-placeholder not_live "$1" \
-        | grep --quiet --invert-match --ignore-case -F not_live
-}
+BASE_PATH="$(dirname "$(readlink -e "$0")")/../"
+. "$BASE_PATH/scripts/yt_dlp.sh"
 
 for url; do
     notify-send 'Enclosure URL' "$url"
 
-    if is_live_stream "$url"; then
+    if yt_is_livestream "$url"; then
         echo "Livestream skipped: $url" >&2
     else
-        download_url_with_youwee "$url" 720
+        echo download_url_with_youwee "$url" 720
         # download_url_with_media_downloader "$url"
     fi
 done

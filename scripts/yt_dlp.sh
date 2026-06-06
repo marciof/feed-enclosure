@@ -15,6 +15,13 @@ yt() {
     yt-dlp "$@"
 }
 
+# Arguments: URL
+# Exit: 0 if live, 1 otherwise
+yt_is_livestream() {
+    yt --print live_status --output-na-placeholder not_live "$1" \
+        | grep --quiet --invert-match --ignore-case -F not_live
+}
+
 yt_defaults() {
     # https://github.com/yt-dlp/yt-dlp#filtering-formats
     yt \
@@ -30,6 +37,6 @@ yt_defaults() {
         "$@"
 }
 
-if [ $# -gt 0 ]; then
+if [ "$(basename "$(readlink -e "$0")")" = 'yt_dlp.sh' ]; then
     yt_defaults "$@"
 fi
