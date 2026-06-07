@@ -20,7 +20,9 @@
     - https://github.com/chriskiehl/Gooey
     - https://github.com/PySimpleGUI/PySimpleGUI
     - https://github.com/alfiopuglisi/guietta
+    - https://tools.suckless.org/dmenu/
 - Helper script for getting an RSS feed URL from a YouTube channel/playlist.
+  - https://codemadness.org/sfeed.html
 
 # Syncing
 
