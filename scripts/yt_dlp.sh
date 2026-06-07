@@ -18,8 +18,15 @@ yt() {
 # Arguments: URL
 # Exit: 0 if live, 1 otherwise
 yt_is_livestream() {
-    yt --print live_status --output-na-placeholder not_live "$1" \
-        | grep --quiet --invert-match --ignore-case -F not_live
+    # Some upcoming livestreams don't have a video format available yet,
+    # so ignore related warnings and errors.
+    # https://github.com/jmbannon/ytdl-sub/issues/1323
+    yt \
+        --no-warnings \
+        --ignore-no-formats-error \
+        --output-na-placeholder not_live "$1" \
+        --print live_status \
+    | grep --quiet --invert-match --ignore-case -F not_live
 }
 
 yt_defaults() {
