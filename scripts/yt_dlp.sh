@@ -48,6 +48,7 @@ yt_defaults() {
         "$@"
 }
 
+# FIXME remove execute/source hack
 if [ "$(basename "$(readlink -e "$0")")" = 'yt_dlp.sh' ]; then
     yt_defaults "$@"
 fi
