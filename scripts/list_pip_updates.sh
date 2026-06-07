@@ -3,6 +3,11 @@
 # List updates by checking PIP against a requirements file.
 # Arguments: [requirements.txt]
 
+# FIXME find all the requirements.txt
+# FIXME document
+# FIXME error handling
+# FIXME proper logging
+
 set -e -u
 
 if command -v mktemp >/dev/null; then
