@@ -1,7 +1,9 @@
 #!/bin/sh
 
-# Helper wrappers around `yt-dlp`.
+# `yt-dlp` helper wrappers.
 # Calls `yt_defaults` by default, unless sourced.
+# https://github.com/yt-dlp/yt-dlp
+#
 # Arguments: [pass-through]
 
 # FIXME document (including dependencies and setup)

@@ -1,5 +1,10 @@
 # -*- coding: UTF-8 -*-
 
+"""
+https://github.com/lwindolf/liferea/tree/main/plugins
+https://github.com/mozbugbox/liferea-plugin-studio
+"""
+
 # FIXME document (including dependencies and setup)
 # FIXME test
 # FIXME error handling
@@ -30,8 +35,6 @@ ENCLOSURE_URL_CMD = CONFIG_DIR / 'enclosure_url'
 # FIXME how to disable built-in Download Manager and have that setting persist?
 # FIXME confirm with author so this is API compliant
 # FIXME use ShellActivatable and listen for new feed items?
-#   https://github.com/mozbugbox/liferea-plugin-studio
-#   https://github.com/lwindolf/liferea/tree/main/plugins
 class ExtCmdPlugin (GObject.Object, Liferea.Activatable, Liferea.DownloadActivatable):
     __gtype_name__ = 'ExtCmdPlugin'
     shell = GObject.property(type=Liferea.Shell)
