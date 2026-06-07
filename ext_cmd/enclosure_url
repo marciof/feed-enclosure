@@ -34,9 +34,11 @@ curl_encode_query_string() {
 # Arguments: URL [quality | '']
 # Stdout: youwee:// protocol encoded download URL in one line
 encode_youwee_download_url() {
+    # FIXME skip livestreams, https://github.com/vanloctech/youwee/issues/76
+    # FIXME let yt-dlp choose format, eg. bestvideo[height<=?720]+bestaudio/best
     # FIXME option for other video formats (eg. mp4 doesn't embed metadata)
-    # FIXME better format selection, eg. bestvideo[height<=?720]+bestaudio/best
     # FIXME embed subtitles
+    # FIXME embed metadata
     printf 'youwee://download?v=1&action=download_now&%s\n' \
         "$(curl_encode_query_string \
             --data-urlencode "url=$1" \
@@ -47,13 +49,13 @@ encode_youwee_download_url() {
 #
 # Arguments: see `encode_youwee_download_url`
 download_url_with_youwee() {
+    # FIXME command line option? https://github.com/vanloctech/youwee/issues/76
+    # FIXME disable window focus (workaround w/ KWin scripting API & D-Bus?)
     # FIXME document how to register protocol handling
     #   $ ln -s etc/Youwee.desktop ~/.local/share/applications/
     #   $ update-desktop-database ~/.local/share/applications
     #   $ apt install qttools5-dev-tools
     #   $ xdg-mime default Youwee.desktop x-scheme-handler/youwee
-    # FIXME command line option? https://github.com/vanloctech/youwee/issues/76
-    # FIXME disable window focus (workaround w/ KWin scripting API & D-Bus?)
     xdg-open "$(encode_youwee_download_url "$@")"
 }
 

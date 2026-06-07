@@ -32,11 +32,10 @@
 
 - Need to find other GUI alternatives?
   - Parabolic, but see https://github.com/NickvisionApps/Parabolic/issues/1855
-- Skip livestreams option.
-- Embed metadata, subtitles in downloaded videos.
+- Embed subtitles in downloaded videos.
 - Skip YouTube shorts (vertical videos) option.
 - Skip video if mtime is more than 1 year in the past (eg. Last Week Tonight uploading old episodes) option.
-- RSS feed from Instagram feed, for https://www.instagram.com/therapyjeff/
+- RSS feed from Instagram feed (for https://www.instagram.com/therapyjeff/)
   - https://github.com/CloakHQ/CloakBrowser
   - https://github.com/jpjacobpadilla/Stealth-Requests
   - https://github.com/lexiforest/curl_cffi
@@ -47,21 +46,19 @@
 
 ## Youwee
 
-- Filter option? Eg. skip livestreams
 - Sort download queue from recent to old.
 - App is too sluggish/slow?
 - Disable previews altogether in the YouTube section?
-- Don't require choosing a specific video format? Let yt-dlp do it, and use [`?` in the format string](https://github.com/yt-dlp/yt-dlp#filtering-formats).
 - Follow dark/light mode from OS?
 - Show timestamp when download was added/finished in the queue.
 - Change number of parallel downloads during downloading.
 
 # Liferea
 
-- How to disable the built-in Download Manager and have that setting persist?
 - Feed fetch spacing option like RSS Guard.
 - OPML automatic backup (via Liferea plugins?)
-- Find Wayland alternative to `kdocker` for tray icon? [v2 removed Trayicon plugin](https://github.com/lwindolf/liferea/releases/tag/v2.0-RC1)
+- Find Wayland alternative to `kdocker` for tray icon?
+  - [v2 removed Trayicon plugin](https://github.com/lwindolf/liferea/releases/tag/v2.0-RC1)
   - https://github.com/Druco/WKDocker/
 
 # PWA?
