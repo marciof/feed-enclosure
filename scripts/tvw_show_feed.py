@@ -7,7 +7,7 @@ Converts a TVW Show page's HTML in `stdin` to an episodes RSS feed in `stdout`.
 https://tvw.org/shows/
 """
 
-# FIXME document (including dependencies and setup)
+# FIXME document
 # FIXME test
 # FIXME error handling
 # FIXME proper logging (including to syslog)

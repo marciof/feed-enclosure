@@ -1,0 +1,3 @@
+beautifulsoup4 # parse/search show's HTML for show/episode's info
+dateparser # parse/search episode's published date
+feedgen # generate show's RSS feed

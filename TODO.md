@@ -24,6 +24,7 @@
 - Helper script for getting an RSS feed URL from a YouTube channel/playlist.
   - https://codemadness.org/sfeed.html
   - check what/how Liferea does it
+- Python/PIP package updates?
 
 # Syncing
 
