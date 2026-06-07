@@ -7,7 +7,7 @@ OPML parsing and handling helpers.
 http://opml.org/spec2.opml
 """
 
-# FIXME document (including dependencies and setup)
+# FIXME document
 # FIXME test
 # FIXME error handling
 # FIXME proper logging (including to syslog)

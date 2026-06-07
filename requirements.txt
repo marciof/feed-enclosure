@@ -8,16 +8,6 @@
 ### https://github.com/srstevenson/xdg-base-dirs/releases
 xdg-base-dirs~=6.0.1
 
-## opml
-
-### https://github.com/tiran/defusedxml#changelog
-defusedxml~=0.7.1
-
-## yt-dlp
-
-### https://github.com/yt-dlp/yt-dlp/releases
-yt-dlp~=2026.3.13
-
 # Test
 
 ## http://www.mypy-lang.org/news.html
