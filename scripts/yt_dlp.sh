@@ -1,6 +1,7 @@
 #!/bin/sh
 
-# Helper wrappers around `yt-dlp`. Calls `yt_defaults` be default.
+# Helper wrappers around `yt-dlp`.
+# Calls `yt_defaults` by default, unless sourced.
 # Arguments: [pass-through]
 
 # FIXME document (including dependencies and setup)
