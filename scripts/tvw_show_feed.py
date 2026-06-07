@@ -78,11 +78,12 @@ if __name__ == '__main__':
 
     # FIXME move to the liferea module
     if len(html) == 0:
+        # FIXME have Liferea not call a converter with no data
         # If the source page returns an HTTP 304 Not Modified, then Liferea
         # determines the source TVW page hasn't changed since the last update,
         # and then seems to still invoke this conversion filter with an empty stdin.
         # https://github.com/lwindolf/liferea/issues/925#issuecomment-902992812
-        raise SystemExit('No HTML input provided on stdin')
+        raise SystemExit()
 
     feed = convert_html_to_feed(html)
 
