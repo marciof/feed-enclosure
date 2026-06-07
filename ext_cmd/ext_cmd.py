@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-# FIXME document
+# FIXME document (including dependencies and setup)
 # FIXME test
 # FIXME error handling
 # FIXME proper logging (including to syslog)

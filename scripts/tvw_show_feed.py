@@ -11,7 +11,6 @@ https://tvw.org/shows/
 # FIXME test
 # FIXME error handling
 # FIXME proper logging (including to syslog)
-# FIXME shebang pointing to venv's Python?
 
 # stdlib
 from datetime import datetime as DateTime

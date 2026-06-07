@@ -73,6 +73,7 @@ BASE_PATH="$(dirname "$(readlink -e "$0")")/../"
 for url; do
     notify-send 'Enclosure URL' "$url"
 
+    # FIXME use yt-dlp post-processing filters to start the GUI downloader?
     if yt_is_livestream "$url"; then
         echo "Livestream skipped: $url" >&2
     else

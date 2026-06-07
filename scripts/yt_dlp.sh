@@ -25,8 +25,9 @@ yt_is_livestream() {
     yt \
         --no-warnings \
         --ignore-no-formats-error \
-        --output-na-placeholder not_live "$1" \
+        --output-na-placeholder not_live \
         --print live_status \
+        "$1" \
     | grep --quiet --invert-match --ignore-case -F not_live
 }
 

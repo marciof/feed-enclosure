@@ -3,6 +3,8 @@
 # Wrapper around the local venv's Python.
 # Arguments: [pass-through]
 
+# FIXME make Python files shebang point to venv instead?
+
 set -e -u
 
 BASE_PATH="$(dirname "$(readlink -e "$0")")/../"
