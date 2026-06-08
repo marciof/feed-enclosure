@@ -1,10 +1,7 @@
 #!/bin/sh
 
 # `yt-dlp` helper wrappers.
-# Calls `yt_defaults` by default, unless sourced.
 # https://github.com/yt-dlp/yt-dlp
-#
-# Arguments: [pass-through]
 
 # FIXME document (including dependencies and setup)
 # FIXME test (including shellcheck)
@@ -20,6 +17,7 @@ yt() {
 
 # Arguments: URL
 # Exit: 0 if live, 1 otherwise
+# FIXME merge into `yt_defaults` using post-processing filters?
 yt_is_livestream() {
     # Some upcoming livestreams don't have a video format available yet,
     # so ignore related warnings and errors.
@@ -47,8 +45,3 @@ yt_defaults() {
         --format 'bestvideo[height<=?720]+bestaudio/best' \
         "$@"
 }
-
-# FIXME remove execute/source hack
-if [ "$(basename "$(readlink -e "$0")")" = 'yt_dlp.sh' ]; then
-    yt_defaults "$@"
-fi

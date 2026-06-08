@@ -27,10 +27,10 @@ curl_encode_query_string() {
     curl_dry_run --silent --get --write-out '%{url.query}' "$@" -- _
 }
 
-# See https://github.com/vanloctech/youwee/blob/main/docs/browser-extension.md#how-it-works
-# See https://github.com/vanloctech/youwee/tree/main/extensions/youwee-webext
-# See buildDeepLink(): https://raw.githubusercontent.com/vanloctech/youwee/main/extensions/youwee-webext/src/shared.js#:~:text=function%20buildDeepLink
-# See normalizeQuality(): https://raw.githubusercontent.com/vanloctech/youwee/main/extensions/youwee-webext/src/shared.js#:~:text=function%20normalizeQuality
+# https://github.com/vanloctech/youwee/blob/main/docs/browser-extension.md#how-it-works
+# https://github.com/vanloctech/youwee/tree/main/extensions/youwee-webext
+# buildDeepLink() https://raw.githubusercontent.com/vanloctech/youwee/main/extensions/youwee-webext/src/shared.js#:~:text=function%20buildDeepLink
+# normalizeQuality() https://raw.githubusercontent.com/vanloctech/youwee/main/extensions/youwee-webext/src/shared.js#:~:text=function%20normalizeQuality
 #
 # Arguments: URL [quality | '']
 # Stdout: youwee:// protocol encoded download URL in one line
@@ -46,7 +46,7 @@ encode_youwee_download_url() {
             --data-urlencode "quality=${2:-}")"
 }
 
-# See https://youwee.app
+# https://youwee.app
 #
 # Arguments: see `encode_youwee_download_url`
 download_url_with_youwee() {
@@ -60,25 +60,17 @@ download_url_with_youwee() {
     xdg-open "$(encode_youwee_download_url "$@")"
 }
 
-# See https://github.com/mhogomchungu/media-downloader
+# https://github.com/mhogomchungu/media-downloader
 #
 # Arguments: URL
 download_url_with_media_downloader() {
     flatpak run io.github.mhogomchungu.media-downloader -a -u "$1"
 }
 
-BASE_PATH="$(dirname "$(readlink -e "$0")")/../"
-. "$BASE_PATH/scripts/yt_dlp.sh"
-
 # FIXME split this script into generic vs download-specific
 for url; do
     notify-send 'Enclosure URL' "$url"
 
-    # FIXME use yt-dlp post-processing filters to start the GUI downloader?
-    if yt_is_livestream "$url"; then
-        echo "Livestream skipped: $url" >&2
-    else
-        download_url_with_youwee "$url" 720
-        # download_url_with_media_downloader "$url"
-    fi
+    download_url_with_youwee "$url" 720
+    # download_url_with_media_downloader "$url"
 done

@@ -1,6 +1,7 @@
 #!/bin/sh
 
 # Wrapper around the local venv's Python.
+#
 # Arguments: [pass-through]
 
 # FIXME make Python files shebang point to venv instead?

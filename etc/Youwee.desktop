@@ -1,8 +1,7 @@
 [Desktop Entry]
-# See https://specifications.freedesktop.org/desktop-entry/latest/
-# See https://github.com/vanloctech/youwee/blob/main/docs/browser-extension.md#how-it-works
-# FIXME remove hardcoded path
-Exec=/home/marcio/opt/Youwee-Linux.AppImage %u
+# https://specifications.freedesktop.org/desktop-entry/latest/
+# https://github.com/vanloctech/youwee/blob/main/docs/browser-extension.md#how-it-works
+Exec=youwee %u
 MimeType=x-scheme-handler/youwee
 Name=Youwee
 Type=Application

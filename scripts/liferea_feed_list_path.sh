@@ -1,7 +1,8 @@
 #!/bin/sh
 
-# Stdout: path to Liferea's feed list OPML file
 # https://lzone.de/liferea/
+#
+# Stdout: path to Liferea's feed list OPML file
 
 # FIXME add command for setting encAutoDownload=true
 # FIXME add command for setting filtercmd
