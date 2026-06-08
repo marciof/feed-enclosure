@@ -36,6 +36,8 @@
 
 - Need to find other GUI alternatives?
   - Parabolic, but see https://github.com/NickvisionApps/Parabolic/issues/1855
+  - VidBee https://github.com/nexmoe/VidBee
+  - https://fmhy.net/social-media-tools#youtube-downloaders
 - Embed subtitles in downloaded videos.
 - Skip YouTube shorts (vertical videos) option.
 - Skip video if mtime is more than 1 year in the past (eg. Last Week Tonight uploading old episodes) option.

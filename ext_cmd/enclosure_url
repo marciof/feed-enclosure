@@ -51,6 +51,7 @@ encode_youwee_download_url() {
 # Arguments: see `encode_youwee_download_url`
 download_url_with_youwee() {
     # FIXME command line option? https://github.com/vanloctech/youwee/issues/76
+    # FIXME error on scheduled livestreams? https://github.com/vanloctech/youwee/issues/79
     # FIXME disable window focus (workaround w/ KWin scripting API & D-Bus?)
     # FIXME document how to register protocol handling
     #   $ ln -s etc/Youwee.desktop ~/.local/share/applications/
@@ -72,5 +73,13 @@ for url; do
     notify-send 'Enclosure URL' "$url"
 
     download_url_with_youwee "$url" 720
+
+    # FIXME use youwee CLI prototype alternative?
+    #   https://stackoverflow.com/questions/12027170/shell-redirect-stdout-to-dev-null-and-stderr-to-stdout
+    #   https://unix.stackexchange.com/questions/124455/linux-how-to-redirect-stdout-stderr-to-logger
+
+    # FIXME use yt_dlp.sh/yt_defaults alternative?
+
+    # FIXME call Media Downloader if YouWee fails?
     # download_url_with_media_downloader "$url"
 done
