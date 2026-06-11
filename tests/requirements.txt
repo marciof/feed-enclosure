@@ -1,2 +1,2 @@
-mypy
-pycodestyle
+mypy==0.991
+pycodestyle==2.8.0

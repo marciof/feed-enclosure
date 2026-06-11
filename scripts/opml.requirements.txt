@@ -1,1 +1,1 @@
-defusedxml # parse/modify/generate OPML
+defusedxml==0.7.1 # parse/modify/generate OPML

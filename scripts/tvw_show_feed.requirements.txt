@@ -1,3 +1,3 @@
-beautifulsoup4 # parse/search show's HTML for show/episode's info
-dateparser # parse/search episode's published date
-feedgen # generate show's RSS feed
+beautifulsoup4==4.12.3 # parse/search show's HTML for show/episode's info
+dateparser==1.4.0 # parse/search episode's published date
+feedgen==1.0.0 # generate show's RSS feed
