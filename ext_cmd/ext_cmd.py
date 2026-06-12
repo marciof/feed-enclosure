@@ -40,11 +40,11 @@ class ExtCmdPlugin (GObject.Object, Liferea.Activatable, Liferea.DownloadActivat
     shell = GObject.property(type=Liferea.Shell)
 
     def do_activate(self):
-        print(f'{PLUGIN_NAME}/activate', file=sys.stderr)
+        print(f'{PLUGIN_NAME}.activate', file=sys.stderr)
 
     def do_deactivate(self):
-        print(f'{PLUGIN_NAME}/deactivate', file=sys.stderr)
+        print(f'{PLUGIN_NAME}.deactivate', file=sys.stderr)
 
     def do_download(self, url):
-        print(f"{PLUGIN_NAME}/download: {ENCLOSURE_URL_CMD} '{url}'", file=sys.stderr)
+        print(f"{PLUGIN_NAME}.download: {ENCLOSURE_URL_CMD} '{url}'", file=sys.stderr)
         subprocess.Popen([ENCLOSURE_URL_CMD, url])
