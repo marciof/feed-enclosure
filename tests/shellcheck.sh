@@ -4,7 +4,7 @@
 
 set -e -u
 
-BASE_PATH="$(dirname "$(readlink -e "$0")")/../"
+BASE_PATH="$(dirname "$(realpath -e "$0")")/../"
 
 grep \
     --exclude-dir .git \

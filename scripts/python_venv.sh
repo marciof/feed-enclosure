@@ -8,7 +8,7 @@
 
 set -e -u
 
-BASE_PATH="$(dirname "$(readlink -e "$0")")/../"
+BASE_PATH="$(dirname "$(realpath -e "$0")")/../"
 export PYTHONPATH="${PYTHONPATH:-}:$BASE_PATH"
 
 PYTHON3="${PYTHON3:-python3}"
