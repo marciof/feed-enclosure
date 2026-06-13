@@ -1,13 +1,9 @@
 #!/bin/sh
 
 # List updates by checking PIP against a requirements file.
+# If no arguments are given, it searches recursively for requirements files.
 #
-# Arguments: [requirements.txt]
-
-# FIXME find all the requirements.txt
-# FIXME document
-# FIXME error handling
-# FIXME proper logging
+# Arguments: [requirements.txt | directory] ...
 
 set -o errexit -o nounset
 
@@ -19,17 +15,20 @@ else
     }
 fi
 
-pip_list_outdated_pkgs() {
-    pip list --outdated | tail --lines +3
+PIP_OUTDATED_PKGS_FILE="$(mktemp_posix)"
+pip list --outdated | tail --lines +3 > "$PIP_OUTDATED_PKGS_FILE" &
+PIP_LIST_PID="$!"
+
+wait_for_pip_list() {
+    if [ -n "$PIP_LIST_PID" ]; then
+        echo "(Downloading outdated package list... $PIP_OUTDATED_PKGS_FILE)"
+        wait "$PIP_LIST_PID"
+        PIP_LIST_PID=
+    fi
 }
 
-find_reqs_txt_files() {
-    find "$@" \
-        -type d -name '.*' \! -path "$1" -prune \
-        -o \
-        -type f -iname '*requirements.txt' -print
-}
-
+# Arguments: <requirements.txt file>
+# Stdout: packages, one name per line
 list_pkgs_from_reqs_txt() {
     grep --no-filename --invert-match --extended-regexp '^$|^#' -- "$@" \
         | cut --delimiter '=' --fields 1 \
@@ -37,10 +36,15 @@ list_pkgs_from_reqs_txt() {
         | uniq
 }
 
+# Arguments: <pip list output file>
+# Stdin: packages, one name per line
+# Stdout: pip list filtered by matching packages
 grep_for_pkgs() {
-    xargs -I '{}' -- echo --regexp='{}' | xargs grep "$1" --fixed-strings
+    xargs -I '{}' -- echo --regexp='{}' \
+        | xargs grep "$1" --fixed-strings
 }
 
+# Arguments: <requirements.txt file> <pip list output file>
 pretty_print_outdated_pkgs() {
     echo "* $1 *"
     printf "  %${#1}s  \n" | tr ' ' '-'
@@ -50,26 +54,28 @@ pretty_print_outdated_pkgs() {
     fi
 }
 
+# Arguments: <requirements.txt file | directory> <pip list output file>
 pretty_print_outdated_pkgs_or_dir() {
     if [ -d "$1" ]; then
-        for reqs_txt_file in $(find_reqs_txt_files "$1"); do
-            echo
-            pretty_print_outdated_pkgs "$reqs_txt_file" "$2"
+        for file in "${1%%/}/"*requirements.txt; do
+            # Skip verbatim glob pattern when no files are found.
+            if [ -f "$file" ]; then
+                wait_for_pip_list
+                echo
+                pretty_print_outdated_pkgs "$file" "$PIP_OUTDATED_PKGS_FILE"
+            fi
         done
     else
+        wait_for_pip_list
         echo
-        pretty_print_outdated_pkgs "$1" "$2"
+        pretty_print_outdated_pkgs "$1" "$PIP_OUTDATED_PKGS_FILE"
     fi
 }
 
-outdated_pkgs_file="$(mktemp_posix)"
-echo "(Downloading list of outdated packages... $outdated_pkgs_file)"
-pip_list_outdated_pkgs > "$outdated_pkgs_file"
-
 if [ $# -eq 0 ]; then
-    set -- .
+    set -- **/*requirements.txt
 fi
 
-for arg; do
-    pretty_print_outdated_pkgs_or_dir "$arg" "$outdated_pkgs_file"
+for file_or_dir; do
+    pretty_print_outdated_pkgs_or_dir "$file_or_dir"
 done
