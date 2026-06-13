@@ -24,53 +24,6 @@ log() {
     logger --stderr --tag "$PLUGIN_NAME/$SCRIPT_NAME.$1"
 }
 
-# Arguments: see `curl`
-# Returns: success
-curl_dry_run() {
-    # FIXME confirm this is ok, see https://github.com/curl/curl/issues/5426
-    curl --resolve '*:80:127.0.0.1' --resolve '*:443:127.0.0.1' "$@" || true
-}
-
-# Arguments: see `curl`
-# Stdout: URL encoded part of the query string
-curl_encode_query_string() {
-    # FIXME use Python instead? or is curl more widely available?
-    curl_dry_run --silent --get --write-out '%{url.query}' "$@" -- IGNORED_URL
-}
-
-# https://github.com/vanloctech/youwee/blob/main/docs/browser-extension.md#how-it-works
-# https://github.com/vanloctech/youwee/tree/main/extensions/youwee-webext
-# buildDeepLink() https://raw.githubusercontent.com/vanloctech/youwee/main/extensions/youwee-webext/src/shared.js#:~:text=function%20buildDeepLink
-# normalizeQuality() https://raw.githubusercontent.com/vanloctech/youwee/main/extensions/youwee-webext/src/shared.js#:~:text=function%20normalizeQuality
-#
-# Arguments: URL [quality | '']
-# Stdout: youwee:// protocol encoded download URL in one line
-encode_youwee_download_url() {
-    printf 'youwee://download?v=1&action=download_now&%s\n' \
-        "$(curl_encode_query_string \
-            --data-urlencode "url=$1" \
-            --data-urlencode "quality=${2:-}")"
-}
-
-# https://youwee.app
-# https://youwee.app/docs/browser-extension
-#
-# Arguments: URL [quality | '']
-download_via_youwee_mime_handler() {
-    # FIXME disable window focus (workaround w/ KWin scripting API & D-Bus?)
-    # FIXME let yt-dlp choose format, eg. bestvideo[height<=?720]+bestaudio/best
-    # FIXME option for other video formats (eg. mp4 doesn't embed metadata)
-    # FIXME embed subtitles
-    # FIXME embed metadata
-    # FIXME document how to register protocol handling
-    #   $ ln -s etc/Youwee.desktop ~/.local/share/applications/
-    #   $ update-desktop-database ~/.local/share/applications
-    #   $ apt install qttools5-dev-tools
-    #   $ xdg-mime default Youwee.desktop x-scheme-handler/youwee
-    xdg-open "$(encode_youwee_download_url "$@")" 2>&1 \
-        | log download_via_youwee_mime_handler
-}
-
 # https://youwee.app
 # https://youwee.app/docs/cli/
 #
@@ -92,13 +45,12 @@ download_via_media_downloader() {
         | log download_via_media_downloader
 }
 
-# FIXME split this script into generic vs download-specific
+# FIXME split this script into generic vs download-specific?
 for url; do
     notify-send 'Enclosure URL' "$url"
     download_via_youwee_cli "$url" 720
 
     # FIXME call other alternatives if the default fails?
-    # download_url_with_youwee_via_mime_handler "$url" 720
     # download_url_with_media_downloader "$url"
     # . yt_dlp.sh && yt_defaults "$url"
 done
