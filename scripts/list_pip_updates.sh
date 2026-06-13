@@ -27,6 +27,10 @@ wait_for_pip_list() {
     fi
 }
 
+indent_stdout() {
+    sed 's/^/    /'
+}
+
 # Arguments: <requirements.txt file>
 # Stdout: packages, one name per line
 list_pkgs_from_reqs_txt() {
@@ -46,12 +50,12 @@ grep_for_pkgs() {
 
 # Arguments: <requirements.txt file> <pip list output file>
 pretty_print_outdated_pkgs() {
-    echo "* $1 *"
-    printf "  %${#1}s  \n" | tr ' ' '-'
+    echo "$1"
+    printf "%${#1}s\n" | tr ' ' '-'
 
     if ! list_pkgs_from_reqs_txt "$1" | grep_for_pkgs "$2"; then
         echo '(N/A)'
-    fi
+    fi | indent_stdout
 }
 
 # Arguments: <requirements.txt file | directory> <pip list output file>
