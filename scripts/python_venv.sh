@@ -14,5 +14,6 @@ export PYTHONPATH="${PYTHONPATH:-}:$BASE_PATH"
 PYTHON3="${PYTHON3:-python3}"
 VENV="$BASE_PATH/.venv/bin/activate"
 
+# shellcheck disable=SC1090
 . "$VENV"
 "$PYTHON3" "$@"
