@@ -6,13 +6,14 @@
   - It'll either work with a GUI media downloader app, or directly with yt-dlp via command line?
     - https://github.com/yt-dlp/yt-dlp#developing-plugins
     - https://yt-dlp-yt-dlp.mintlify.app/guides/post-processing
+    - https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-download-only-new-videos-from-a-playlist
   - Could https://codeberg.org/lwindolf/lzone.de work instead? Using Web APIs such as Native Messaging?
   - Candidates (need to support OPML for data portability, and some form of plugin/extension to download enclosures):
     - [RSS Guard](https://github.com/martinrotter/rssguard/issues/1952#issuecomment-4609281030)
     - [Akregator](https://github.com/KDE/akregator/)
     - [Alligator](https://github.com/kde/alligator)
     - [Thunderbird](https://reviewers.addons.thunderbird.net/en-us/thunderbird/tag/rss) (see also [custom CSS](https://reddit.com/r/Thunderbird/comments/1fhyvvq/kind_of_loving_thunderbird_as_an_rss_reader_right/lo3dpgu/))
-    - Another option is to use a local proxy (as done previously) as a hook for detecting enclosures, and optionally downloading and passing on as a stream to the upstream app.
+    - Another option is to use a local proxy (as done previously) as a hook for detecting enclosures, and optionally downloading and passing on as a stream to the upstream app. https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-stream-directly-to-media-player
   - New project structure?
     - `converters/` (anything -> feed, eg. TVW show page HTML -> RSS)
     - `relays/` (data passing glue logic, eg. Liferea plugin)
