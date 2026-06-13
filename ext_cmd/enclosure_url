@@ -17,6 +17,13 @@ SCRIPT_FILE_PATH="$(realpath -e "$0")"
 SCRIPT_NAME="$(basename "$SCRIPT_FILE_PATH")"
 PLUGIN_NAME="$(basename "$(dirname "$SCRIPT_FILE_PATH")")"
 
+# Arguments: <component name>
+# Stdin: logger input
+# Stderr: logger output
+log() {
+    logger --stderr --tag "$PLUGIN_NAME/$SCRIPT_NAME.$1"
+}
+
 # Arguments: see `curl`
 # Returns: success
 curl_dry_run() {
@@ -28,7 +35,7 @@ curl_dry_run() {
 # Stdout: URL encoded part of the query string
 curl_encode_query_string() {
     # FIXME use Python instead? or is curl more widely available?
-    curl_dry_run --silent --get --write-out '%{url.query}' "$@" -- _
+    curl_dry_run --silent --get --write-out '%{url.query}' "$@" -- IGNORED_URL
 }
 
 # https://github.com/vanloctech/youwee/blob/main/docs/browser-extension.md#how-it-works
@@ -60,7 +67,8 @@ download_via_youwee_mime_handler() {
     #   $ update-desktop-database ~/.local/share/applications
     #   $ apt install qttools5-dev-tools
     #   $ xdg-mime default Youwee.desktop x-scheme-handler/youwee
-    xdg-open "$(encode_youwee_download_url "$@")"
+    xdg-open "$(encode_youwee_download_url "$@")" 2>&1 \
+        | log download_via_youwee_mime_handler
 }
 
 # https://youwee.app
@@ -73,20 +81,21 @@ download_via_youwee_cli() {
     # FIXME embed subtitles
     # FIXME embed metadata
     youwee --skip-live --url "$1" --quality "$2" 2>&1 \
-        | logger --tag "$PLUGIN_NAME/$SCRIPT_NAME.download_via_youwee_cli" &
+        | log download_via_youwee_cli &
 }
 
 # https://github.com/mhogomchungu/media-downloader
 #
 # Arguments: URL
 download_via_media_downloader() {
-    flatpak run io.github.mhogomchungu.media-downloader -a -u "$1"
+    flatpak run io.github.mhogomchungu.media-downloader -a -u "$1" 2>&1 \
+        | log download_via_media_downloader
 }
 
 # FIXME split this script into generic vs download-specific
 for url; do
     notify-send 'Enclosure URL' "$url"
-    download_via_youwee_mime_handler "$url" 720
+    download_via_youwee_cli "$url" 720
 
     # FIXME call other alternatives if the default fails?
     # download_url_with_youwee_via_mime_handler "$url" 720
