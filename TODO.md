@@ -12,6 +12,7 @@
     - [Akregator](https://github.com/KDE/akregator/)
     - [Alligator](https://github.com/kde/alligator)
     - [Thunderbird](https://reviewers.addons.thunderbird.net/en-us/thunderbird/tag/rss) (see also [custom CSS](https://reddit.com/r/Thunderbird/comments/1fhyvvq/kind_of_loving_thunderbird_as_an_rss_reader_right/lo3dpgu/))
+    - Another option is to use a local proxy (as done previously) as a hook for detecting enclosures, and optionally downloading and passing on as a stream to the upstream app.
   - New project structure?
     - `converters/` (anything -> feed, eg. TVW show page HTML -> RSS)
     - `relays/` (data passing glue logic, eg. Liferea plugin)
