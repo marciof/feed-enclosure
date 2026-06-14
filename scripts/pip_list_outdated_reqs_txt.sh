@@ -5,6 +5,10 @@
 #
 # Arguments: [requirements.txt | directory] ...
 
+# FIXME list `pip` itself if outdated
+# FIXME ensure `pip install` uses `--uploaded-prior-to` (since pip v26.1)
+# FIXMe ensure `pip install` uses `--require-virtualenv`
+
 set -o errexit -o nounset
 
 if command -v mktemp >/dev/null; then
