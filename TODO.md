@@ -75,7 +75,9 @@ Pros:
 
 - Available anywhere, no installation, always up to date on the browser.
 - Also available as a CLI via Nodejs.
-- Check https://whatpwacando.today/
+- Check:
+  - https://web.dev/articles/app-like-pwas
+  - https://whatpwacando.today/
 
 Cons:
 
