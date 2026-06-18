@@ -67,7 +67,7 @@ pretty_print_outdated_pkgs_or_dir() {
     if [ -d "$1" ]; then
         for file in "${1%%/}/"*requirements.txt; do
             # Skip verbatim glob pattern when no files are found.
-            if [ -f "$file" ]; then
+            if [ -r "$file" ]; then
                 wait_for_pip_list
                 echo
                 pretty_print_outdated_pkgs "$file" "$PIP_OUTDATED_PKGS_FILE"
