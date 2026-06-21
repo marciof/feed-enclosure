@@ -5,7 +5,7 @@
 - Replace entire `feed_enclosure` with `ext_cmd`?
   - It'll either work with a GUI media downloader app, or directly with yt-dlp via command line?
     - https://github.com/yt-dlp/yt-dlp#developing-plugins
-    - https://yt-dlp-yt-dlp.mintlify.app/guides/post-processing
+    - https://yt-dlp-yt-dlp.mintlify.app/guides/post-processing (see `--exec`)
     - https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-download-only-new-videos-from-a-playlist
   - Could https://codeberg.org/lwindolf/lzone.de work instead? Using Web APIs such as Native Messaging?
   - Candidates (need to support OPML for data portability, and some form of plugin/extension to download enclosures):
