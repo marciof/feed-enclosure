@@ -15,7 +15,7 @@ if command -v mktemp >/dev/null; then
     alias mktemp_posix=mktemp
 else
     mktemp_posix() {
-        echo 'mkstemp(template)' | m4 --define= "template=${TMPDIR:-/tmp}/"
+        echo 'mkstemp(template)' | m4 -D "template=${TMPDIR:-/tmp}/"
     }
 fi
 

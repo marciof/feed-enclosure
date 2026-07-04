@@ -21,7 +21,7 @@ PLUGIN_NAME="$(basename "$(dirname "$SCRIPT_FILE_PATH")")"
 # Stdin: logger input
 # Stderr: logger output
 log() {
-    logger --stderr --tag "$PLUGIN_NAME/$SCRIPT_NAME.$1"
+    logger --id $$ --stderr --tag "$PLUGIN_NAME/$SCRIPT_NAME.$1"
 }
 
 # https://youwee.app
