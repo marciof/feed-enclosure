@@ -4,10 +4,6 @@
   - `converter/` (anything -> feed, eg. TVW show page HTML -> RSS)
   - `relay/` (data passing glue logic, eg. Liferea plugin)
   - `wrapper/` (helper scripts, eg. Youwee CLI script)
-- GUI for Python scripts?
-  - https://github.com/chriskiehl/Gooey
-  - https://github.com/PySimpleGUI/PySimpleGUI
-  - https://github.com/alfiopuglisi/guietta
 
 # Feeds
 
