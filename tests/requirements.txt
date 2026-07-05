@@ -1,5 +1,0 @@
-# https://github.com/python/mypy/blob/master/CHANGELOG.md
-mypy==2.1.0
-
-# https://pycodestyle.pycqa.org/en/latest/developer.html#changes
-pycodestyle==2.8.0
