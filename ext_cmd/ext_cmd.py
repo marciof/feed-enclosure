@@ -6,12 +6,9 @@ https://github.com/mozbugbox/liferea-plugin-studio
 """
 
 # FIXME document (including dependencies and setup)
-# FIXME test
+# FIXME tests (including typing, mypy, pycodestyle)
 # FIXME error handling
 # FIXME proper logging (including to syslog)
-# FIXME typing
-#   https://github.com/lwindolf/liferea/blob/main/src/plugins/liferea_activatable.h
-#   https://github.com/lwindolf/liferea/blob/main/src/plugins/download_activatable.h
 
 # stdlib
 import os

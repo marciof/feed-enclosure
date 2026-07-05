@@ -13,4 +13,5 @@ grep \
     --recursive \
     --files-with-matches '#!/bin/sh' \
     "$BASE_PATH" \
+| tee /dev/tty \
 | xargs shellcheck
