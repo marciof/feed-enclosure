@@ -1,42 +1,38 @@
 # General
 
-- Subscribe to mailing lists so I'm up to date with new features and breaking changes.
-- Need to find alternatives to Liferea? It removed the external downloaders option, and may remove more or go unmaintained? Check which have support for plugins: Akregator, RSS Guard, Thundebird.
-- Replace entire `feed_enclosure` with `ext_cmd`?
-  - It'll either work with a GUI media downloader app, or directly with yt-dlp via command line?
-    - https://github.com/yt-dlp/yt-dlp#developing-plugins
-    - https://yt-dlp-yt-dlp.mintlify.app/guides/post-processing (see `--exec`)
-    - https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-download-only-new-videos-from-a-playlist
-  - Could https://codeberg.org/lwindolf/lzone.de work instead? Using Web APIs such as Native Messaging?
-  - Candidates (need to support OPML for data portability, and some form of plugin/extension to download enclosures):
-    - [RSS Guard](https://github.com/martinrotter/rssguard/issues/1952#issuecomment-4609281030)
-    - [Akregator](https://github.com/KDE/akregator/)
-    - [Alligator](https://github.com/kde/alligator)
-    - [Thunderbird](https://reviewers.addons.thunderbird.net/en-us/thunderbird/tag/rss) (see also [custom CSS](https://reddit.com/r/Thunderbird/comments/1fhyvvq/kind_of_loving_thunderbird_as_an_rss_reader_right/lo3dpgu/))
-    - Another option is to use a local proxy (as done previously) as a hook for detecting enclosures, and optionally downloading and passing on as a stream to the upstream app.
-      - https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-stream-directly-to-media-player
-      - https://fastapi.tiangolo.com
-      - https://starlette.dev
-      - https://github.com/pydantic/pydantic
-  - New project structure?
-    - `converters/` (anything -> feed, eg. TVW show page HTML -> RSS)
-    - `relays/` (data passing glue logic, eg. Liferea plugin)
-    - `wrappers/` (helper scripts, eg. Youwee CLI script)
-  - Headless workflow alternative as well? With simple GUI options?
-    - https://github.com/chriskiehl/Gooey
-    - https://github.com/PySimpleGUI/PySimpleGUI
-    - https://github.com/alfiopuglisi/guietta
-    - https://tools.suckless.org/dmenu/
+- New project structure?
+  - `converters/` (anything -> feed, eg. TVW show page HTML -> RSS)
+  - `relays/` (data passing glue logic, eg. Liferea plugin)
+  - `wrappers/` (helper scripts, eg. Youwee CLI script)
+- GUI for Python scripts?
+  - https://github.com/chriskiehl/Gooey
+  - https://github.com/PySimpleGUI/PySimpleGUI
+  - https://github.com/alfiopuglisi/guietta
+
+# Feeds
+
+- Need to find alternatives to Liferea? It removed the external downloaders option, and may remove more or go unmaintained? Preferrably with support for plugins and OPML.
+  - [RSS Guard](https://github.com/martinrotter/rssguard/issues/1952#issuecomment-4609281030)
+  - [Akregator](https://github.com/KDE/akregator/)
+  - [Alligator](https://github.com/kde/alligator)
+  - [Thunderbird](https://reviewers.addons.thunderbird.net/en-us/thunderbird/tag/rss) (see also [custom CSS](https://reddit.com/r/Thunderbird/comments/1fhyvvq/kind_of_loving_thunderbird_as_an_rss_reader_right/lo3dpgu/))
+  - local proxy (as done previously) as a hook for detecting enclosures, and optionally downloading and passing on as a stream to the upstream app.
+    - https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-stream-directly-to-media-player
+    - https://github.com/fastapi/fastapi
+    - https://github.com/Kludex/starlette
 - Helper script for getting an RSS feed URL from a YouTube channel/playlist.
   - https://codemadness.org/sfeed.html
   - check what/how Liferea does it
-- Python/PIP package updates?
 
-# Syncing
+## Liferea
 
-- Do filenames with emojis break Dropbox syncing? See also https://github.com/woodgern/confusables
-- Sync VLC last video position between devices.
-- Syncthing for faster efficient syncing within the local network between devices? Double check Dropbox.
+- Not always updating The Impact even when it has new content.
+  - And calls the conversion filter with an empty stdin.
+- Feed fetch spacing option like RSS Guard.
+- OPML automatic backup (via plugins?)
+- Find Wayland alternative to `kdocker` for tray icon?
+  - [v2 removed Trayicon plugin](https://github.com/lwindolf/liferea/releases/tag/v2.0-RC1)
+  - https://github.com/Druco/WKDocker/
 
 # Videos
 
@@ -44,31 +40,53 @@
   - Parabolic, but see https://github.com/NickvisionApps/Parabolic/issues/1855
   - VidBee https://github.com/nexmoe/VidBee
   - https://fmhy.net/social-media-tools#youtube-downloaders
+- yt-dlp extensibility:
+  - Plugins: https://github.com/yt-dlp/yt-dlp#plugins
+  - `--exec` / post-processing: https://github.com/yt-dlp/yt-dlp#post-processing-options
 - Embed subtitles in downloaded videos.
 - Skip YouTube shorts (vertical videos) option.
 - Skip video if mtime is more than 1 year in the past (eg. Last Week Tonight uploading old episodes) option.
-- RSS feed from Instagram feed (for https://www.instagram.com/therapyjeff/)
-  - https://github.com/CloakHQ/CloakBrowser
-  - https://github.com/jpjacobpadilla/Stealth-Requests
-  - https://github.com/lexiforest/curl_cffi
-  - https://github.com/microsoft/playwright-python
-  - https://github.com/instaloader/instaloader
 - Make it possible to watch a video as it's being downloaded before it finishes.
 - Video summarizing option? TL;DW Too Long; Didn't watch, https://tldw.tube/, https://news.ycombinator.com/item?id=43021044
+- How to skip non-English videos? Eg. French/German Withings
+
+## Instagram
+
+- RSS feed from Instagram feed (for https://www.instagram.com/therapyjeff/)
+- via browser impersonation? might need to run JavaScript
+  - https://github.com/CloakHQ/CloakBrowser + Playwright / Puppeteer
+  - stealth browser as a localhost proxy?
+- via HTTP impersonation? might be more complex to parse w/o JavaScript
+  - https://github.com/lexiforest/curl-impersonate
+  - https://github.com/jpjacobpadilla/Stealth-Requests
+- via external tool/library/API?
+  - https://github.com/instaloader/instaloader
+  - https://imginn.com/therapyjeff/
+  - https://www.picnob.com/profile/therapyjeff/
+  - https://greasyfork.org/en/scripts/561325-bypass-instagram-login-redirects/code
+- etc
+  - https://en.wikipedia.org/wiki/Model_Context_Protocol
+  - https://www.mitmproxy.org
 
 ## Youwee
 
 - Sort download queue from recent to old.
 - App is too sluggish/slow?
 - Disable previews altogether in the YouTube section?
-- Follow dark/light mode from OS?
+- Follow dark/light mode from OS? CLI option to change mode?
 - Show timestamp when download was added/finished in the queue.
 - Change number of parallel downloads during downloading.
 
-# Liferea
+## VLC
 
-- Feed fetch spacing option like RSS Guard.
-- OPML automatic backup (via Liferea plugins?)
-- Find Wayland alternative to `kdocker` for tray icon?
-  - [v2 removed Trayicon plugin](https://github.com/lwindolf/liferea/releases/tag/v2.0-RC1)
-  - https://github.com/Druco/WKDocker/
+- Embed video metadata in screenshots?
+
+# Syncing
+
+- Do filenames with emojis break Dropbox syncing? See also https://github.com/woodgern/confusables
+- Sync VLC last video position between devices.
+- Syncthing for faster efficient syncing within the local network between devices? Double check Dropbox.
+
+# Device
+
+- Zero Terminal v3: https://n-o-d-e.net/zeroterminal3.html
