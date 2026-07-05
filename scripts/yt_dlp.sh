@@ -9,7 +9,7 @@
 # FIXME proper logging (including to syslog)
 # TODO check https://github.com/TheFrenchGhosty/TheFrenchGhostys-Ultimate-YouTube-DL-Scripts-Collection
 
-set -e -u
+set -o errexit -o nounset
 
 yt() {
     yt-dlp "$@"
@@ -28,7 +28,7 @@ yt_is_livestream() {
         --output-na-placeholder not_live \
         --print live_status \
         "$1" \
-    | grep --quiet --invert-match --ignore-case -F not_live
+    | grep --quiet --invert-match --ignore-case --fixed-strings not_live
 }
 
 yt_defaults() {

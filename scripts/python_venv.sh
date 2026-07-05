@@ -6,7 +6,7 @@
 
 # FIXME make Python files shebang point to venv instead?
 
-set -e -u
+set -o errexit -o nounset
 
 BASE_PATH="$(dirname "$(realpath -e "$0")")/../"
 export PYTHONPATH="${PYTHONPATH:-}:$BASE_PATH"
