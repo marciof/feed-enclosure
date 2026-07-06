@@ -11,6 +11,8 @@ http://opml.org/spec2.opml
 # FIXME test
 # FIXME error handling
 # FIXME proper logging (including to syslog)
+# FIXME add command for setting encAutoDownload=true?
+# FIXME add command for setting filtercmd?
 
 # stdlib
 import argparse
