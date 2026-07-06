@@ -3,7 +3,7 @@
 # Runs a command for each URL.
 # Calls `download_url_with_youwee` by default.
 #
-# Arguments: [URL] ...
+# Arguments: [URL ...]
 
 # FIXME document (including dependencies and setup)
 # FIXME test (including shellcheck)

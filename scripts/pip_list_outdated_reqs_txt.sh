@@ -3,7 +3,7 @@
 # List updates by checking PIP against a requirements file.
 # If no arguments are given, it searches recursively for requirements files.
 #
-# Arguments: [requirements.txt | directory] ...
+# Arguments: [requirements.txt | directory ...]
 
 # FIXME list `pip` itself if outdated
 # FIXME ensure `pip install` uses `--uploaded-prior-to` (since pip v26.1)
