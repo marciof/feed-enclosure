@@ -26,9 +26,6 @@
   - And calls the conversion filter with an empty stdin.
 - Feed fetch spacing option like RSS Guard.
 - OPML automatic backup (via plugins?)
-- Find Wayland alternative to `kdocker` for tray icon?
-  - [v2 removed Trayicon plugin](https://github.com/lwindolf/liferea/releases/tag/v2.0-RC1)
-  - https://github.com/Druco/WKDocker/
 
 # Videos
 
