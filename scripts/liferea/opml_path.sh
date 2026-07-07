@@ -7,5 +7,7 @@
 # - XDG Spec: https://specifications.freedesktop.org/basedir/latest/#variables
 # - Liferea source: https://raw.githubusercontent.com/lwindolf/liferea/refs/heads/main/src/node_source.c#:~:text=feedlist.opml
 
+# TODO request Liferea cmdline flag to print path to OPML file
+
 set -o errexit -o nounset
 realpath -e "${XDG_CONFIG_HOME:-"$HOME/.config"}/liferea/feedlist.opml"
