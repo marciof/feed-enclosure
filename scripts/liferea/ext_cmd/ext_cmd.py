@@ -28,7 +28,7 @@ ENCLOSURE_URL_CMD =  PLUGIN_PATH.parent / 'enclosure_url'
 # FIXME confirm with author so this is API compliant
 # FIXME use ShellActivatable and listen for new feed items?
 class ExtCmdPlugin (GObject.Object, Liferea.Activatable, Liferea.DownloadActivatable):
-    __gtype_name__ = 'ExtCmdPlugin'
+    __gtype_name__ = __qualname__
     shell = GObject.property(type=Liferea.Shell)
 
     def do_activate(self):
