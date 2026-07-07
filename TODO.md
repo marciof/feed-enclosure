@@ -22,6 +22,8 @@
 
 ## Liferea
 
+- Look into sandboxing an old fixed version that still has support for custom external download tool:
+  - https://github.com/89luca89/distrobox
 - Not always updating The Impact even when it has new content.
   - And calls the conversion filter with an empty stdin.
 - Feed fetch spacing option like RSS Guard.
