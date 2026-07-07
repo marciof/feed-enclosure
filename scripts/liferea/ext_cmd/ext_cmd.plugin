@@ -3,6 +3,3 @@ Module=ext_cmd
 Loader=python
 Name=External Command
 Description=Runs external commands for different events
-Authors=Márcio Faustino
-Copyright=Copyright (C) 2020-2026 Márcio Faustino
-Website=https://github.com/marciof/feed-enclosure
