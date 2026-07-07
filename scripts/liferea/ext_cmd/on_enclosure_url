@@ -9,6 +9,11 @@
 # FIXME test (including shellcheck)
 # FIXME error handling
 # FIXME proper logging (including to syslog)
+# FIXME proper extensibility, example ideas:
+#   - ext_cmd/on_enclosure_url.d/* (runs chmod +x files)
+#   - run a specific command that must be in PATH
+#   - run a command specified in an env var
+#   - resolve symlinks and runs a config command
 # TODO check https://github.com/TheFrenchGhosty/TheFrenchGhostys-Ultimate-YouTube-DL-Scripts-Collection
 
 set -o errexit -o nounset
