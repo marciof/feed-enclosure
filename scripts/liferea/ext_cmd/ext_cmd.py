@@ -5,9 +5,8 @@
 # FIXME error handling
 # FIXME proper logging (including to syslog)
 # FIXME how to disable built-in Download Manager and have that setting persist?
-# FIXME confirm this is API compliant
-# FIXME use ShellActivatable and listen for new feed items?
-# TODO would be nice to optionally pass the feed article title
+# FIXME confirm it's API compliant, https://github.com/lwindolf/liferea/issues/1564
+# TODO would be nice to optionally pass the feed article title to ext cmds
 
 # stdlib
 from pathlib import Path
