@@ -70,7 +70,8 @@ def main(args: Optional[List[str]] = None) -> NoReturn:
     arg_parser = argparse.ArgumentParser(description=__doc__.strip())
     arg_parser.add_argument(
         '-p', '--path',
-        type=TextIoArgType, default=sys.stdin,
+        type=TextIoArgType,
+        default=sys.stdin,
         help='path to OPML file or stdin')
     cmd_arg_parser = arg_parser.add_subparsers(required=True)
 
