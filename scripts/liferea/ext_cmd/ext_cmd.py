@@ -38,5 +38,6 @@ class ExtCmdPlugin (GObject.Object, Liferea.Activatable, Liferea.DownloadActivat
         print(f'{PLUGIN_NAME}.deactivate', file=sys.stderr)
 
     def do_download(self, url):
+        # TODO would be nice to optionally pass the feed article title
         print(f"{PLUGIN_NAME}.download: {ENCLOSURE_URL_CMD} '{url}'", file=sys.stderr)
         subprocess.Popen([ENCLOSURE_URL_CMD, url])

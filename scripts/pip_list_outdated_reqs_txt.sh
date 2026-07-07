@@ -7,7 +7,8 @@
 
 # FIXME list `pip` itself if outdated
 # FIXME ensure `pip install` uses `--uploaded-prior-to` (since pip v26.1)
-# FIXMe ensure `pip install` uses `--require-virtualenv`
+# FIXME ensure `pip install` uses `--require-virtualenv`
+# FIXME detect brand new/empty venv to list all are required updates
 
 set -o errexit -o nounset
 

@@ -48,6 +48,7 @@
 ## Instagram
 
 - RSS feed from Instagram feed (for https://www.instagram.com/therapyjeff/)
+  - eg. `a[href*="/reel/"][role=link]`
 - via browser impersonation? might need to run JavaScript
   - https://github.com/CloakHQ/CloakBrowser + Playwright / Puppeteer
   - stealth browser as a localhost proxy?
