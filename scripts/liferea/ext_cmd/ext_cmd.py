@@ -6,12 +6,13 @@ https://github.com/mozbugbox/liferea-plugin-studio
 """
 
 # FIXME document (including dependencies and setup)
+#   https://github.com/lwindolf/liferea/blob/main/plugins/README.md#plugin-tutorial
+#   ~/.local/share/liferea/plugins/
 # FIXME tests (including typing, mypy, pycodestyle)
 # FIXME error handling
 # FIXME proper logging (including to syslog)
 
 # stdlib
-import os
 from pathlib import Path
 import subprocess
 import sys
@@ -19,16 +20,9 @@ import sys
 # FIXME requirements.txt PyGObject
 from gi.repository import GObject, Liferea
 
-# FIXME ensure correct paths for config and plugin (broken website links too?)
-#   https://github.com/lwindolf/liferea/issues/1562
-#   https://github.com/lwindolf/liferea/blob/main/plugins/README.md#plugin-tutorial
-#   ~/.config/liferea/plugins/
-#   ~/.local/share/liferea/plugins/
-# FIXME avoid hardcoding paths, use `xdg_base_dirs`?
-PLUGIN_NAME = os.path.basename(os.path.dirname(__file__))
-CONFIG_HOME = Path(os.getenv('XDG_CONFIG_HOME', str(Path.home() / '.config')))
-CONFIG_DIR = CONFIG_HOME / 'liferea' / 'plugins' / PLUGIN_NAME
-ENCLOSURE_URL_CMD = CONFIG_DIR / 'enclosure_url'
+PLUGIN_PATH = Path(__file__)
+PLUGIN_NAME = PLUGIN_PATH.name
+ENCLOSURE_URL_CMD =  PLUGIN_PATH.parent / 'enclosure_url'
 
 # FIXME how to disable built-in Download Manager and have that setting persist?
 # FIXME confirm with author so this is API compliant
