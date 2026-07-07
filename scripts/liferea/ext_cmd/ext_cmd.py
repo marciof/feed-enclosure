@@ -21,7 +21,7 @@ import sys
 from gi.repository import GObject, Liferea
 
 PLUGIN_PATH = Path(__file__)
-PLUGIN_NAME = PLUGIN_PATH.name
+PLUGIN_NAME = PLUGIN_PATH.stem
 ENCLOSURE_URL_CMD = PLUGIN_PATH.parent / 'on_enclosure_url'
 
 # FIXME how to disable built-in Download Manager and have that setting persist?
