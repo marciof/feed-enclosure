@@ -20,7 +20,8 @@ import sys
 from gi.repository import GObject, Liferea
 
 # FIXME ensure correct paths for config and plugin (broken website links too?)
-#   https://lzone.de/liferea/blog/Writing-Liferea-Plugins-Tutorial-Part-1.html
+#   https://github.com/lwindolf/liferea/issues/1562
+#   https://github.com/lwindolf/liferea/blob/main/plugins/README.md#plugin-tutorial
 #   ~/.config/liferea/plugins/
 #   ~/.local/share/liferea/plugins/
 # FIXME avoid hardcoding paths, use `xdg_base_dirs`?
