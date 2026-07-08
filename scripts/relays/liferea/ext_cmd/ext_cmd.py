@@ -41,32 +41,54 @@ class ExtCmdPlugin (
     def __init__(self):
         super().__init__()
 
-        self.plugin_path: Path = Path(__file__)
-        self.plugin_name: str = self.plugin_path.stem
+        plugin_path: Path = Path(__file__)
+        plugin_name: str = plugin_path.stem
+        self.on_download_url_env_var: str = 'LIFEREA_ON_DOWNLOAD_URL'
         self.is_dbus_activatable: bool = 'DBUS_STARTER_ADDRESS' in os.environ
 
         logging.basicConfig()
-
-        self.logger: logging.Logger = logging.getLogger(
-            'plugin.' + self.plugin_name)
+        self.logger: logging.Logger = logging.getLogger('plugin.' + plugin_name)
         self.logger.setLevel(logging.DEBUG)
 
         self.logger.debug(
-            '__init__: path=%s; name=%s; dbus=%s',
-            self.plugin_path,
-            self.plugin_name,
+            '__init__ path=%s; name=%s; dbus=%s',
+            plugin_path,
+            plugin_name,
             self.is_dbus_activatable)
 
 
-    def do_activate(self):
+    def do_activate(self) -> None:
         self.logger.info('Activate')
 
 
-    def do_deactivate(self):
+    def do_deactivate(self) -> None:
         self.logger.info('Deactivate')
 
 
-    def do_download(self, url):
-        cmd = self.plugin_path.parent / 'on_enclosure_url'
-        self.logger.info('Download: cmd=%s; url=%s', cmd, url)
+    def do_download(self, url: str) -> None:
+        cmd: str = os.getenv(self.on_download_url_env_var, '')
+
+        # TODO see LibnotifyPlugin for QoL ideas to notify user of errors
+        if not cmd:
+            self.logger.error(
+                'Download aborted: $%s not set', self.on_download_url_env_var)
+
+            if self.is_dbus_activatable:
+                self.logger.info(
+                    """
+D-Bus Activatable detected. Possible fixes:
+- either -
+(A) Disable `DBusActivatable=true` in Liferea's `.desktop` file, so
+    that environment variables are passed to it.
+    https://developer.gnome.org/documentation/guidelines/maintainer/integrating.html#d-bus-activation
+- or -
+(B) Run command: dbus-update-activation-environment %s=PATH_TO_EXECUTABLE
+- then -
+    Restart Liferea.
+                    """.lstrip(),
+                    self.on_download_url_env_var)
+
+            return
+
+        self.logger.info('Download cmd=%s; url=%s', cmd, url)
         subprocess.Popen([cmd, url])
