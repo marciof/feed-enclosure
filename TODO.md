@@ -87,3 +87,4 @@
 # Device
 
 - Zero Terminal v3: https://n-o-d-e.net/zeroterminal3.html
+- M5Stack Tab5: https://shop.m5stack.com/products/m5stack-tab5-iot-development-kit-esp32-p4
