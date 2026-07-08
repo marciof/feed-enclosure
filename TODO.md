@@ -27,6 +27,7 @@
 - Not always updating The Impact even when it has new content.
   - And calls the conversion filter with an empty stdin.
 - Feed fetch spacing option like RSS Guard.
+  - https://github.com/lwindolf/liferea/issues/1555
 - OPML automatic backup (via plugins?)
 
 # Videos
