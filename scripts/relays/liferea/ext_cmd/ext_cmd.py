@@ -1,10 +1,35 @@
 # -*- coding: UTF-8 -*-
 
+"""
+Plugin that runs external commands on various events.
+
+Supported Events
+================
+
+Enclosure Download
+------------------
+
+Reinstates the external downloader tool functionality that was removed in
+`v1.15.9 <https://github.com/lwindolf/liferea/releases/tag/v1.15.9>`_, by using
+an environment variable to specify what command to run with an enclosure URL.
+
+Why
+^^^
+
+- Symlinks aren't cross-platform and aren't portable.
+- Not all VCS' support symlinks.
+- `$PATH` is too implicit.
+- Environment variables can be VCS-ed as "Configuration as Code".
+- Protocol handler registration (eg. `extcmd://`) is too involved.
+"""
+
+
 # FIXME document (including deps)
 # FIXME tests (including typing, mypy, pycodestyle)
 # FIXME error handling
 # FIXME how to disable built-in Download Manager and have that setting persist?
 # TODO would be nice to optionally pass the feed article title to ext cmds
+
 
 # stdlib
 import logging
@@ -78,7 +103,7 @@ class ExtCmdPlugin (
                     """
 D-Bus Activatable detected. Possible fixes:
 - either -
-(A) Disable `DBusActivatable=true` in Liferea's `.desktop` file, so
+(A) Set `DBusActivatable=false` in Liferea's `.desktop` file, so
     that environment variables are passed to it.
     https://developer.gnome.org/documentation/guidelines/maintainer/integrating.html#d-bus-activation
 - or -
