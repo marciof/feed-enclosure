@@ -2,12 +2,12 @@
 
 - New project structure?
   - `converter/` (anything -> feed, eg. TVW show page HTML -> RSS)
-  - `relay/` (data passing glue logic, eg. Liferea plugin)
+  - `relay/` `adapter/` `bridge/` (data passing glue logic, eg. Liferea plugin)
   - `wrapper/` (helper scripts, eg. Youwee CLI script)
 
 # Feeds
 
-- Need to find alternatives to Liferea? It removed the external downloaders option, and may remove more or go unmaintained? Preferrably with support for plugins and OPML.
+- Need to find alternatives to Liferea? It removed the external downloader tool option (on v1.15.9), and may remove more, make things more complicated, or go unmaintained? Preferably with support for plugins and OPML.
   - [RSS Guard](https://github.com/martinrotter/rssguard/issues/1952#issuecomment-4609281030)
   - [Akregator](https://github.com/KDE/akregator/)
   - [Alligator](https://github.com/kde/alligator)
@@ -22,12 +22,10 @@
 
 ## Liferea
 
-- Look into sandboxing an old fixed version that still has support for custom external download tool:
-  - https://github.com/89luca89/distrobox
+- Look into sandboxing an old fixed version that still has support for custom external download tool. https://github.com/89luca89/distrobox
 - Not always updating The Impact even when it has new content.
-  - And calls the conversion filter with an empty stdin.
-- Feed fetch spacing option like RSS Guard.
-  - https://github.com/lwindolf/liferea/issues/1555
+- Calls the conversion filter with an empty stdin, when it decides a feed (eg. The Impact) has no new content.
+- Feed fetch spacing option like RSS Guard. https://github.com/lwindolf/liferea/issues/1555
 - OPML automatic backup (via plugins?)
 
 # Videos
