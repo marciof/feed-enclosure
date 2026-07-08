@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-# FIXME document (including deps and setup ~/.local/share/liferea/plugins/)
+# FIXME document (including deps)
 # FIXME tests (including typing, mypy, pycodestyle)
 # FIXME error handling
 # FIXME proper logging (including to syslog)
