@@ -82,9 +82,13 @@ pretty_print_outdated_pkgs_or_dir() {
 }
 
 if [ $# -eq 0 ]; then
-    set -- **/*requirements.txt
+    find . \
+        -type d -name '.*' \! -path . -prune \
+        -o \
+        -type f -iname '*requirements.txt' \
+        -exec "$0" {} +
+else
+    for file_or_dir; do
+        pretty_print_outdated_pkgs_or_dir "$file_or_dir"
+    done
 fi
-
-for file_or_dir; do
-    pretty_print_outdated_pkgs_or_dir "$file_or_dir"
-done
