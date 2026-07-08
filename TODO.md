@@ -1,10 +1,3 @@
-# General
-
-- New project structure?
-  - `converter/` (anything -> feed, eg. TVW show page HTML -> RSS)
-  - `relay/` `adapter/` `bridge/` (data passing glue logic, eg. Liferea plugin)
-  - `wrapper/` (helper scripts, eg. Youwee CLI script)
-
 # Feeds
 
 - Need to find alternatives to Liferea? It removed the external downloader tool option (on v1.15.9), and may remove more, make things more complicated, or go unmaintained? Preferably with support for plugins and OPML.
