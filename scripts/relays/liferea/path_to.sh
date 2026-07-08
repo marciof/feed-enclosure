@@ -6,7 +6,7 @@
 #
 # References:
 # - XDG Spec: https://specifications.freedesktop.org/basedir/latest/#variables
-# - Liferea man page: https://github.com/lwindolf/liferea/blob/main/data/man/liferea.1
+# - Liferea man page: https://github.com/lwindolf/liferea/blob/v1.16.7/man/liferea.1
 
 set -o errexit -o nounset
 

@@ -49,9 +49,9 @@ class ExtCmdPlugin (
     """
     References:
 
-    - https://github.com/lwindolf/liferea/blob/main/plugins/README.md#plugin-tutorial
-    - https://github.com/lwindolf/liferea/blob/main/plugins/download-manager.py
-    - https://github.com/lwindolf/liferea/blob/main/src/plugins/download_activatable.c
+    - https://github.com/lwindolf/liferea/blob/v1.16.7/plugins/README.md#plugin-tutorial
+    - https://github.com/lwindolf/liferea/blob/v1.16.7/plugins/download-manager.py
+    - https://github.com/lwindolf/liferea/blob/v1.16.7/src/plugins/download_activatable.c
     - https://github.com/mozbugbox/liferea-plugin-studio
     """
 
@@ -69,6 +69,8 @@ class ExtCmdPlugin (
         plugin_path: Path = Path(__file__)
         plugin_name: str = plugin_path.stem
         self.on_download_url_env_var: str = 'LIFEREA_ON_DOWNLOAD_URL'
+
+        # See https://dbus.freedesktop.org/doc/dbus-specification.html
         self.is_dbus_activatable: bool = 'DBUS_STARTER_ADDRESS' in os.environ
 
         logging.basicConfig()
@@ -94,6 +96,7 @@ class ExtCmdPlugin (
         cmd: str = os.getenv(self.on_download_url_env_var, '')
 
         # TODO see LibnotifyPlugin for QoL ideas to notify user of errors
+        #   https://github.com/lwindolf/liferea/blob/v1.16.7/plugins/libnotify.py
         if not cmd:
             self.logger.error(
                 'Download aborted: $%s not set', self.on_download_url_env_var)
