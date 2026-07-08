@@ -18,7 +18,7 @@ plugins_cmd=plugins
 while getopts "$help_opt" opt "$@"; do
     case "$opt" in
         \?)
-            exit 1
+            break
             ;;
         "$help_opt")
             printf 'usage: %s [options] <path type>\n\n' \
@@ -46,8 +46,8 @@ case "${1:-}" in
             "${XDG_DATA_HOME:-"$HOME/.local/share"}/liferea/plugins/"
         ;;
     *)
-        echo 'Invalid or missing required arguments' >&2
-        printf "try '-%s' for help\n" "$help_opt" >&2
+        printf 'Invalid or missing required arguments\n\n--\n\n' >&2
+        exec "$0" "-$help_opt"
         exit 1
         ;;
 esac
