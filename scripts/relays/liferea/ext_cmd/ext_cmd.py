@@ -3,22 +3,18 @@
 # FIXME document (including deps)
 # FIXME tests (including typing, mypy, pycodestyle)
 # FIXME error handling
-# FIXME proper logging (including to syslog)
 # FIXME how to disable built-in Download Manager and have that setting persist?
-# FIXME confirm it's API compliant, https://github.com/lwindolf/liferea/issues/1564
 # TODO would be nice to optionally pass the feed article title to ext cmds
 
 # stdlib
+import logging
+import os
 from pathlib import Path
 import subprocess
-import sys
 
 # internal
 from gi.repository import GObject, Liferea
 
-PLUGIN_PATH = Path(__file__)
-PLUGIN_NAME = PLUGIN_PATH.stem
-ENCLOSURE_URL_CMD = PLUGIN_PATH.parent / 'on_enclosure_url'
 
 class ExtCmdPlugin (
         GObject.Object,
@@ -41,17 +37,36 @@ class ExtCmdPlugin (
     #   'shell' from interface 'LifereaDownloadActivatable'
     shell = GObject.property(type=Liferea.Shell)
 
+
+    def __init__(self):
+        super().__init__()
+
+        self.plugin_path: Path = Path(__file__)
+        self.plugin_name: str = self.plugin_path.stem
+        self.is_dbus_activatable: bool = 'DBUS_STARTER_ADDRESS' in os.environ
+
+        logging.basicConfig()
+
+        self.logger: logging.Logger = logging.getLogger(
+            'plugin.' + self.plugin_name)
+        self.logger.setLevel(logging.DEBUG)
+
+        self.logger.debug(
+            '__init__: path=%s; name=%s; dbus=%s',
+            self.plugin_path,
+            self.plugin_name,
+            self.is_dbus_activatable)
+
+
     def do_activate(self):
-        print('%s.%s' % (PLUGIN_NAME, self.do_activate.__name__),
-            file=sys.stderr)
+        self.logger.info('Activate')
+
 
     def do_deactivate(self):
-        print('%s.%s' % (PLUGIN_NAME, self.do_deactivate.__name__),
-            file=sys.stderr)
+        self.logger.info('Deactivate')
+
 
     def do_download(self, url):
-        print('%s.%s: %s %s'
-            % (PLUGIN_NAME, self.do_download.__name__, ENCLOSURE_URL_CMD, url),
-            file=sys.stderr)
-
-        subprocess.Popen([ENCLOSURE_URL_CMD, url])
+        cmd = self.plugin_path.parent / 'on_enclosure_url'
+        self.logger.info('Download: cmd=%s; url=%s', cmd, url)
+        subprocess.Popen([cmd, url])
