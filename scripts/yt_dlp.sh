@@ -15,6 +15,26 @@ yt() {
     yt-dlp "$@"
 }
 
+yt_defaults() {
+    # https://github.com/yt-dlp/yt-dlp#filtering-formats
+    yt \
+        --mtime \
+        --no-part \
+        --windows-filenames \
+        --embed-subs \
+        --embed-metadata \
+        --embed-thumbnail \
+        --format 'bestvideo[height<=?720]+bestaudio/best' \
+        "$@"
+}
+
+yt_non_live() {
+    yt_defaults \
+        --output-na-placeholder not_live \
+        --match-filter live_status=not_live \
+        "$@"
+}
+
 # Arguments: URL
 # Exit: 0 if live, 1 otherwise
 # FIXME merge into `yt_defaults` using post-processing filters?
@@ -29,19 +49,4 @@ yt_is_livestream() {
         --print live_status \
         "$1" \
     | grep --quiet --invert-match --ignore-case --fixed-strings not_live
-}
-
-yt_defaults() {
-    # https://github.com/yt-dlp/yt-dlp#filtering-formats
-    yt \
-        --mtime \
-        --no-part \
-        --windows-filenames \
-        --embed-subs \
-        --embed-metadata \
-        --embed-thumbnail \
-        --output-na-placeholder not_live \
-        --match-filter live_status=not_live \
-        --format 'bestvideo[height<=?720]+bestaudio/best' \
-        "$@"
 }
