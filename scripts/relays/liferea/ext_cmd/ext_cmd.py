@@ -18,7 +18,7 @@ Why
 
 - Symlinks aren't cross-platform and aren't portable.
 - Not all VCS' support symlinks.
-- `$PATH` is too implicit.
+- Avoids polluting `$PATH`, and it's also too implicit.
 - Environment variables can be VCS-ed as "Configuration as Code".
 - Protocol handler registration (eg. `extcmd://`) is too involved.
 """
