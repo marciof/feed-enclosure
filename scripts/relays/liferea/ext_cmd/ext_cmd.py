@@ -29,13 +29,18 @@ Why
 # FIXME error handling
 # FIXME how to disable built-in Download Manager and have that setting persist?
 # TODO would be nice to optionally pass the feed article title to ext cmds
+# TODO see LibnotifyPlugin for QoL ideas to notify user of errors
+#   https://github.com/lwindolf/liferea/blob/v1.16.7/plugins/libnotify.py
 
 
 # stdlib
+from functools import partial
 import logging
 import os
 from pathlib import Path
 import subprocess
+from threading import Thread
+from typing import TextIO, Callable, List
 
 # internal
 from gi.repository import GObject, Liferea
@@ -93,11 +98,12 @@ class ExtCmdPlugin (
 
 
     def do_download(self, url: str) -> None:
-        cmd: str = os.getenv(self.on_download_url_env_var, '')
+        command: str = os.getenv(self.on_download_url_env_var, '')
 
-        # TODO see LibnotifyPlugin for QoL ideas to notify user of errors
-        #   https://github.com/lwindolf/liferea/blob/v1.16.7/plugins/libnotify.py
-        if not cmd:
+        if command:
+            self.logger.info('Download command=%s; url=%s', command, url)
+            self.run_ext_cmd([command, url])
+        else:
             self.logger.error(
                 'Download aborted: $%s not set', self.on_download_url_env_var)
 
@@ -116,7 +122,33 @@ D-Bus Activatable detected. Possible fixes:
                     """.lstrip(),
                     self.on_download_url_env_var)
 
-            return
 
-        self.logger.info('Download cmd=%s; url=%s', cmd, url)
-        subprocess.Popen([cmd, url])
+    def run_ext_cmd(self, command: List[str]) -> None:
+        process = subprocess.Popen(command,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE)
+
+        self.logger.info('Run pid=%s', process.pid)
+
+        def log_output(pipe: TextIO, log: Callable[[str], None]) -> None:
+            with pipe:
+                for line in pipe:
+                    log(line)
+
+        def log_exit() -> None:
+            code = process.wait()
+            log = (self.logger.info if code == os.EX_OK else self.logger.error)
+            log('Run pid=%s; exit=%s', process.pid, code)
+
+        Thread(target=log_output, args=[
+            process.stdout,
+            partial(self.logger.info, f'[{process.pid}] %s'),
+        ]).start()
+
+        Thread(target=log_output, args=[
+            process.stderr,
+            partial(self.logger.error, f'[{process.pid}] %s'),
+        ]).start()
+
+        Thread(target=log_exit).start()

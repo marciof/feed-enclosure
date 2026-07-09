@@ -8,7 +8,6 @@
 # FIXME document (including dependencies and setup)
 # FIXME test (including shellcheck)
 # FIXME error handling
-# FIXME proper logging (including to syslog)
 # FIXME proper extensibility, example ideas:
 #   - ext_cmd/on_enclosure_url.d/* (runs chmod +x files)
 #   - run a specific command that must be in PATH
@@ -18,44 +17,31 @@
 
 set -o errexit -o nounset
 
-SCRIPT_FILE_PATH="$(realpath -e "$0")"
-SCRIPT_NAME="$(basename "$SCRIPT_FILE_PATH")"
-PLUGIN_NAME="$(basename "$(dirname "$SCRIPT_FILE_PATH")")"
-
-# Arguments: <component name>
-# Stdin: logger input
-# Stderr: logger output
-log() {
-    logger --id $$ --stderr --tag "$PLUGIN_NAME/$SCRIPT_NAME.$1"
-}
-
 # https://youwee.app
 # https://youwee.app/docs/cli/
 #
-# Arguments: URL [quality | '']
+# Arguments: <URL> <quality>
 download_via_youwee_cli() {
     # FIXME let yt-dlp choose format, eg. bestvideo[height<=?720]+bestaudio/best
     # FIXME option for other video formats (eg. mp4 doesn't embed metadata)
     # FIXME embed subtitles
     # FIXME embed metadata
-    youwee --skip-live --url "$1" --quality "$2" 2>&1 \
-        | log download_via_youwee_cli &
+    youwee --skip-live "--url=$1" "--quality=$2"
 }
 
 # https://github.com/mhogomchungu/media-downloader
 #
-# Arguments: URL
+# Arguments: <URL>
 download_via_media_downloader() {
-    flatpak run io.github.mhogomchungu.media-downloader -a -u "$1" 2>&1 \
-        | log download_via_media_downloader
+    flatpak run io.github.mhogomchungu.media-downloader \
+        --auto-download --url "$1"
 }
 
 # FIXME split this script into generic vs download-specific?
+# FIXME call other alternatives if the default fails?
 for url; do
     notify-send 'Enclosure URL' "$url"
     download_via_youwee_cli "$url" 720
-
-    # FIXME call other alternatives if the default fails?
-    # download_url_with_media_downloader "$url"
-    # . yt_dlp.sh && yt_defaults "$url"
+#     download_via_media_downloader "$url"
+#    . yt_dlp.sh && yt_defaults "$url"
 done
