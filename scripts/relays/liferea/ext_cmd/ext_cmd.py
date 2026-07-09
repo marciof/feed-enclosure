@@ -24,15 +24,6 @@ Why
 """
 
 
-# FIXME document (including deps)
-# FIXME tests (including typing, mypy, pycodestyle)
-# FIXME error handling
-# FIXME how to disable built-in Download Manager and have that setting persist?
-# TODO would be nice to optionally pass the feed article title to ext cmds
-# TODO see LibnotifyPlugin for QoL ideas to notify user of errors
-#   https://github.com/lwindolf/liferea/blob/v1.16.7/plugins/libnotify.py
-
-
 # stdlib
 from functools import partial
 import logging
@@ -46,6 +37,14 @@ from typing import TextIO, Callable, List
 from gi.repository import GObject, Liferea
 
 
+# FIXME seems to be missing from outside the plugin
+logging.basicConfig()
+
+
+# FIXME tests (including typing, mypy, pycodestyle)
+# FIXME disable built-in Download Manager?
+# TODO see LibnotifyPlugin for QoL ideas to notify user of errors
+#   https://github.com/lwindolf/liferea/blob/v1.16.7/plugins/libnotify.py
 class ExtCmdPlugin (
         GObject.Object,
         Liferea.Activatable, # Required by `DownloadActivatable`.
@@ -68,6 +67,7 @@ class ExtCmdPlugin (
     shell = GObject.property(type=Liferea.Shell)
 
 
+    # FIXME instantiated 2x
     def __init__(self):
         super().__init__()
 
@@ -78,7 +78,6 @@ class ExtCmdPlugin (
         # See https://dbus.freedesktop.org/doc/dbus-specification.html
         self.is_dbus_activatable: bool = 'DBUS_STARTER_ADDRESS' in os.environ
 
-        logging.basicConfig()
         self.logger: logging.Logger = logging.getLogger('plugin.' + plugin_name)
         self.logger.setLevel(logging.DEBUG)
 
@@ -89,14 +88,17 @@ class ExtCmdPlugin (
             self.is_dbus_activatable)
 
 
+    # inherit Liferea.Activatable
     def do_activate(self) -> None:
         self.logger.info('Activate')
 
 
+    # inherit Liferea.Activatable
     def do_deactivate(self) -> None:
         self.logger.info('Deactivate')
 
 
+    # inherit Liferea.DownloadActivatable
     def do_download(self, url: str) -> None:
         command: str = os.getenv(self.on_download_url_env_var, '')
 
@@ -123,11 +125,10 @@ D-Bus Activatable detected. Possible fixes:
                     self.on_download_url_env_var)
 
 
+    # TODO would be nice to optionally pass the feed article title to ext cmds
     def run_ext_cmd(self, command: List[str]) -> None:
-        process = subprocess.Popen(command,
-            text=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE)
+        process = subprocess.Popen(
+            command, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
         self.logger.info('Run pid=%s', process.pid)
 
@@ -142,13 +143,11 @@ D-Bus Activatable detected. Possible fixes:
             log('Run pid=%s; exit=%s', process.pid, code)
 
         Thread(target=log_output, args=[
-            process.stdout,
-            partial(self.logger.info, f'[{process.pid}] %s'),
+            process.stdout, partial(self.logger.info, f'[{process.pid}] %s'),
         ]).start()
 
         Thread(target=log_output, args=[
-            process.stderr,
-            partial(self.logger.error, f'[{process.pid}] %s'),
+            process.stderr, partial(self.logger.error, f'[{process.pid}] %s'),
         ]).start()
 
         Thread(target=log_exit).start()
