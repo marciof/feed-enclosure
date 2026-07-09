@@ -41,7 +41,7 @@ from gi.repository import GObject, Liferea
 logging.basicConfig()
 
 
-# FIXME tests (including typing, mypy, pycodestyle)
+# FIXME tests (including mypy, pycodestyle)
 # FIXME disable built-in Download Manager?
 # TODO see LibnotifyPlugin for QoL ideas to notify user of errors
 #   https://github.com/lwindolf/liferea/blob/v1.16.7/plugins/libnotify.py
@@ -126,6 +126,7 @@ D-Bus Activatable detected. Possible fixes:
 
 
     # TODO would be nice to optionally pass the feed article title to ext cmds
+    # TODO might be nice to use `shlex.split` and/or `os.path.expanduser/vars`
     def run_ext_cmd(self, command: List[str]) -> None:
         process = subprocess.Popen(
             command, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
