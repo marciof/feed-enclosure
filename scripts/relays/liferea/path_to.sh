@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Arguments: [path type]
+# Arguments: <path type>
 # Stdout: path to a Liferea file/folder if it exists, nothing otherwise
 # Exit: 0 if it exists, >0 otherwise
 #
