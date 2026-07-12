@@ -2,6 +2,7 @@
 
 # Arguments: <path type>
 # Stdout: path to a Liferea file/folder if it exists, nothing otherwise
+#         (folders will always have a trailing slash)
 # Exit: 0 if it exists, >0 otherwise
 #
 # References:
@@ -42,8 +43,9 @@ case "${1:-}" in
             "${XDG_CONFIG_HOME:-"$HOME/.config"}/liferea/feedlist.opml"
         ;;
     plugins)
-        realpath --canonicalize-existing \
-            "${XDG_DATA_HOME:-"$HOME/.local/share"}/liferea/plugins/"
+        path="$(realpath --canonicalize-existing \
+            "${XDG_DATA_HOME:-"$HOME/.local/share"}/liferea/plugins/")"
+        echo "${path%%/}/"
         ;;
     *)
         printf 'Invalid or missing required arguments\n\n--\n\n' >&2
