@@ -88,6 +88,7 @@ class ExtCmdPlugin (
 
         # See https://docs.gtk.org/gio/flags.ApplicationFlags.html#is_service
         # See https://dbus.freedesktop.org/doc/dbus-specification.html
+        # See https://developer.gnome.org/documentation/guidelines/maintainer/integrating.html#d-bus-activation
         self.is_dbus_activatable: bool = (
             app_flags is not None
             and (app_flags & Gio.ApplicationFlags.IS_SERVICE) != 0)
@@ -134,17 +135,7 @@ class ExtCmdPlugin (
 
             if self.is_dbus_activatable:
                 self.logger.info(
-                    """
-D-Bus Activatable detected. Possible fixes:
-- either -
-(A) Set `DBusActivatable=false` in Liferea's `.desktop` file, so
-    that environment variables are passed to it.
-    https://developer.gnome.org/documentation/guidelines/maintainer/integrating.html#d-bus-activation
-- or -
-(B) Run command: dbus-update-activation-environment %s=PATH_TO_EXECUTABLE
-- then -
-    Restart Liferea.
-                    """.lstrip(),
+                    'D-Bus Activatable detected. See README for help.',
                     self.on_download_url_env_var)
 
 
