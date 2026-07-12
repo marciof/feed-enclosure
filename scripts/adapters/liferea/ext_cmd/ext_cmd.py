@@ -25,6 +25,7 @@ Why
 
 
 # stdlib
+import configparser
 from functools import partial
 import logging
 import os
@@ -70,7 +71,6 @@ class ExtCmdPlugin (
     # FIXME instantiated 2x
     def __init__(self):
         super().__init__()
-        self.on_download_url_env_var: str = 'LIFEREA_ON_DOWNLOAD_URL'
 
         plugin_path: Path = Path(__file__)
         plugin_name: str = plugin_path.stem
@@ -79,6 +79,12 @@ class ExtCmdPlugin (
         app_flags: Optional[Gio.ApplicationFlags] = (
             None if app is None
             else app.get_flags())
+
+        info = configparser.ConfigParser()
+        info.read(plugin_path.parent / (plugin_name + '.plugin'))
+
+        self.on_download_url_env_var: str \
+            = info['Configuration']['OnDownloadUrlEnvVar']
 
         # See https://docs.gtk.org/gio/flags.ApplicationFlags.html#is_service
         # See https://dbus.freedesktop.org/doc/dbus-specification.html
@@ -122,7 +128,7 @@ class ExtCmdPlugin (
             self.run_ext_cmd([command, url])
         else:
             self.logger.error(
-                'Download aborted: $%s not set: %s',
+                'Download aborted: $%s not set: looked in %s',
                 self.on_download_url_env_var,
                 sorted(os.environ.keys()))
 

@@ -3,3 +3,5 @@ Module=ext_cmd
 Loader=python
 Name=External Command
 Description=Runs external commands for different events
+[Configuration]
+OnDownloadUrlEnvVar=LIFEREA_ON_DOWNLOAD_URL
