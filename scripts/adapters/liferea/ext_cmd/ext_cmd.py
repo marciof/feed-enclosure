@@ -31,10 +31,10 @@ import os
 from pathlib import Path
 import subprocess
 from threading import Thread
-from typing import TextIO, Callable, List
+from typing import TextIO, Callable, List, Optional
 
 # internal
-from gi.repository import GObject, Liferea
+from gi.repository import Gio, GObject, Liferea
 
 
 # FIXME seems to be missing from outside the plugin
@@ -70,22 +70,37 @@ class ExtCmdPlugin (
     # FIXME instantiated 2x
     def __init__(self):
         super().__init__()
+        self.on_download_url_env_var: str = 'LIFEREA_ON_DOWNLOAD_URL'
 
         plugin_path: Path = Path(__file__)
         plugin_name: str = plugin_path.stem
-        self.on_download_url_env_var: str = 'LIFEREA_ON_DOWNLOAD_URL'
 
+        app: Optional[Gio.Application] = Gio.Application.get_default()
+        app_flags: Optional[Gio.ApplicationFlags] = (
+            None if app is None
+            else app.get_flags())
+
+        # See https://docs.gtk.org/gio/flags.ApplicationFlags.html#is_service
         # See https://dbus.freedesktop.org/doc/dbus-specification.html
-        self.is_dbus_activatable: bool = 'DBUS_STARTER_ADDRESS' in os.environ
+        self.is_dbus_activatable: bool = (
+            app_flags is not None
+            and (app_flags & Gio.ApplicationFlags.IS_SERVICE) != 0)
 
         self.logger: logging.Logger = logging.getLogger('plugin.' + plugin_name)
         self.logger.setLevel(logging.DEBUG)
 
         self.logger.debug(
-            '__init__ path=%s; name=%s; dbus=%s',
+            '__init__ path=%s; flags=%s; dbus=%s; $%s=%s',
             plugin_path,
-            plugin_name,
-            self.is_dbus_activatable)
+            None if app_flags is None else bin(app_flags),
+            self.is_dbus_activatable,
+            self.on_download_url_env_var,
+            self.on_download_url)
+
+
+    @property
+    def on_download_url(self) -> Optional[str]:
+        return os.getenv(self.on_download_url_env_var)
 
 
     # inherit Liferea.Activatable
@@ -100,14 +115,16 @@ class ExtCmdPlugin (
 
     # inherit Liferea.DownloadActivatable
     def do_download(self, url: str) -> None:
-        command: str = os.getenv(self.on_download_url_env_var, '')
+        command = self.on_download_url
 
-        if command:
+        if command is not None:
             self.logger.info('Download command=%s; url=%s', command, url)
             self.run_ext_cmd([command, url])
         else:
             self.logger.error(
-                'Download aborted: $%s not set', self.on_download_url_env_var)
+                'Download aborted: $%s not set: %s',
+                self.on_download_url_env_var,
+                sorted(os.environ.keys()))
 
             if self.is_dbus_activatable:
                 self.logger.info(
@@ -128,8 +145,10 @@ D-Bus Activatable detected. Possible fixes:
     # TODO would be nice to optionally pass the feed article title to ext cmds
     # TODO might be nice to use `shlex.split` and/or `os.path.expanduser/vars`
     def run_ext_cmd(self, command: List[str]) -> None:
-        process = subprocess.Popen(
-            command, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        process = subprocess.Popen(command,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE)
 
         self.logger.info('Run pid=%s', process.pid)
 
@@ -144,11 +163,13 @@ D-Bus Activatable detected. Possible fixes:
             log('Run pid=%s; exit=%s', process.pid, code)
 
         Thread(target=log_output, args=[
-            process.stdout, partial(self.logger.info, f'[{process.pid}] %s'),
+            process.stdout,
+            partial(self.logger.info, f'[{process.pid}] %s'),
         ]).start()
 
         Thread(target=log_output, args=[
-            process.stderr, partial(self.logger.error, f'[{process.pid}] %s'),
+            process.stderr,
+            partial(self.logger.error, f'[{process.pid}] %s'),
         ]).start()
 
         Thread(target=log_exit).start()
