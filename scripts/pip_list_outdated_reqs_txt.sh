@@ -16,7 +16,7 @@ if command -v mktemp >/dev/null; then
     alias mktemp_posix=mktemp
 else
     mktemp_posix() {
-        echo 'mkstemp(template)' | m4 --define "template=${TMPDIR:-/tmp}/"
+        echo 'mkstemp(template)' | m4 --define="template=${TMPDIR:-/tmp}/"
     }
 fi
 
@@ -49,7 +49,7 @@ list_pkgs_from_reqs_txt() {
 # Stdin: packages, one name per line
 # Stdout: pip list filtered by matching packages
 grep_for_pkgs() {
-    xargs -I '{}' -- echo '--regexp {}' \
+    xargs -I '{}' -- echo '--regexp={}' \
         | xargs grep "$1" --fixed-strings
 }
 
