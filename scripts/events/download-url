@@ -39,6 +39,7 @@ download_via_media_downloader() {
 
 # FIXME split this script into generic vs download-specific?
 # FIXME call other alternatives if the default fails?
+# FIXME spawn in background always?
 for url; do
     notify-send 'Enclosure URL' "$url"
     download_via_youwee_cli "$url" 720
