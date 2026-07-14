@@ -97,10 +97,10 @@ class ExtCmdPlugin (
         self.logger.setLevel(logging.DEBUG)
 
         self.logger.debug(
-            '__init__ path=%s; flags=%s; dbus=%s; $%s=%s',
+            '__init__ path=%s; dbus=%s; flags=%s; $%s=%s',
             plugin_path,
-            None if app_flags is None else bin(app_flags),
             self.is_dbus_activatable,
+            None if app_flags is None else bin(app_flags),
             self.on_download_url_env_var,
             self.on_download_url)
 
