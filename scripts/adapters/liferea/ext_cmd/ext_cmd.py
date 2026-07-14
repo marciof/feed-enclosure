@@ -32,7 +32,7 @@ import os
 from pathlib import Path
 import subprocess
 from threading import Thread
-from typing import TextIO, Callable, List, Optional
+from typing import TextIO, Callable, List, Optional, Tuple
 
 # internal
 from gi.repository import Gio, GObject, Liferea
@@ -77,14 +77,10 @@ class ExtCmdPlugin (
 
         app: Optional[Gio.Application] = Gio.Application.get_default()
         app_flags: Optional[Gio.ApplicationFlags] = (
-            None if app is None
-            else app.get_flags())
+            app.get_flags() if app is not None else None)
 
-        info = configparser.ConfigParser()
-        info.read(plugin_path.parent / (plugin_name + '.plugin'))
-
-        self.on_download_url_env_var: str \
-            = info['Configuration']['OnDownloadUrlEnvVar']
+        self.plugin_info_path = plugin_path.parent / (plugin_name + '.plugin')
+        self.config_parser = configparser.ConfigParser()
 
         # See https://docs.gtk.org/gio/flags.ApplicationFlags.html#is_service
         # See https://dbus.freedesktop.org/doc/dbus-specification.html
@@ -97,17 +93,25 @@ class ExtCmdPlugin (
         self.logger.setLevel(logging.DEBUG)
 
         self.logger.debug(
-            '__init__ path=%s; dbus=%s; flags=%s; $%s=%s',
+            '__init__ path=%s; dbus=%s; flags=%s; $%s',
             plugin_path,
             self.is_dbus_activatable,
             None if app_flags is None else bin(app_flags),
-            self.on_download_url_env_var,
-            self.on_download_url)
+            '='.join(map(str, self.get_on_download_url())))
 
 
-    @property
-    def on_download_url(self) -> Optional[str]:
-        return os.getenv(self.on_download_url_env_var)
+    def get_on_download_url(self) -> Tuple[Optional[str], Optional[str]]:
+        self.config_parser.read(self.plugin_info_path)
+
+        env_var = self.config_parser.get(
+            section='Configuration',
+            option='OnDownloadUrlEnvVar',
+            fallback=None)
+
+        if env_var is None:
+            return (None, None)
+        else:
+            return (env_var, os.getenv(env_var))
 
 
     # inherit Liferea.Activatable
@@ -122,7 +126,7 @@ class ExtCmdPlugin (
 
     # inherit Liferea.DownloadActivatable
     def do_download(self, url: str) -> None:
-        command = self.on_download_url
+        (env_var, command) = self.get_on_download_url()
 
         if command is not None:
             self.logger.info('Download command=%s; url=%s', command, url)
@@ -130,13 +134,13 @@ class ExtCmdPlugin (
         else:
             self.logger.error(
                 'Download aborted: $%s not set: looked in %s',
-                self.on_download_url_env_var,
+                env_var,
                 sorted(os.environ.keys()))
 
             if self.is_dbus_activatable:
                 self.logger.info(
                     'D-Bus Activatable detected. See README for help.',
-                    self.on_download_url_env_var)
+                    env_var)
 
 
     # TODO would be nice to optionally pass the feed article title to ext cmds
