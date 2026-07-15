@@ -13,7 +13,7 @@ ln -v -s "`realpath -e ext_cmd`" "`./path_to.sh plugins`"
 Set the environment variable specified in the [`*.plugin` file](./ext_cmd/ext_cmd.plugin):
 
 1. Create a file [setting the variable in `~/.config/environment.d/*.conf`](https://www.freedesktop.org/software/systemd/man/latest/environment.d.html).
-2. Logout and login.
+2. Log out and log in.
 
 ### Note
 
