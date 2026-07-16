@@ -13,7 +13,7 @@
   - https://codemadness.org/sfeed.html
   - check what/how Liferea does it
 
-Prior Work:
+## Prior Work
 
 - https://github.com/flexget/flexget
   - Very close to the requirements.
@@ -34,6 +34,12 @@ Prior Work:
   - System requirements indicate it's too resource intensive.
 - https://github.com/kieraneglin/pinchflat
   - Doesn't run on phones/Android.
+- https://github.com/deniscerri/ytdlnis
+  - No OPML support.
+  - No RSS feed support.
+- https://github.com/junkfood02/Seal
+  - No OPML support.
+  - No RSS feed support.
 
 ## Liferea
 
