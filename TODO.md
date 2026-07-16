@@ -81,10 +81,35 @@
 - Zero Terminal v3: https://n-o-d-e.net/zeroterminal3.html
 - M5Stack Tab5: https://shop.m5stack.com/products/m5stack-tab5-iot-development-kit-esp32-p4
 
+# Requirements
+
+- Automatic update of feeds (eg. RSS, Atom).
+- Automatic download of enclosures.
+  - Including non-attachments (eg. YouTube URLs).
+  - Including JavaScript-heavy websites (eg. Instagram).
+- Extensibility (eg. adding websites/feeds without built-in support).
+- Data portability.
+  - Ideally OPML as storage, but import/export at a minimum.
+
 # Prior Work
 
 (Last checked: 2026-07-16)
 
+## Candidates
+
+- https://antennapod.org
+  - Very close to the requirements.
+  - Audio-oriented (eg. [TVW shows](https://tvw.org/shows/) don't have video).
+  - [OPML support is only for import/export, not subscriptions storage.](https://antennapod.org/documentation/general/backup)
+  - No plugin support.
+  - [Doesn't run on Linux/Windows.](https://antennapod.org/download/)
+- https://fluidcastapp.com
+  - Very close to the requirements.
+  - Not open source.
+  - Audio-oriented (eg. [TVW shows](https://tvw.org/shows/) don't have video).
+  - OPML support is only for import/export, not subscriptions storage.
+  - No plugin support.
+  - No Atom feed support.
 - https://grayjay.app
   - Very close to the requirements.
   - [Desktop app still in development?](https://grayjay.app/desktop/)
@@ -99,6 +124,9 @@
   - [Doesn't run on phones/Android.](https://www.flexget.com/InstallWizard)
   - [No OPML support.](https://github.com/search?q=repo%3AFlexget%2FFlexget%20%22opml%22&type=code)
   - [GUI still in development.](https://flexget.com/Web-UI)
+
+## Alternatives
+
 - https://github.com/mxpv/podsync
   - [Doesn't run on phones/Android.](https://github.com/mxpv/podsync#-features)
   - [Last release is from 2025.](https://github.com/mxpv/podsync/releases)
