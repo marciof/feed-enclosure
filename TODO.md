@@ -9,6 +9,7 @@
     - https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-stream-directly-to-media-player
     - https://github.com/fastapi/fastapi
     - https://github.com/Kludex/starlette
+  - https://freenet.org/apps/
 - Helper script for getting an RSS feed URL from a YouTube channel/playlist.
   - https://codemadness.org/sfeed.html
   - check what/how Liferea does it
