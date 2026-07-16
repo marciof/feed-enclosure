@@ -1,3 +1,49 @@
+# Prior Work
+
+(Last checked: 2026-07-16)
+
+- https://grayjay.app
+  - Very close to the requirements.
+  - [Desktop app still in development?](https://grayjay.app/desktop/)
+  - [No YouTube playlist update support.](https://github.com/futo-org/grayjay-android/issues/857)
+  - [No OPML support.](https://github.com/futo-org/grayjay-android/issues/1524)
+- https://github.com/jmbannon/ytdl-sub
+  - Very close to the requirements.
+  - [Doesn't run on phones/Android.](https://ytdl-sub.readthedocs.io/en/latest/guides/install/index.html)
+  - [No OPML support.](https://ytdl-sub.readthedocs.io/en/latest/search.html?q=opml)
+- https://github.com/flexget/flexget
+  - Very close to the requirements.
+  - [Doesn't run on phones/Android.](https://www.flexget.com/InstallWizard)
+  - [No OPML support.](https://github.com/search?q=repo%3AFlexget%2FFlexget%20%22opml%22&type=code)
+  - [GUI still in development.](https://flexget.com/Web-UI)
+- https://github.com/mxpv/podsync
+  - [Doesn't run on phones/Android.](https://github.com/mxpv/podsync#-features)
+  - [Last release is from 2025.](https://github.com/mxpv/podsync/releases)
+- https://github.com/Sn8z/Poddr
+  - [Doesn't run on phones/Android.](https://github.com/Sn8z/Poddr#downloads)
+  - [Last release is from 2025.](https://github.com/Sn8z/Poddr/releases)
+  - App is sluggish ([due to Electron?](https://github.com/Sn8z/Poddr/blob/main/electron-builder.yml)).
+- https://github.com/tubearchivist/tubearchivist
+  - [Doesn't run on phones/Android.](https://github.com/tubearchivist/tubearchivist/releases)
+  - [It's made for archival and media server.](https://github.com/tubearchivist/tubearchivist#core-functionality)
+  - [System requirements are too resource intensive.](https://github.com/tubearchivist/tubearchivist/releasesS)
+- https://github.com/kieraneglin/pinchflat
+  - [Doesn't run on phones/Android.](https://github.com/kieraneglin/pinchflat#installation)
+  - [Last release is from 2025.](https://github.com/kieraneglin/pinchflat/releases)
+  - [No OPML import support?](https://github.com/search?q=repo%3Akieraneglin%2Fpinchflat%20opml&type=code)
+- https://github.com/deniscerri/ytdlnis
+  - [No OPML support.](https://github.com/search?q=repo%3Adeniscerri%2Fytdlnis%20opml&type=code)
+  - [No RSS feed support.](https://github.com/search?q=repo%3Adeniscerri%2Fytdlnis+%2F%5Cbrss%5Cb%2F&type=code)
+  - [Sloppy documentation?](https://ytdlnis.org/docs/guides/home#i-have-many-urls-that-i-need-to-download) (eg. "that _i_ need")
+- https://github.com/junkfood02/Seal
+  - [No OPML support.](https://github.com/search?q=repo%3AJunkFood02%2FSeal%20opml&type=code)
+  - [Last release is from 2024.](https://github.com/JunkFood02/Seal/releases)
+  - [No RSS feed support.](https://github.com/search?q=repo%3AJunkFood02%2FSeal%20rss&type=code)
+- https://github.com/RSS-Bridge/rss-bridge
+  - RSS bridge only.
+- https://stacher.io/
+  - Not open source.
+
 # Feeds
 
 - Need to find alternatives to Liferea? It removed the external downloader tool option (on v1.15.9), and may remove more, make things more complicated, or go unmaintained? Preferably with support for plugins and OPML.
@@ -13,41 +59,6 @@
 - Helper script for getting an RSS feed URL from a YouTube channel/playlist.
   - https://codemadness.org/sfeed.html
   - check what/how Liferea does it
-
-## Prior Work
-
-- https://github.com/flexget/flexget
-  - Very close to the requirements.
-  - Doesn't run on phones/Android.
-  - No OPML support.
-- https://github.com/jmbannon/ytdl-sub
-  - Very close to the requirements.
-  - Doesn't run on phones/Android.
-  - No OPML support.
-- https://github.com/mxpv/podsync
-  - Doesn't run on phones/Android.
-  - Last release is from 2025 (as of 2026-07-15).
-- https://github.com/Sn8z/Poddr
-  - Doesn't run on phones/Android.
-  - Last release is from 2025 (as of 2026-07-15).
-  - App is sluggish.
-- https://github.com/tubearchivist/tubearchivist
-  - Doesn't run on phones/Android.
-  - It's made for archival and as a media server.
-  - System requirements are too resource intensive.
-- https://github.com/kieraneglin/pinchflat
-  - Doesn't run on phones/Android.
-  - No OPML support.
-- https://stacher.io/
-  - Not open source.
-- https://github.com/deniscerri/ytdlnis
-  - No OPML support.
-  - No RSS feed support.
-- https://github.com/junkfood02/Seal
-  - No OPML support.
-  - No RSS feed support.
-- https://github.com/RSS-Bridge/rss-bridge
-  - RSS bridge only.
 
 ## Liferea
 
