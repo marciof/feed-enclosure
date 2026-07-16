@@ -96,7 +96,7 @@ class ExtCmdPlugin (
             '__init__ path=%s; dbus=%s; flags=%s; $%s',
             plugin_path,
             self.is_dbus_activatable,
-            None if app_flags is None else bin(app_flags),
+            bin(app_flags) if app_flags is not None else None,
             '='.join(map(str, self.get_on_download_url())))
 
 
