@@ -18,36 +18,43 @@
 - https://github.com/flexget/flexget
   - Very close to the requirements.
   - Doesn't run on phones/Android.
+  - No OPML support.
 - https://github.com/jmbannon/ytdl-sub
   - Very close to the requirements.
   - Doesn't run on phones/Android.
+  - No OPML support.
 - https://github.com/mxpv/podsync
   - Doesn't run on phones/Android.
   - Last release is from 2025 (as of 2026-07-15).
 - https://github.com/Sn8z/Poddr
   - Doesn't run on phones/Android.
   - Last release is from 2025 (as of 2026-07-15).
-  - Too slow, even on a powerful HP Z2 Mini G5 Workstation.
+  - App is sluggish.
 - https://github.com/tubearchivist/tubearchivist
   - Doesn't run on phones/Android.
   - It's made for archival and as a media server.
-  - System requirements indicate it's too resource intensive.
+  - System requirements are too resource intensive.
 - https://github.com/kieraneglin/pinchflat
   - Doesn't run on phones/Android.
+  - No OPML support.
+- https://stacher.io/
+  - Not open source.
 - https://github.com/deniscerri/ytdlnis
   - No OPML support.
   - No RSS feed support.
 - https://github.com/junkfood02/Seal
   - No OPML support.
   - No RSS feed support.
+- https://github.com/RSS-Bridge/rss-bridge
+  - RSS bridge only.
 
 ## Liferea
 
-- Look into sandboxing an old fixed version that still has support for custom external download tool. https://github.com/89luca89/distrobox
-- Not always updating The Impact even when it has new content.
-- Calls the conversion filter with an empty stdin, when it decides a feed (eg. The Impact) has no new content.
+- Look into sandboxing an old fixed version that still has support for custom external download tools? https://github.com/89luca89/distrobox
+- Not always updating some feeds even when it has new content  (eg. TVW The Impact).
+- Calls the conversion filter with an empty stdin, when it decides incorrectly that a feed (eg. TVW The Impact) has no new content.
 - Feed fetch spacing option like RSS Guard. https://github.com/lwindolf/liferea/issues/1555
-- OPML automatic backup (via plugins?)
+- OPML automatic backup (via plugins?).
 
 # Videos
 
