@@ -13,6 +13,28 @@
   - https://codemadness.org/sfeed.html
   - check what/how Liferea does it
 
+Prior Work:
+
+- https://github.com/flexget/flexget
+  - Very close to the requirements.
+  - Doesn't run on phones/Android.
+- https://github.com/jmbannon/ytdl-sub
+  - Very close to the requirements.
+  - Doesn't run on phones/Android.
+- https://github.com/mxpv/podsync
+  - Doesn't run on phones/Android.
+  - Last release is from 2025 (as of 2026-07-15).
+- https://github.com/Sn8z/Poddr
+  - Doesn't run on phones/Android.
+  - Last release is from 2025 (as of 2026-07-15).
+  - Too slow, even on a powerful HP Z2 Mini G5 Workstation.
+- https://github.com/tubearchivist/tubearchivist
+  - Doesn't run on phones/Android.
+  - It's made for archival and as a media server.
+  - System requirements indicate it's too resource intensive.
+- https://github.com/kieraneglin/pinchflat
+  - Doesn't run on phones/Android.
+
 ## Liferea
 
 - Look into sandboxing an old fixed version that still has support for custom external download tool. https://github.com/89luca89/distrobox
