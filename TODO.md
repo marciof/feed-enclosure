@@ -83,6 +83,10 @@
 
 # Requirements
 
+## Use Cases
+
+Minimum:
+
 - Automatic update of feeds (eg. RSS, Atom).
 - Automatic download of enclosures.
   - Including non-attachments (eg. YouTube URLs).
@@ -90,6 +94,16 @@
 - Extensibility (eg. adding websites/feeds without built-in support).
 - Data portability.
   - Ideally OPML as storage, but import/export at a minimum.
+
+Optional:
+
+- Download URLs one-off.
+
+## Platforms
+
+- Linux
+- Windows: 10 64-bit, 11 64-bit
+- Android
 
 # Prior Work
 
