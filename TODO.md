@@ -94,10 +94,12 @@ Minimum:
 - Extensibility (eg. adding websites/feeds without built-in support).
 - Data portability.
   - Ideally OPML as storage, but import/export at a minimum.
+- Video metadata (eg. chapters, subtitles).
 
 Optional:
 
 - Download URLs one-off.
+- Synchronization (either built-in or third-party, eg. Dropbox).
 
 ## Platforms
 
