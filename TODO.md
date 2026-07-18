@@ -109,7 +109,7 @@
 
 # Prior Work
 
-_(Last checked: 2026-07-17)_
+_(Last checked: 2026-07-18)_
 
 ## Candidates
 
@@ -140,6 +140,7 @@ _(Last checked: 2026-07-17)_
   - [Doesn't run on phones/Android.](https://www.flexget.com/InstallWizard)
   - [No OPML support.](https://github.com/search?q=repo%3AFlexget%2FFlexget%20%22opml%22&type=code)
   - [GUI still in development.](https://flexget.com/Web-UI)
+  - [Changelogs are a list of commits.](https://flexget.com/ChangeLog)
 - https://github.com/gpodder/gpodder
   - Very close to the requirements.
   - [Doesn't run on phones/Android.](https://gpodder.github.io/#downloads)
