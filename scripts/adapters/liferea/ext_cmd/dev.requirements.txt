@@ -1,0 +1,15 @@
+# https://github.com/pygobject/pygobject-stubs/blob/master/CHANGELOG.md
+PyGObject-stubs==2.17.0 --config-settings config=Gtk3
+
+# https://pypi.org/project/gengir/#history
+#
+# Requires `lxml<5`, and it in turn requires `Python<=3.12`. Otherwise it fails
+# when compiling an old version of lxml with a newer Python.
+# https://github.com/lxml/lxml/releases/tag/lxml-4.9.4
+#
+# Also require an older `click` version that's more forgiving parsing flags.
+# https://click.palletsprojects.com/en/stable/changes/#version-8-2-0
+# https://github.com/pallets/click/issues/2205
+# https://github.com/pallets/click/issues/1992
+click<8.2.0
+gengir; python_version<='3.12' # generate Liferea type stubs

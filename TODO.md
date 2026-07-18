@@ -109,7 +109,7 @@
 
 # Prior Work
 
-(Last checked: 2026-07-17)
+_(Last checked: 2026-07-17)_
 
 ## Candidates
 
