@@ -40,10 +40,12 @@ indent_stdout() {
 # Stdout: packages, one name per line
 # See: https://pip.pypa.io/en/stable/reference/requirements-file-format/
 list_pkgs_from_reqs_txt() {
-    grep --no-filename --invert-match --extended-regexp '^$|^#' -- "$@" \
-        | cut --delimiter = --fields 1 \
-        | sort \
-        | uniq
+    grep \
+        --no-filename --only-matching --extended-regexp \
+        '^\s*[[:alnum:]][[:alnum:]-]*' -- \
+        "$@" \
+    | sort \
+    | uniq
 }
 
 # Arguments: <pip list output file>
