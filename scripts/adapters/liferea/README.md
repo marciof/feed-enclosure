@@ -27,4 +27,4 @@ dpkg -L liferea-data | grep -F .gir | xargs gengir --outdir ./stubs/gi
 ```
 
 > [!NOTE]
-> If necessary, use `pyenv` to install an older Python version.
+> If necessary, [use `pyenv` to install an older Python version](https://github.com/pyenv/pyenv).

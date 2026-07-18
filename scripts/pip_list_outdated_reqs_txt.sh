@@ -38,6 +38,7 @@ indent_stdout() {
 
 # Arguments: <requirements.txt file>
 # Stdout: packages, one name per line
+# See: https://pip.pypa.io/en/stable/reference/requirements-file-format/
 list_pkgs_from_reqs_txt() {
     grep --no-filename --invert-match --extended-regexp '^$|^#' -- "$@" \
         | cut --delimiter = --fields 1 \
