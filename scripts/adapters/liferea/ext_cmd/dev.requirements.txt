@@ -3,6 +3,9 @@ PyGObject-stubs==2.17.0 --config-settings config=Gtk3
 
 # https://pypi.org/project/gengir/#history
 #
+# https://github.com/santiagocezar/gengir/issues/4
+# https://github.com/lwindolf/liferea/issues/1568
+#
 # Requires `lxml<5`, and it in turn requires `Python<=3.12`. Otherwise it fails
 # when compiling an old version of lxml with a newer Python.
 # https://github.com/lxml/lxml/releases/tag/lxml-4.9.4
