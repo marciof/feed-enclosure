@@ -113,7 +113,7 @@ _(Last checked: 2026-07-18)_
 
 ## Candidates
 
-- https://antennapod.org
+- https://github.com/AntennaPod/AntennaPod
   - Very close to the requirements.
   - Audio-oriented (eg. [TVW shows](https://tvw.org/shows/) don't have video).
   - [OPML support is only for import/export, not subscriptions storage.](https://antennapod.org/documentation/general/backup)
