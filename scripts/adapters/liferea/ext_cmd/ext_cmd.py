@@ -24,6 +24,7 @@ more powerful/flexible download management tools and GUIs.
 Rationale
 ^^^^^^^^^
 
+- A single command avoids complexity and bugs from shell parsing and un/quoting.
 - Symlinks aren't cross-platform and aren't portable.
 - Not all VCS' support symlinks.
 - Avoids polluting `$PATH`, and it's also too implicit.
