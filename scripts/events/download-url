@@ -14,6 +14,7 @@
 #   - run a command specified in an env var
 #   - resolve symlinks and runs a config command
 # TODO check https://github.com/TheFrenchGhosty/TheFrenchGhostys-Ultimate-YouTube-DL-Scripts-Collection
+# TODO idea, accept `*.url` files
 
 set -o errexit -o nounset
 
