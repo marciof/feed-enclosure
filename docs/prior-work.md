@@ -1,6 +1,6 @@
 # Prior Work
 
-_(Last checked: 2026-07-18)_
+_(Last checked: 2026-07-20)_
 
 ## Candidates
 
@@ -61,6 +61,16 @@ https://github.com/vanloctech/youwee/
   - [Supports plugins.](https://youwee.app/docs/plugins)
   - [Supports workflows.](https://youwee.app/docs/workflows)
 - [Doesn't run on phones/Android.](https://github.com/vanloctech/youwee/#installation)
+- [Uses](https://github.com/vanloctech/youwee/blob/main/bun.lock) [Bun](https://bun.com), which seems [problematic](https://web.archive.org/web/20220824093845/https://twitter.com/oven_sh/status/1562248121656102914#:~:text=grind).
+
+https://github.com/mhogomchungu/media-downloader/
+
+- Video download-oriented.
+- No OPML support.
+  - [Supports subscriptions.](https://github.com/mhogomchungu/media-downloader/wiki/Frequently-Asked-Questions#9-how-do-i-add-subscriptions)
+- [Doesn't run on phones/Android.](https://github.com/mhogomchungu/media-downloader#binary-packages)
+- [Typos in the documentation?](https://github.com/mhogomchungu/media-downloader/wiki/Frequently-Asked-Questions#9-how-do-i-add-subscriptions) (eg. "do _i_ add")
+- [UI is confusing to use.](https://github.com/mhogomchungu/media-downloader#screenshots)
 
 https://github.com/mxpv/podsync
 
@@ -89,7 +99,7 @@ https://github.com/deniscerri/ytdlnis
 
 - [No OPML support.](https://github.com/search?q=repo%3Adeniscerri%2Fytdlnis%20opml&type=code)
 - [No RSS feed support.](https://github.com/search?q=repo%3Adeniscerri%2Fytdlnis+%2F%5Cbrss%5Cb%2F&type=code)
-- [Sloppy documentation?](https://ytdlnis.org/docs/guides/home#i-have-many-urls-that-i-need-to-download) (eg. "that _i_ need")
+- [Typos in the documentation?](https://ytdlnis.org/docs/guides/home#i-have-many-urls-that-i-need-to-download) (eg. "that _i_ need")
 
 https://github.com/junkfood02/Seal
 
