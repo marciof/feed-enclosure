@@ -52,6 +52,16 @@ https://github.com/gpodder/gpodder
 
 ## Alternatives
 
+https://github.com/vanloctech/youwee/
+
+- Video download-oriented.
+  - [Supports following channels for automatic downloads.](https://youwee.app/docs/channels)
+- App is sluggish ([due to Tauri?](https://github.com/vanloctech/youwee/tree/main/src-tauri)).
+- No OPML support.
+  - [Supports plugins.](https://youwee.app/docs/plugins)
+  - [Supports workflows.](https://youwee.app/docs/workflows)
+- [Doesn't run on phones/Android.](https://github.com/vanloctech/youwee/#installation)
+
 https://github.com/mxpv/podsync
 
 - [Doesn't run on phones/Android.](https://github.com/mxpv/podsync#-features)
