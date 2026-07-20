@@ -1,10 +1,19 @@
 #!/bin/sh
 
-# List updates by checking PIP against a requirements file.
-# If no arguments are given, it searches recursively for requirements files.
+# List updates by checking PIP against files containing requirements.
+# If no arguments are given, it searches recursively ignoring hidden paths.
 #
-# Arguments: [requirements.txt | directory ...]
+# A file containing requirements is one of the following:
+#
+# - Filename ending in "requirements.txt" case-insensitive.
+#   https://pip.pypa.io/en/stable/reference/requirements-file-format/
+#
+# - File containing inline script metadata.
+#   https://packaging.python.org/en/latest/specifications/inline-script-metadata/#script-type
+#
+# Arguments: [file with requirements | directory ...]
 
+# FIXME convert to Python so it's cross-platform
 # FIXME list `pip` itself if outdated
 # FIXME ensure `pip install` uses `--uploaded-prior-to` (since pip v26.1)
 # FIXME ensure `pip install` uses `--require-virtualenv`
@@ -36,14 +45,19 @@ indent_stdout() {
     sed 's/^/    /'
 }
 
-# Arguments: <requirements.txt file>
+# Arguments: <file with requirements>
 # Stdout: packages, one name per line
-# See: https://pip.pypa.io/en/stable/reference/requirements-file-format/
-list_pkgs_from_reqs_txt() {
-    grep \
-        --no-filename --only-matching --extended-regexp \
-        '^\s*[[:alnum:]][[:alnum:]-]*' -- \
-        "$@" \
+list_pkgs_from_file_with_reqs() {
+    if grep --quiet --line-regexp --fixed-strings '# /// script' -- "$1"; then
+        echo --requirements-from-script "$1"
+    else
+        echo --requirement "$1"
+    fi \
+    | xargs pip install \
+        --quiet --no-input --dry-run \
+        --no-deps --ignore-installed --disable-pip-version-check \
+        --report - \
+    | python -c 'import sys, json; print("\n".join(p["metadata"]["name"] for p in json.load(sys.stdin)["install"]))' \
     | sort \
     | uniq
 }
@@ -56,42 +70,45 @@ grep_for_pkgs() {
         | xargs grep "$1" --fixed-strings
 }
 
-# Arguments: <requirements.txt file> <pip list output file>
+# Arguments: <file with requirements> <pip list output file>
 pretty_print_outdated_pkgs() {
     echo "$1"
     printf "%${#1}s\n" | tr ' ' '-'
 
-    if ! list_pkgs_from_reqs_txt "$1" | grep_for_pkgs "$2"; then
+    if ! list_pkgs_from_file_with_reqs "$1" | grep_for_pkgs "$2"; then
         echo '(N/A)'
     fi | indent_stdout
 }
 
-# Arguments: <requirements.txt file | directory> <pip list output file>
+# Arguments: <file with requirements | directory> <pip list output file>
 pretty_print_outdated_pkgs_or_dir() {
     if [ -d "$1" ]; then
-        for file in "${1%%/}/"*requirements.txt; do
-            # Skip verbatim glob pattern when no files are found.
-            if [ -r "$file" ]; then
-                wait_for_pip_list
-                echo
-                pretty_print_outdated_pkgs "$file" "$PIP_OUTDATED_PKGS_FILE"
-            fi
+        for file in $(list_files_with_reqs "$1"); do
+            wait_for_pip_list
+            echo
+            pretty_print_outdated_pkgs "${file#./}" "$PIP_OUTDATED_PKGS_FILE"
         done
     else
         wait_for_pip_list
         echo
-        pretty_print_outdated_pkgs "$1" "$PIP_OUTDATED_PKGS_FILE"
+        pretty_print_outdated_pkgs "${1#./}" "$PIP_OUTDATED_PKGS_FILE"
     fi
 }
 
+# Arguments: <starting path>
+list_files_with_reqs() {
+    starting_path="$1"; shift
+
+    find "$starting_path" -name '.*' \! -name '.' -prune -o -type f \( \
+        -iname '*requirements.txt' \
+        -o -exec grep --quiet --line-regexp --fixed-strings '# /// script' {} \; \
+    \) -print
+}
+
 if [ $# -eq 0 ]; then
-    find . \
-        -type d -name '.*' \! -path . -prune \
-        -o \
-        -type f -iname '*requirements.txt' \
-        -exec "$0" {} +
-else
-    for file_or_dir; do
-        pretty_print_outdated_pkgs_or_dir "$file_or_dir"
-    done
+    set -- .
 fi
+
+for file_or_dir; do
+    pretty_print_outdated_pkgs_or_dir "$file_or_dir"
+done
