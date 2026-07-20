@@ -59,6 +59,17 @@ https://github.com/nickvisionapps/parabolic _v2026.5.0_
 - No OPML support.
 - [Doesn't run on phones/Android.](https://github.com/nickvisionapps/parabolic#-installation)
 - [No (CLI) support for automation.](https://github.com/NickvisionApps/Parabolic/issues/1855)
+- No plugin support.
+
+https://github.com/persepolisdm/persepolis _v5.2.0_
+
+- Download manager-oriented.
+- No OPML support.
+- [Last release is from 2025.](https://github.com/persepolisdm/persepolis/releases)
+- [Doesn't run on phones/Android.](https://github.com/persepolisdm/persepolis/wiki/Home-en#installation)
+- No plugin support? [Wiki has a broken "Plugins" link.](https://github.com/persepolisdm/persepolis/wiki/)
+- No (CLI) support for automation.
+  - [Browser extension can trigger an automatic download.](https://github.com/persepolisdm/Persepolis-WebExtension)
 
 https://github.com/vanloctech/youwee/ _v0.20.0_
 
@@ -80,7 +91,6 @@ https://github.com/mhogomchungu/media-downloader/ _v5.6.3_
   - [Supports plugins.](https://github.com/mhogomchungu/media-downloader/#extensions)
 - [Doesn't run on phones/Android.](https://github.com/mhogomchungu/media-downloader#binary-packages)
 - [UI is confusing to use.](https://github.com/mhogomchungu/media-downloader#screenshots)
-- [Typos in the documentation?](https://github.com/mhogomchungu/media-downloader/wiki/Frequently-Asked-Questions#9-how-do-i-add-subscriptions) (eg. "do _i_ add")
 
 https://github.com/jely2002/youtube-dl-gui _v3.2.1_
 
@@ -126,7 +136,6 @@ https://github.com/deniscerri/ytdlnis _v1.8.9.1_
 
 - [No OPML support.](https://github.com/search?q=repo%3Adeniscerri%2Fytdlnis%20opml&type=code)
 - [No RSS feed support.](https://github.com/search?q=repo%3Adeniscerri%2Fytdlnis+%2F%5Cbrss%5Cb%2F&type=code)
-- [Typos in the documentation?](https://ytdlnis.org/docs/guides/home#i-have-many-urls-that-i-need-to-download) (eg. "that _i_ need")
 
 https://github.com/junkfood02/Seal _v1.13.1_
 
