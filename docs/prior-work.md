@@ -56,21 +56,31 @@ https://github.com/vanloctech/youwee/
 
 - Video download-oriented.
   - [Supports following channels for automatic downloads.](https://youwee.app/docs/channels)
-- App is sluggish ([due to Tauri?](https://github.com/vanloctech/youwee/tree/main/src-tauri)).
 - No OPML support.
   - [Supports plugins.](https://youwee.app/docs/plugins)
   - [Supports workflows.](https://youwee.app/docs/workflows)
 - [Doesn't run on phones/Android.](https://github.com/vanloctech/youwee/#installation)
+- App is sluggish ([due to Tauri?](https://github.com/vanloctech/youwee/tree/main/src-tauri)).
 - [Uses](https://github.com/vanloctech/youwee/blob/main/bun.lock) [Bun](https://bun.com), which seems [problematic](https://web.archive.org/web/20220824093845/https://twitter.com/oven_sh/status/1562248121656102914#:~:text=grind).
 
 https://github.com/mhogomchungu/media-downloader/
 
 - Video download-oriented.
-- No OPML support.
   - [Supports subscriptions.](https://github.com/mhogomchungu/media-downloader/wiki/Frequently-Asked-Questions#9-how-do-i-add-subscriptions)
+- No OPML support.
+  - [Supports plugins.](https://github.com/mhogomchungu/media-downloader/#extensions)
 - [Doesn't run on phones/Android.](https://github.com/mhogomchungu/media-downloader#binary-packages)
-- [Typos in the documentation?](https://github.com/mhogomchungu/media-downloader/wiki/Frequently-Asked-Questions#9-how-do-i-add-subscriptions) (eg. "do _i_ add")
 - [UI is confusing to use.](https://github.com/mhogomchungu/media-downloader#screenshots)
+- [Typos in the documentation?](https://github.com/mhogomchungu/media-downloader/wiki/Frequently-Asked-Questions#9-how-do-i-add-subscriptions) (eg. "do _i_ add")
+
+https://github.com/axcore/tartube
+
+- Video download-oriented.
+  - [Supports subscriptions.](https://github.com/axcore/tartube#6215-importing-from-youtube)
+- No OPML support.
+- [Doesn't run on phones/Android.](https://github.com/axcore/tartube#3-downloads)
+- No plugin support.
+- [UI is confusing to use.](https://github.com/axcore/tartube/blob/master/screenshots/)
 
 https://github.com/mxpv/podsync
 
