@@ -39,6 +39,7 @@ from gi.repository import Gio, GObject, Liferea
 
 
 # FIXME seems to be missing from outside the plugin
+# FIXME use level from `$ liferea --help-debug`?
 logging.basicConfig()
 
 
