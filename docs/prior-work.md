@@ -52,6 +52,14 @@ https://github.com/gpodder/gpodder _Git/e05f630f_
 
 ## Alternatives
 
+https://github.com/nickvisionapps/parabolic _v2026.5.0_
+
+- Video download-oriented.
+- [Nice UI/UX.](https://github.com/nickvisionapps/parabolic#-screenshots)
+- No OPML support.
+- [Doesn't run on phones/Android.](https://github.com/nickvisionapps/parabolic#-installation)
+- [No (CLI) support for automation.](https://github.com/NickvisionApps/Parabolic/issues/1855)
+
 https://github.com/vanloctech/youwee/ _v0.20.0_
 
 - Video download-oriented.
@@ -80,7 +88,7 @@ https://github.com/jely2002/youtube-dl-gui _v3.2.1_
 - No OPML support.
 - [Doesn't run on phones/Android.](https://github.com/jely2002/youtube-dl-gui#download)
 - Not very private? ([Uses Sentry.](https://github.com/jely2002/youtube-dl-gui/blob/main/src/sentry.ts))
-- No CLI support for automation.
+- No (CLI) support for automation.
 
 https://github.com/axcore/tartube _v2.5.231_
 

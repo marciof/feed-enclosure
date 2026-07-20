@@ -25,9 +25,6 @@
 # Videos
 
 - Need to find other GUI alternatives?
-  - Parabolic, but see https://github.com/NickvisionApps/Parabolic/issues/1855
-  - VidBee https://github.com/nexmoe/VidBee
-  - https://fmhy.net/social-media-tools#youtube-downloaders
 - yt-dlp extensibility:
   - Plugins: https://github.com/yt-dlp/yt-dlp#plugins
   - `--exec` / post-processing: https://github.com/yt-dlp/yt-dlp#post-processing-options
