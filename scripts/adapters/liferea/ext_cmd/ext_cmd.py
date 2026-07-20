@@ -11,10 +11,18 @@ Enclosure Download
 
 Reinstates the external downloader tool functionality that was removed in
 `v1.15.9 <https://github.com/lwindolf/liferea/releases/tag/v1.15.9>`_, by using
-an environment variable to specify what command to run with an enclosure URL.
+an environment variable to specify what command to run, with an enclosure URL
+as its only argument.
 
-Why
-^^^
+Motivation
+^^^^^^^^^^
+
+Being able to use external downloaders with potentially wider support for
+various websites (eg. `yt-dlp <https://github.com/yt-dlp/yt-dlp>`_), as well as
+more powerful/flexible download management tools and GUIs.
+
+Rationale
+^^^^^^^^^
 
 - Symlinks aren't cross-platform and aren't portable.
 - Not all VCS' support symlinks.
