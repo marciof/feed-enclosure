@@ -62,6 +62,7 @@ https://github.com/vanloctech/youwee/
 - [Doesn't run on phones/Android.](https://github.com/vanloctech/youwee/#installation)
 - App is sluggish ([due to Tauri?](https://github.com/vanloctech/youwee/tree/main/src-tauri)).
 - [Uses](https://github.com/vanloctech/youwee/blob/main/bun.lock) [Bun](https://bun.com), which seems [problematic](https://web.archive.org/web/20220824093845/https://twitter.com/oven_sh/status/1562248121656102914#:~:text=grind).
+- [Doesn't disclose sponsors?](https://github.com/vanloctech/youwee/commit/cbf78202d200bf6e666bd2bb6911ec43360a40ff)
 
 https://github.com/mhogomchungu/media-downloader/
 
@@ -72,6 +73,14 @@ https://github.com/mhogomchungu/media-downloader/
 - [Doesn't run on phones/Android.](https://github.com/mhogomchungu/media-downloader#binary-packages)
 - [UI is confusing to use.](https://github.com/mhogomchungu/media-downloader#screenshots)
 - [Typos in the documentation?](https://github.com/mhogomchungu/media-downloader/wiki/Frequently-Asked-Questions#9-how-do-i-add-subscriptions) (eg. "do _i_ add")
+
+https://github.com/jely2002/youtube-dl-gui
+
+- Video download-oriented.
+- No OPML support.
+- [Doesn't run on phones/Android.](https://github.com/jely2002/youtube-dl-gui#download)
+- Not very private? ([Uses Sentry.](https://github.com/jely2002/youtube-dl-gui/blob/main/src/sentry.ts))
+- No CLI support for automation.
 
 https://github.com/axcore/tartube
 
