@@ -3,6 +3,13 @@
 # `yt-dlp` helper wrappers.
 # https://github.com/yt-dlp/yt-dlp
 
+# /// script
+# dependencies = [
+#   # https://github.com/yt-dlp/yt-dlp/blob/master/Changelog.md
+#   "yt-dlp==2026.7.4",
+# ]
+# ///
+
 # FIXME document (including dependencies and setup)
 # FIXME test (including shellcheck)
 # FIXME error handling

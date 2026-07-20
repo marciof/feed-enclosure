@@ -7,6 +7,14 @@ Converts a TVW Show page's HTML in `stdin` to an episodes RSS feed in `stdout`.
 https://tvw.org/shows/
 """
 
+# /// script
+# dependencies = [
+#   "beautifulsoup4==4.12.3", # parse/search show's HTML for show/episode's info
+#   "dateparser==1.4.0", # parse/search episode's published date
+#   "feedgen==1.0.0", # generate show's RSS feed
+# ]
+# ///
+
 # FIXME document
 # FIXME test
 # FIXME error handling

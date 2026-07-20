@@ -7,6 +7,12 @@ OPML parsing and handling helpers.
 http://opml.org/spec2.opml
 """
 
+# /// script
+# dependencies = [
+#   "defusedxml==0.7.1", # parse/modify/generate OPML
+# ]
+# ///
+
 # FIXME document
 # FIXME test
 # FIXME error handling
