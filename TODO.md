@@ -16,7 +16,9 @@
 
 ## Liferea
 
-- Look into sandboxing an old fixed version that still has support for custom external download tools? https://github.com/89luca89/distrobox
+- Look into sandboxing an old fixed version that still has support for custom external download tools?
+  - https://github.com/89luca89/distrobox
+  - https://libvirt.org
 - Not always updating some feeds even when it has new content  (eg. TVW The Impact).
 - Calls the conversion filter with an empty stdin, when it decides incorrectly that a feed (eg. TVW The Impact) has no new content.
 - Feed fetch spacing option like RSS Guard. https://github.com/lwindolf/liferea/issues/1555
