@@ -92,6 +92,17 @@ https://github.com/mhogomchungu/media-downloader/ _v5.6.3_
 - [Doesn't run on phones/Android.](https://github.com/mhogomchungu/media-downloader#binary-packages)
 - [UI is confusing to use.](https://github.com/mhogomchungu/media-downloader#screenshots)
 
+https://github.com/Unrud/video-downloader _v0.12.31_
+
+- Video download-oriented.
+  - [Not single-instance (multiple downloads = multiple windows).](https://github.com/Unrud/video-downloader/blob/v0.12.31/src/main.py#L41)
+- [Nice UI/UX.](https://github.com/Unrud/video-downloader#screenshots)
+- No OPML support.
+- No (CLI) support for automation.
+  - [Only pre-fills URL field.](https://github.com/Unrud/video-downloader/blob/v0.12.31/src/main.py#L37)
+  - `$ flatpak run --command=gsettings com.github.unrud.VideoDownloader list-recursively com.github.unrud.VideoDownloader`
+- [Doesn't run on phones/Android.](https://github.com/Unrud/video-downloader#installation)
+
 https://github.com/jely2002/youtube-dl-gui _v3.2.1_
 
 - Video download-oriented.
