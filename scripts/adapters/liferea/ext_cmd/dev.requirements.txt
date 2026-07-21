@@ -16,4 +16,4 @@ PyGObject-stubs==2.17.0 --config-settings config=Gtk3
 #   https://github.com/santiagocezar/gengir/issues/4
 #   https://github.com/lwindolf/liferea/issues/1568
 click<8.2.0
-gengir; python_version<='3.12' # generate Liferea type stubs
+gengir; python_version<='3.12' # generate `gi.repository.Liferea` type stubs
