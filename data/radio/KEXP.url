@@ -2,5 +2,6 @@
 URL=https://www.kexp.org
 IconFile=https://www.kexp.org/static/assets/img/logo-footer.svg
 Desc=KEXP
+
 [Bookmarklet]
 ExtendedURL=https://www.kexp.org/streaming-urls
