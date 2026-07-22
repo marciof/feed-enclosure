@@ -4,7 +4,7 @@
 
 Either copy, or symlink the provided plugin into the plugins folder:
 
-```
+```shell
 ln -v -s "`realpath -e ext_cmd`" "`./path_to.sh plugins`"
 ```
 
@@ -22,7 +22,7 @@ Set the environment variable specified in the [`*.plugin` file](./ext_cmd/ext_cm
 
 Generate type stubs for `gi.repository.Liferea`:
 
-```
+```shell
 dpkg -L liferea-data | grep -F .gir | xargs gengir --outdir ./stubs/gi
 ```
 
