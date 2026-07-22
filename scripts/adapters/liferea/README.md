@@ -5,7 +5,7 @@
 Either copy, or symlink the provided plugin into the plugins folder:
 
 ```shell
-ln -v -s "`realpath -e ext_cmd`" "`./path_to.sh plugins`"
+ln -v -s "`realpath -e ext_cmd`" "`./path_to.py plugins`"
 ```
 
 ## Liferea
