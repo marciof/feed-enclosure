@@ -14,7 +14,10 @@ https://support.microsoft.com/windows/privacy/windows-activity-history-and-your-
 
 ## Disable Optional Hardware Apps
 
-1. Open `System Properties`: `sysdm.cpl`
+1. Open `System Properties`:
+    ```batch
+    sysdm.cpl
+    ```
 2. Switch to the `Hardware` tab.
 3. Open `Device Installation Settings`.
 4. Disable automatic download.
