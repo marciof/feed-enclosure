@@ -53,6 +53,7 @@ logging.basicConfig()
 
 
 # FIXME tests (including mypy, pycodestyle)
+# FIXME error handling
 # FIXME disable built-in Download Manager?
 # TODO see LibnotifyPlugin for QoL ideas to notify user of errors
 #   https://github.com/lwindolf/liferea/blob/v1.16.7/plugins/libnotify.py
